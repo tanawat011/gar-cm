@@ -1,3 +1,125 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "no-console": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "quotes": ["error", "single"],
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/keyword-spacing": "error",
+        "@typescript-eslint/no-explicit-any": "warn", // * Do not use `any` type
+        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-unused-vars": "warn", // * Unused variables
+        "@typescript-eslint/padding-line-between-statements": [
+          "error",
+          { "blankLine": "always", "prev": "*", "next": "return" }, // * always add a blank line before return
+          {
+            "blankLine": "always",
+            "prev": ["const", "let", "var"],
+            "next": [
+              "if",
+              "for",
+              "while",
+              "do",
+              "switch",
+              "try",
+              "throw",
+              "class",
+              "function",
+              "interface",
+              "type"
+            ]
+          }, // * always add a blank line before variable statements
+          {
+            "blankLine": "always",
+            "prev": [
+              "if",
+              "for",
+              "while",
+              "do",
+              "switch",
+              "try",
+              "throw",
+              "class",
+              "function",
+              "interface",
+              "type"
+            ],
+            "next": ["const", "let", "var"]
+          }, // * always add a blank line after variable statements
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": [
+              "if",
+              "for",
+              "while",
+              "do",
+              "switch",
+              "try",
+              "throw",
+              "class",
+              "function",
+              "interface",
+              "type"
+            ]
+          }, // * always add a blank line before all statements
+          {
+            "blankLine": "always",
+            "prev": [
+              "if",
+              "for",
+              "while",
+              "do",
+              "switch",
+              "try",
+              "throw",
+              "class",
+              "function",
+              "interface",
+              "type"
+            ],
+            "next": "*"
+          } // * always add a blank line after all statements
+        ],
+        "eqeqeq": ["error", "always"], // * always use `===` and `!==
+        "eol-last": ["error", "always"], // * always add a blank line at the end of the file
+        "import/no-duplicates": "error", // * Do not import duplicates
+        "import/order": [
+          "error",
+          {
+            "warnOnUnassignedImports": true,
+            "alphabetize": { "order": "asc" }, // * Alphabetize imports
+            "newlines-between": "always", // * always add a blank line between imports
+            "pathGroups": [
+              {
+                "pattern": "react",
+                "group": "builtin",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["react"],
+            "groups": [
+              "type", // * import type
+              "builtin", // * import react
+              "external", // * import from node_modules
+              "internal", // * import from src
+              "parent", // * import from parent folder
+              "sibling", // * import from sibling folder
+              "index", // * import from index
+              "object", // * import from object
+              "unknown"
+            ]
+          }
+        ],
+        "no-else-return": "error",
+        "no-return-await": "error",
+        "semi": ["error", "never"]
+      }
+    }
+  ]
 }
