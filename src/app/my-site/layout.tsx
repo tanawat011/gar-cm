@@ -1,30 +1,17 @@
-import ChildrenWrapper from '@/components/MySiteLayout/ChildrenWrapper'
-import Container from '@/components/MySiteLayout/Container'
-import ContentContainer from '@/components/MySiteLayout/ContentContainer'
-import HeaderContainer from '@/components/MySiteLayout/HeaderContainer'
-import HeaderWrapper from '@/components/MySiteLayout/HeaderWrapper'
-import LogoWrapper from '@/components/MySiteLayout/LogoWrapper'
-import SidebarWrapper from '@/components/MySiteLayout/SidebarWrapper'
+'use client'
+import dynamic from 'next/dynamic'
 
-type MySiteLayoutProps = {
-  children: React.ReactNode;
-};
+const DynamicComponent = dynamic(
+  () => import('@/components/MySiteLayout/Container'),
+  {
+    ssr: false,
+  },
+)
 
-export default function MySiteLayout({ children }: MySiteLayoutProps) {
-  return (
-    <Container>
-      <HeaderContainer>
-        <LogoWrapper>Logo Header</LogoWrapper>
+type MySiteProps = {
+  children: React.ReactNode
+}
 
-        <HeaderWrapper>Header</HeaderWrapper>
-      </HeaderContainer>
-
-      <ContentContainer>
-        <SidebarWrapper>Sidebar</SidebarWrapper>
-
-        <ChildrenWrapper>{children}</ChildrenWrapper>
-      </ContentContainer>
-
-    </Container>
-  )
+export default function MySite({ children }: MySiteProps) {
+  return <DynamicComponent>{children}</DynamicComponent>
 }

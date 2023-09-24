@@ -1,5 +1,5 @@
 import PageDashboard from '@/pages/Dashboard'
 
-export default function MySite() {
+export default function Dashboard() {
   return <PageDashboard />
 }
