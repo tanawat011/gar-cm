@@ -12,9 +12,11 @@ export const Container = () => {
       data-te-sidenav-init
       data-te-sidenav-hidden='false'
       data-te-sidenav-mode-breakpoint-over='0'
-      data-te-sidenav-mode-breakpoint-side='xl'
+      data-te-sidenav-mode-breakpoint-side='sm'
       data-te-sidenav-content='#content'
-      data-te-sidenav-accordion='true'
+      data-te-sidenav-accordion='false'
+      data-te-sidenav-color='dark'
+      data-te-sidenav-mode='side'
     >
       <Brand />
 

@@ -1,4 +1,4 @@
-import { version } from '../../../../package.json'
+import * as pkg from '../../../../package.json'
 
 export const Footer = () => {
   return (
@@ -8,7 +8,7 @@ export const Footer = () => {
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
       >
         <p>Powered by tDev</p>
-        <p>{version}</p>
+        <p>{pkg.version}</p>
       </div>
     </footer>
   )

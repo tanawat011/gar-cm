@@ -13,7 +13,7 @@ type ContainerProps = {
 export default function Container({ children }: ContainerProps) {
   useEffect(() => {
     const init = async () => {
-      const { Datepicker, Input, initTE, Collapse, Dropdown, Sidenav } =
+      const { Datepicker, Input, initTE, Collapse, Dropdown, Sidenav, Ripple } =
         await import('tw-elements')
       initTE({
         Datepicker,
@@ -21,6 +21,7 @@ export default function Container({ children }: ContainerProps) {
         Collapse,
         Dropdown,
         Sidenav,
+        Ripple,
       })
     }
 

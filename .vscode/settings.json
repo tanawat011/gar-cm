@@ -29,7 +29,8 @@
   "eslint.alwaysShowStatus": true,
   "cSpell.words": [
     "camelcase",
-    "Datepicker"
+    "Datepicker",
+    "sidenav"
   ],
   "scss.lint.unknownAtRules": "ignore",
   "tailwindCSS.includeLanguages": {
