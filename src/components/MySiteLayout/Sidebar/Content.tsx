@@ -18,22 +18,37 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
   )
 }
 
+const baseUri = 'my-site'
+
 export const Content = () => {
   const items = [
     {
-      title: 'Website traffic',
+      title: 'Dashboard',
       icon: FaHouseChimneyCrack,
-      link: '#!',
+      link: '/',
+    },
+    {
+      title: 'App',
+      icon: FaLock,
+      link: 'app',
+      subItems: [
+        { title: 'TO-DO', link: 'to-do' },
+        { title: 'Something', link: 'something' },
+      ],
     },
     {
       title: 'Settings',
       icon: FaGears,
-      subItems: [{ title: 'Profile' }, { title: 'Account' }],
+      link: 'setting',
+      subItems: [
+        { title: 'Profile', link: 'profile' },
+        { title: 'Theme', link: 'theme' },
+      ],
     },
     {
-      title: 'Password',
-      icon: FaLock,
-      subItems: [{ title: 'Request password' }, { title: 'Reset password' }],
+      title: 'About ME',
+      icon: FaHouseChimneyCrack,
+      link: 'about-me',
     },
   ]
 
@@ -46,6 +61,7 @@ export const Content = () => {
           icon={item?.icon}
           link={item?.link}
           subItems={item?.subItems}
+          baseUri={baseUri}
         />
       ))}
     </Container>

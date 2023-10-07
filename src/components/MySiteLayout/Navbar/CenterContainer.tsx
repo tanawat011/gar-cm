@@ -17,9 +17,9 @@ export const CenterContainer = () => {
             className='h-7 w-7'
           >
             <path
-              fill-rule='evenodd'
+              fillRule='evenodd'
               d='M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z'
-              clip-rule='evenodd'
+              clipRule='evenodd'
             />
           </svg>
           {/* <!-- Notification counter --> */}
@@ -76,9 +76,9 @@ export const CenterContainer = () => {
             className='h-7 w-7'
           >
             <path
-              fill-rule='evenodd'
+              fillRule='evenodd'
               d='M6 5v1H4.667a1.75 1.75 0 00-1.743 1.598l-.826 9.5A1.75 1.75 0 003.84 19H16.16a1.75 1.75 0 001.743-1.902l-.826-9.5A1.75 1.75 0 0015.333 6H14V5a4 4 0 00-8 0zm4-2.5A2.5 2.5 0 007.5 5v1h5V5A2.5 2.5 0 0010 2.5zM7.5 10a2.5 2.5 0 005 0V8.75a.75.75 0 011.5 0V10a4 4 0 01-8 0V8.75a.75.75 0 011.5 0V10z'
-              clip-rule='evenodd'
+              clipRule='evenodd'
             />
           </svg>
         </a>

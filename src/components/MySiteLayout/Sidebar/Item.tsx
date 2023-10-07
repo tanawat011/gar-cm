@@ -1,6 +1,9 @@
 import type { IconType } from 'react-icons'
 
+import React from 'react'
+
 import clsx from 'clsx'
+import Link from 'next/link'
 import { FaAngleDown } from 'react-icons/fa6'
 
 type ItemProps = {
@@ -9,6 +12,7 @@ type ItemProps = {
   link?: string
   hasParent?: boolean
   subItems?: ItemProps[]
+  baseUri?: string
 }
 
 const defaultClsItem = {
@@ -85,22 +89,47 @@ const _defaultClsAngleIcon = clsx(
   defaultClsAngleIcon.fill.dark,
 )
 
+const CustomLink: React.FC<{
+  children: React.ReactNode
+  link?: string
+  className?: string
+  hasSubItems?: boolean
+}> = ({ link, className, children, hasSubItems }) => {
+  if (link && !hasSubItems) {
+    return (
+      <Link className={className} data-te-sidenav-link-ref href={link}>
+        {children}
+      </Link>
+    )
+  }
+
+  return (
+    <a className={className} data-te-sidenav-link-ref>
+      {children}
+    </a>
+  )
+}
+
 export const Item: React.FC<ItemProps> = ({
   title,
   icon: Icon,
   link,
   hasParent,
   subItems,
+  baseUri,
 }) => {
+  const _baseUri = baseUri && baseUri === '/' ? '' : `/${baseUri}`
+  const _link = link && link === '/' ? '' : link
+  const fullLink = `${_baseUri}/${_link}`.replace(/\/+/g, '/')
   const usingClass =
     hasParent && !subItems ? secondFloorOnlyClass : firstFloorOnlyClass
 
   return (
     <li className='relative'>
-      <a
+      <CustomLink
         className={usingClass}
-        data-te-sidenav-link-ref
-        {...(link && !subItems && { href: link })}
+        link={fullLink}
+        hasSubItems={!!subItems}
       >
         {Icon && !hasParent && (
           <span className={_defaultClsIcon}>
@@ -118,7 +147,7 @@ export const Item: React.FC<ItemProps> = ({
             <FaAngleDown />
           </span>
         )}
-      </a>
+      </CustomLink>
 
       {subItems && (
         <ul
@@ -129,8 +158,9 @@ export const Item: React.FC<ItemProps> = ({
             <Item
               key={subItem.title}
               title={subItem.title}
-              hasParent
               link={subItem.link}
+              baseUri={fullLink}
+              hasParent
             />
           ))}
         </ul>
