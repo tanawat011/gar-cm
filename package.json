@@ -9,7 +9,8 @@
     "lint": "next lint",
     "husky:add": "husky add",
     "pre:commit": "yarn lint && yarn build",
-    "pre:push": "yarn test:cv"
+    "pre:push": "yarn test:cv",
+    "test:cv": "echo 'test:cv'"
   },
   "dependencies": {
     "autoprefixer": "10.4.15",
@@ -26,6 +27,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "clsx": "^2.0.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "^9.0.0",

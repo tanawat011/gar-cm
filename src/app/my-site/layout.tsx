@@ -1,12 +1,9 @@
 'use client'
 import dynamic from 'next/dynamic'
 
-const DynamicComponent = dynamic(
-  () => import('@/components/MySiteLayout/Container'),
-  {
-    ssr: false,
-  },
-)
+const DynamicComponent = dynamic(() => import('@/components/MySiteLayout'), {
+  ssr: false,
+})
 
 type MySiteProps = {
   children: React.ReactNode
