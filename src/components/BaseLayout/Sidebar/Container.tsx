@@ -8,7 +8,7 @@ import { Footer } from './Footer'
 
 export type ContainerProps = ContentProps
 
-export const Container: React.FC<ContainerProps> = ({ items }) => {
+export const Container: React.FC<ContainerProps> = ({ items, onClick }) => {
   return (
     <nav
       id='sidenav-1'
@@ -24,7 +24,7 @@ export const Container: React.FC<ContainerProps> = ({ items }) => {
     >
       <Brand />
 
-      <Content items={items} />
+      <Content items={items} onClick={onClick} />
 
       <Footer />
     </nav>

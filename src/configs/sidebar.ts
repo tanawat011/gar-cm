@@ -1,8 +1,9 @@
 import type { SidebarItem } from '@/types/sidebar'
 
+// NOTE: Please set the Home Page to the first item.
 export const sidebarItems: SidebarItem[] = [
   {
-    title: 'Dashboard',
+    title: 'Home',
     icon: 'FaHouseChimneyCrack',
     link: '/',
   },

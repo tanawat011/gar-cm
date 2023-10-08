@@ -20,21 +20,21 @@ const ContainerContent: React.FC<ContainerProps> = ({ children }) => {
 
 export type ContentProps = {
   items: SidebarItem[]
+  onClick?: (item: SidebarItem) => void
 }
 
 const baseUri = '/'
 
-export const Content: React.FC<ContentProps> = ({ items }) => {
+export const Content: React.FC<ContentProps> = ({ items, onClick }) => {
   return (
     <ContainerContent>
       {items.map((item) => (
         <Item
           key={item.title}
-          title={item.title}
-          icon={item?.icon}
-          link={item?.link}
+          item={item}
           subItems={item?.subItems}
           baseUri={baseUri}
+          onClick={onClick}
         />
       ))}
     </ContainerContent>

@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { Inter } from 'next/font/google'
 import 'tw-elements/dist/css/tw-elements.min.css'
 
+import { ThemeProvider } from '@/contexts/ThemeProvider'
 import '@/styles/css/global.css'
 import '@/styles/css/reset.css'
 
@@ -11,7 +12,7 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' className='dark'>
       <body className={clsx(inter.className, 'dark:bg-zinc-800')}>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   )

@@ -1,7 +1,10 @@
 'use client'
 import type { SidebarProps } from './Sidebar'
+import type { SidebarItem } from '@/types/sidebar'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { RouteProvider } from '@/contexts/RouteProvider'
 
 import { Children } from './Children'
 import { Content } from './Content'
@@ -18,6 +21,8 @@ export default function Container({
   children,
   sidebarItems,
 }: SidebarContainerProps) {
+  const [item, setItem] = useState<SidebarItem | undefined>()
+
   useEffect(() => {
     const init = async () => {
       const { Datepicker, Input, initTE, Collapse, Dropdown, Sidenav, Ripple } =
@@ -35,10 +40,14 @@ export default function Container({
     init()
   }, [])
 
+  const onClick = (_item: SidebarItem) => {
+    setItem(_item)
+  }
+
   return (
-    <>
+    <RouteProvider value={item}>
       <header>
-        <Sidebar items={sidebarItems} />
+        <Sidebar items={sidebarItems} onClick={onClick} />
 
         <Navbar />
       </header>
@@ -48,6 +57,6 @@ export default function Container({
       </Content>
 
       {/* <Footer /> */}
-    </>
+    </RouteProvider>
   )
 }

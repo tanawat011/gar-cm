@@ -1,18 +1,18 @@
+import type { SidebarItem } from '@/types/sidebar'
 
 import React from 'react'
 
 import clsx from 'clsx'
 import Link from 'next/link'
 
-import { Icon, type IconProps } from '@/components/Icon'
+import { Icon } from '@/components/Icon'
 
 type ItemProps = {
-  title: string
-  icon?: IconProps['name']
-  link?: string
-  hasParent?: boolean
-  subItems?: ItemProps[]
+  item: SidebarItem
+  subItems?: SidebarItem[]
   baseUri?: string
+  parent?: SidebarItem
+  onClick?: (item: SidebarItem) => void
 }
 
 const defaultClsItem = {
@@ -90,14 +90,25 @@ const _defaultClsAngleIcon = clsx(
 )
 
 const CustomLink: React.FC<{
+  item: SidebarItem
+  fullLink: string
   children: React.ReactNode
-  link?: string
   className?: string
-  hasSubItems?: boolean
-}> = ({ link, className, children, hasSubItems }) => {
-  if (link && !hasSubItems) {
+  onClick?: (item: SidebarItem) => void
+  fullParent?: SidebarItem
+}> = ({ item, fullLink, className, children, onClick, fullParent }) => {
+  if (fullLink && !item?.subItems) {
     return (
-      <Link className={className} data-te-sidenav-link-ref href={link}>
+      <Link
+        className={className}
+        data-te-sidenav-link-ref
+        href={{
+          pathname: fullLink,
+        }}
+        onFocus={() => {
+          onClick?.(fullParent || item)
+        }}
+      >
         {children}
       </Link>
     )
@@ -111,27 +122,31 @@ const CustomLink: React.FC<{
 }
 
 export const Item: React.FC<ItemProps> = ({
-  title,
-  icon,
-  link,
-  hasParent,
+  item,
   subItems,
   baseUri,
+  parent,
+  onClick,
 }) => {
+  const { link, title, icon } = item
   const _baseUri = baseUri && baseUri === '/' ? '' : `/${baseUri}`
   const _link = link && link === '/' ? '' : link
   const fullLink = `${_baseUri}/${_link}`.replace(/\/+/g, '/')
   const usingClass =
-    hasParent && !subItems ? secondFloorOnlyClass : firstFloorOnlyClass
+    parent && !subItems ? secondFloorOnlyClass : firstFloorOnlyClass
 
   return (
     <li className='relative'>
       <CustomLink
+        item={item}
         className={usingClass}
-        link={fullLink}
-        hasSubItems={!!subItems}
+        fullLink={fullLink}
+        onClick={onClick}
+        fullParent={
+          parent ? { ...parent, subItem: item, subItems: undefined } : undefined
+        }
       >
-        {icon && !hasParent && (
+        {icon && !parent && (
           <span className={_defaultClsIcon}>
             <Icon name={icon} />
           </span>
@@ -157,10 +172,10 @@ export const Item: React.FC<ItemProps> = ({
           {subItems.map((subItem) => (
             <Item
               key={subItem.title}
-              title={subItem.title}
-              link={subItem.link}
+              item={subItem}
               baseUri={fullLink}
-              hasParent
+              parent={item}
+              onClick={onClick}
             />
           ))}
         </ul>
