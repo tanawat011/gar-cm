@@ -18,7 +18,7 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
   )
 }
 
-const baseUri = 'my-site'
+const baseUri = '/'
 
 export const Content = () => {
   const items = [
