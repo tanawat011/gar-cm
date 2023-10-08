@@ -79,3 +79,5 @@
   - can export todo list
   - can import todo list
 - Deploy with vercel or netlify?
+- Loading page
+- Skeleton loading page
