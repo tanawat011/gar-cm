@@ -81,3 +81,10 @@
 - Deploy with vercel or netlify?
 - Loading page
 - Skeleton loading page
+- Setup github action
+- Setup cz-conventional-changelog
+- Setup commitlint
+- Setup auto versioning
+- Setup auto changelog
+- Setup auto release
+- Setup auto deploy
