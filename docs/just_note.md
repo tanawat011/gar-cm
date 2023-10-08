@@ -78,3 +78,4 @@
   - can search todo list
   - can export todo list
   - can import todo list
+- Deploy with vercel or netlify?
