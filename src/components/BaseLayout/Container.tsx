@@ -1,4 +1,6 @@
 'use client'
+import type { SidebarProps } from './Sidebar'
+
 import React, { useEffect } from 'react'
 
 import { Children } from './Children'
@@ -7,11 +9,15 @@ import { Content } from './Content'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
 
-type ContainerProps = {
+type SidebarContainerProps = {
   children: React.ReactNode
+  sidebarItems: SidebarProps['items']
 }
 
-export default function Container({ children }: ContainerProps) {
+export default function Container({
+  children,
+  sidebarItems,
+}: SidebarContainerProps) {
   useEffect(() => {
     const init = async () => {
       const { Datepicker, Input, initTE, Collapse, Dropdown, Sidenav, Ripple } =
@@ -32,7 +38,7 @@ export default function Container({ children }: ContainerProps) {
   return (
     <>
       <header>
-        <Sidebar />
+        <Sidebar items={sidebarItems} />
 
         <Navbar />
       </header>

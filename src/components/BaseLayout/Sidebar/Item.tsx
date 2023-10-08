@@ -1,14 +1,14 @@
-import type { IconType } from 'react-icons'
 
 import React from 'react'
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import { FaAngleDown } from 'react-icons/fa6'
+
+import { Icon, type IconProps } from '@/components/Icon'
 
 type ItemProps = {
   title: string
-  icon?: IconType
+  icon?: IconProps['name']
   link?: string
   hasParent?: boolean
   subItems?: ItemProps[]
@@ -112,7 +112,7 @@ const CustomLink: React.FC<{
 
 export const Item: React.FC<ItemProps> = ({
   title,
-  icon: Icon,
+  icon,
   link,
   hasParent,
   subItems,
@@ -131,9 +131,9 @@ export const Item: React.FC<ItemProps> = ({
         link={fullLink}
         hasSubItems={!!subItems}
       >
-        {Icon && !hasParent && (
+        {icon && !hasParent && (
           <span className={_defaultClsIcon}>
-            <Icon />
+            <Icon name={icon} />
           </span>
         )}
 
@@ -144,7 +144,7 @@ export const Item: React.FC<ItemProps> = ({
             className={_defaultClsAngleIcon}
             data-te-sidenav-rotate-icon-ref
           >
-            <FaAngleDown />
+            <Icon name='FaAngleDown' />
           </span>
         )}
       </CustomLink>

@@ -1,10 +1,14 @@
+import type { ContentProps } from './Content'
+
 import React from 'react'
 
 import { Brand } from './Brand'
 import { Content } from './Content'
 import { Footer } from './Footer'
 
-export const Container = () => {
+export type ContainerProps = ContentProps
+
+export const Container: React.FC<ContainerProps> = ({ items }) => {
   return (
     <nav
       id='sidenav-1'
@@ -20,7 +24,7 @@ export const Container = () => {
     >
       <Brand />
 
-      <Content />
+      <Content items={items} />
 
       <Footer />
     </nav>
