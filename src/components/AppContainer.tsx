@@ -2,9 +2,9 @@ import clsx from 'clsx'
 import { Inter } from 'next/font/google'
 import 'tw-elements/dist/css/tw-elements.min.css'
 
+import '@/assets/css/global.css'
+import '@/assets/css/reset.css'
 import { ThemeProvider } from '@/contexts/ThemeProvider'
-import '@/styles/css/global.css'
-import '@/styles/css/reset.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

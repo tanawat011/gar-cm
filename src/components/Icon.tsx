@@ -6,6 +6,8 @@ import {
   FaLock,
   FaGears,
   FaAngleDown,
+  FaFile,
+  FaSignal,
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
@@ -14,6 +16,8 @@ const iconAllowed = {
   FaLock,
   FaGears,
   FaAngleDown,
+  FaFile,
+  FaSignal,
 }
 
 export type IconProps = {
