@@ -3,6 +3,8 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes'
 
 import '../src/assets/css/global.css'
 
+import DarkTheme from './darkTheme'
+
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -12,22 +14,27 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-  },
-}
-
-export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-}
-
-export const decorators = [
-  withThemeByDataAttribute({
-    themes: {
-      light: 'light',
-      dark: 'dark',
+    docs: {
+      theme: DarkTheme,
     },
-    defaultTheme: 'dark',
-    attributeName: 'data-mode',
-  }),
-]
+    themes: {
+      default: 'dark',
+      list: [
+        { name: 'dark', class: 'dark', color: '#777777' },
+        { name: 'light', class: 'light', color: '#ffffff' },
+      ],
+    },
+  },
+  decorators: [
+    withThemeByDataAttribute({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+      },
+      defaultTheme: 'dark',
+      attributeName: 'data-mode',
+    }),
+  ],
+}
 
 export default preview
