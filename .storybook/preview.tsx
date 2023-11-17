@@ -63,7 +63,7 @@ const preview: Preview = {
         dark: 'dark',
       },
       defaultTheme: 'dark',
-      attributeName: 'tw-theme-mode',
+      attributeName: 'class',
     }),
   ],
   globalTypes: {
