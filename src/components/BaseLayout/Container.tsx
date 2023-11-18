@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Avatar,
@@ -47,7 +47,28 @@ export default function Container({ children }: SidebarContainerProps) {
       .style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    window.addEventListener('resize', setupChildrenContainerHeight)
+
+    // NOTE: for mobile or IPad device
+    window.addEventListener(
+      'orientationchange',
+      setupChildrenContainerHeight,
+      false,
+    )
+
+    return () => {
+      window.removeEventListener('resize', setupChildrenContainerHeight)
+
+      // NOTE: for mobile or IPad device
+      window.removeEventListener(
+        'orientationchange',
+        setupChildrenContainerHeight,
+      )
+    }
+  }, [])
+
+  useEffect(() => {
     setupChildrenContainerHeight()
   }, [isLoading])
 
