@@ -10,7 +10,7 @@ import '@/assets/css/reset.css'
 export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
-      <body className='dark:bg-[#051139] font-monaspace-neon'>
+      <body className='font-monaspace-neon'>
         <time dateTime={new Date().toISOString()} suppressHydrationWarning />
 
         <NextUIProvider>

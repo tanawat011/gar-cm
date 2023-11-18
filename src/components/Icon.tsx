@@ -3,26 +3,30 @@ import React from 'react'
 // NOTE: Import all icons from react-icons
 import {
   FaAngleDown,
-  FaBell,
   FaFile,
   FaGear,
   FaGears,
   FaHouseChimneyCrack,
   FaLock,
   FaMagnifyingGlass,
+  FaRegBell,
+  FaRegMoon,
+  FaRegSun,
   FaSignal,
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
 const iconAllowed = {
   FaAngleDown,
-  FaBell,
   FaFile,
   FaGear,
   FaGears,
   FaHouseChimneyCrack,
   FaLock,
   FaMagnifyingGlass,
+  FaRegBell,
+  FaRegMoon,
+  FaRegSun,
   FaSignal,
 }
 

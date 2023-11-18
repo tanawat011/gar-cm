@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 import { nextui } from '@nextui-org/react'
+import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
   darkMode: 'class',
@@ -12,6 +13,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        'cetacean-blue': '#070d2b',
+        'rich-black': '#000312',
+        gunmetal: '#2e313a',
+      },
       fontFamily: {
         ['monaspace-argon']: ['Monaspace Argon', 'monospace', 'sans-serif'],
         ['monaspace-krypton']: ['Monaspace Krypton', 'monospace', 'sans-serif'],
@@ -21,7 +27,22 @@ const config: Config = {
       },
     },
   },
-  plugins: [nextui()],
+  plugins: [
+    nextui(),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.bg-base-gradient-sidebar': {
+          '@apply bg-gradient-to-l from-cetacean-blue to-rich-black': {},
+        },
+        '.bg-base-gradient-navbar': {
+          '@apply bg-gradient-to-r from-cetacean-blue to-rich-black': {},
+        },
+        '.bg-base-gradient-content': {
+          '@apply bg-gradient-to-r from-cetacean-blue to-rich-black': {},
+        },
+      })
+    }),
+  ],
 }
 
 export default config
