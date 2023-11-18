@@ -17,6 +17,7 @@ const config: Config = {
         'cetacean-blue': '#070d2b',
         'rich-black': '#000312',
         gunmetal: '#2e313a',
+        'charleston-green': '#282828',
       },
       fontFamily: {
         ['monaspace-argon']: ['Monaspace Argon', 'monospace', 'sans-serif'],
