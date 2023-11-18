@@ -1,10 +1,10 @@
 'use client'
 import { usePathname } from 'next/navigation'
 
-const JustInitPage = () => {
+const BeginPage = () => {
   const pathname = usePathname()
 
   return <div>App {pathname}</div>
 }
 
-export default JustInitPage
+export default BeginPage

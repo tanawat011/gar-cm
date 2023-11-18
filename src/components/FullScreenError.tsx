@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect } from 'react'
 
 type ErrorProps = {
@@ -5,7 +7,7 @@ type ErrorProps = {
   reset: () => void
 }
 
-export const Error: React.FC<ErrorProps> = ({ error, reset }) => {
+export const FullScreenError: React.FC<ErrorProps> = ({ error, reset }) => {
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.error(error)

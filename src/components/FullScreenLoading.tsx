@@ -2,7 +2,7 @@ import Lottie from 'lottie-react'
 
 import lottieCat from '@/assets/json/lottieCat.json'
 
-export const Loading = () => {
+export const FullScreenLoading = () => {
   return (
     <Lottie
       animationData={lottieCat}

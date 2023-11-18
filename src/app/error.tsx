@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 import * as React from 'react'
 
-import { Error as ErrorPage } from '@/components/BaseLayout/Error'
+import { FullScreenError } from '@/components/FullScreenError'
 import { METADATA_ERROR } from '@/constants'
 
 export const metadata: Metadata = METADATA_ERROR
@@ -16,5 +16,5 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
-  return <ErrorPage error={error} reset={reset} />
+  return <FullScreenError error={error} reset={reset} />
 }

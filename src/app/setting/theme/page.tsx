@@ -1,5 +1,5 @@
-import JustInitPage from '@/pages/JustInitPage'
+import BeginPage from '@/pages/BeginPage'
 
 export default function Page() {
-  return <JustInitPage />
+  return <BeginPage />
 }

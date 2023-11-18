@@ -2,12 +2,12 @@ import type { LANG } from '@/constants'
 
 import React from 'react'
 
-export type CountryFlagIconProps = {
+export type IconCountryFlagProps = {
   lang: (typeof LANG)[number]
   className?: string
 }
 
-export const CountryFlagIcon: React.FC<CountryFlagIconProps> = ({
+export const IconCountryFlag: React.FC<IconCountryFlagProps> = ({
   lang,
   className,
 }) => {

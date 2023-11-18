@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { AppContainer } from '@/components/AppContainer'
-import BaseLayout from '@/components/BaseLayout'
+import CoreLayout from '@/components/CoreLayout'
 import { METADATA_BASE } from '@/constants'
 
 type AppProps = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = METADATA_BASE
 export default function RootLayout({ children }: AppProps) {
   return (
     <AppContainer>
-      <BaseLayout>{children}</BaseLayout>
+      <CoreLayout>{children}</CoreLayout>
     </AppContainer>
   )
 }
