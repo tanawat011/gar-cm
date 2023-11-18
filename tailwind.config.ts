@@ -28,7 +28,15 @@ const config: Config = {
     },
   },
   plugins: [
-    nextui(),
+    nextui({
+      themes: {
+        dark: {
+          colors: {
+            content1: '#282828',
+          },
+        },
+      },
+    }),
     plugin(({ addUtilities }) => {
       addUtilities({
         '.bg-base-gradient-sidebar': {
@@ -40,6 +48,8 @@ const config: Config = {
         '.bg-base-gradient-content': {
           '@apply bg-gradient-to-r from-cetacean-blue to-rich-black': {},
         },
+        '.scrolling-touch': { '-webkit-overflow-scrolling': 'touch' },
+        '.scrolling-auto': { '-webkit-overflow-scrolling': 'auto' },
       })
     }),
   ],

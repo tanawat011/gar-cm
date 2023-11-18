@@ -2,7 +2,9 @@ import React from 'react'
 
 // NOTE: Import all icons from react-icons
 import {
+  FaAlignJustify,
   FaAngleDown,
+  FaBars,
   FaFile,
   FaGear,
   FaGears,
@@ -17,7 +19,9 @@ import {
 
 // NOTE: Add icon to this object
 const iconAllowed = {
+  FaAlignJustify,
   FaAngleDown,
+  FaBars,
   FaFile,
   FaGear,
   FaGears,
