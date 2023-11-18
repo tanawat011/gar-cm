@@ -33,7 +33,9 @@ export default function Container({ children }: SidebarContainerProps) {
 
   return (
     <div className='flex'>
-      <div className='dark:bg-[#111c44]'>Sidebar</div>
+      <div className='dark:bg-[#111c44]'>
+        <div className='w-60'>Sidebar</div>
+      </div>
 
       <div>
         <div
