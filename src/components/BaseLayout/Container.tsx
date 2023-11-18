@@ -175,7 +175,7 @@ export default function Container({ children }: SidebarContainerProps) {
         <div
           className={clsx(
             'dark:bg-base-gradient-content px-6 pt-4 pb-6',
-            isMobileDevice ? 'mt-[--navbar-h]' : 'mt-[--navbar-h] lg:mt-0',
+            isMobileDevice ? 'mt-[--navbar-h]' : 'mt-0',
           )}
         >
           {children}
