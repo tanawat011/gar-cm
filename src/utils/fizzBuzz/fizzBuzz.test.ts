@@ -1,6 +1,6 @@
 import { fizzBuzz } from './fizzBuzz'
 
-describe('FizzBuzz', () => {
+describe('fizzBuzz', () => {
   test.each([
     [1, 1],
     [2, 2],

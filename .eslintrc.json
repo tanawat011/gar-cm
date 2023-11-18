@@ -139,6 +139,7 @@
         "no-else-return": "error",
         "no-return-await": "error",
         "object-curly-spacing": ["error", "always"],
+        "react-hooks/exhaustive-deps": "off",
         "semi": ["error", "never"]
       }
     }
