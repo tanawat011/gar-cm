@@ -3,9 +3,7 @@
 import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
-import '@/assets/css/font.css'
 import '@/assets/css/global.css'
-import '@/assets/css/reset.css'
 
 export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   return (

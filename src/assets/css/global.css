@@ -1,4 +1,7 @@
+@import './reset';
+@import './font';
 @import './tailwind';
+@import 'node_modules/flag-icons/css/flag-icons.min.css';
 
 :root {
   --foreground-rgb: 0, 0, 0;

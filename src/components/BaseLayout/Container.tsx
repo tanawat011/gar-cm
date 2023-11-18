@@ -13,6 +13,8 @@ import {
 
 import { Icon } from '@/components/Icon'
 
+import { CountryFlagIcon } from '../CountryFlagIcon'
+
 type SidebarContainerProps = {
   children: React.ReactNode
 }
@@ -56,6 +58,8 @@ export default function Container({ children }: SidebarContainerProps) {
             <Icon name='FaRegBell' className='cursor-pointer mx-3' />
 
             <Icon name='FaRegMoon' className='cursor-pointer mx-3' />
+
+            <CountryFlagIcon lang='th' className='cursor-pointer mx-3' />
 
             <Dropdown placement='bottom-end'>
               <DropdownTrigger>
