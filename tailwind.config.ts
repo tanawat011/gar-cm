@@ -36,6 +36,11 @@ const config: Config = {
             content1: '#282828',
           },
         },
+        light: {
+          colors: {
+            content1: '#d1d3d7',
+          },
+        },
       },
     }),
     plugin(({ addUtilities }) => {

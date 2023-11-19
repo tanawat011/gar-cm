@@ -9,8 +9,10 @@ import {
   FaGear,
   FaGears,
   FaHouseChimneyCrack,
+  FaIndent,
   FaLock,
   FaMagnifyingGlass,
+  FaOutdent,
   FaRegBell,
   FaRegMoon,
   FaRegSun,
@@ -26,8 +28,10 @@ export const ICON_ALLOWED = {
   FaGear,
   FaGears,
   FaHouseChimneyCrack,
+  FaIndent,
   FaLock,
   FaMagnifyingGlass,
+  FaOutdent,
   FaRegBell,
   FaRegMoon,
   FaRegSun,
@@ -35,16 +39,17 @@ export const ICON_ALLOWED = {
 }
 
 export type IconProps = {
+  id?: string
   name: keyof typeof ICON_ALLOWED
   className?: string
   onClick?: () => void
 }
 
-export const Icon: React.FC<IconProps> = ({ name, className, onClick }) => {
+export const Icon: React.FC<IconProps> = ({ id, name, className, onClick }) => {
   const IconComponent = ICON_ALLOWED[name]
 
   return (
-    <div className={className} onClick={onClick}>
+    <div id={id} className={className} onClick={onClick}>
       <IconComponent />
     </div>
   )

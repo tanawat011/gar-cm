@@ -8,24 +8,25 @@ type ErrorProps = {
 }
 
 export const FullScreenError: React.FC<ErrorProps> = ({ error, reset }) => {
+  const onClick = () => {
+    reset()
+
+    // NOTE: temporary
+    window.location.replace('/')
+  }
+
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.error(error)
   }, [error])
 
   return (
-    <main>
-      <section>
-        <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
-          <h1 className='mt-8 text-4xl md:text-6xl'>
-            Oops, something went wrong!
-          </h1>
-          <p>{error.message}</p>
-          <button onClick={reset} className='mt-4'>
-            Try again
-          </button>
-        </div>
-      </section>
-    </main>
+    <div className='fixed top-0 left-0 w-screen h-screen bg-white dark:bg-base-gradient-content flex flex-col items-center justify-center text-center'>
+      <h1 className='mt-8 text-4xl md:text-6xl'>Oops, something went wrong!</h1>
+      <p>{error.message}</p>
+      <button onClick={onClick} className='mt-4'>
+        Try again
+      </button>
+    </div>
   )
 }
