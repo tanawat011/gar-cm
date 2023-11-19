@@ -1,13 +1,7 @@
 import type { LANG as ALL_LANG } from '@/constants'
 
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from '@nextui-org/react'
-
 import { IconCountryFlag } from '@/components/IconCountryFlag'
+import { DropdownInput } from '@/components/Input'
 import { LANG_LABEL } from '@/constants'
 import { useLang } from '@/hooks/useLang'
 
@@ -17,32 +11,20 @@ export const ToggleLang = () => {
   const { lang, toggleLang } = useLang()
 
   return (
-    <Dropdown placement='bottom-end'>
-      <DropdownTrigger>
-        <div className='cursor-pointer'>
-          <IconCountryFlag lang={lang} className='mx-3' />
-        </div>
-      </DropdownTrigger>
-
-      <DropdownMenu
-        aria-label='Lang Actions'
-        variant='flat'
-        disallowEmptySelection
-        selectionMode='single'
-        selectedKeys={[lang]}
-        onAction={(key) => toggleLang(key as LANG)}
-      >
-        {LANG_LABEL.map(({ _, label }) => (
-          <DropdownItem
-            key={_}
-            startContent={
-              <IconCountryFlag lang={_ as never} className='mx-3' />
-            }
-          >
-            {label}
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+    <DropdownInput
+      ariaLabel='Lang Actions'
+      mode='single'
+      disallowEmptySelection
+      selectedKeys={[lang]}
+      onSelected={(key) => toggleLang(key as LANG)}
+      items={[...LANG_LABEL].map((allLang) => ({
+        ...allLang,
+        startContent: <IconCountryFlag lang={allLang.key} className='mx-3' />,
+      }))}
+    >
+      <div className='cursor-pointer'>
+        <IconCountryFlag lang={lang} className='mx-3' />
+      </div>
+    </DropdownInput>
   )
 }

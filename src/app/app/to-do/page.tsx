@@ -11,6 +11,7 @@ export default function ToDo() {
       <p>Todo List Page</p>
       <p>I18N</p>
       <p>Light Theme</p>
+      <p>Storybook</p>
       <p>Login Page</p>
       <p>Register Page</p>
       <p>Remember Password Page</p>

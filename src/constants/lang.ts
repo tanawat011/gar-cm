@@ -1,15 +1,15 @@
 export const LANG = {
-  TH: 'th',
   EN: 'en',
+  TH: 'th',
 } as const
 
 export const LANG_LABEL = [
   {
-    _: LANG.TH,
-    label: 'ไทย',
+    key: LANG.EN,
+    label: 'English',
   },
   {
-    _: LANG.EN,
-    label: 'English',
+    key: LANG.TH,
+    label: 'ไทย',
   },
 ] as const

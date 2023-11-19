@@ -14,7 +14,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
     <div
       id='navbar'
       className={clsx(
-        'dark:bg-base-gradient-navbar dark:border-gunmetal border-solid border-b flex justify-between w-full top-0',
+        'bg-white dark:bg-base-gradient-navbar dark:border-gunmetal border-solid border-b flex justify-between w-full top-0',
         isMobileDevice ? 'fixed' : 'sticky',
       )}
     >

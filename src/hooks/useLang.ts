@@ -4,15 +4,17 @@ import { LANG as ALL_LANG } from '@/constants'
 
 type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 
+const defaultLang = ALL_LANG.EN
+
 export const useLang = () => {
-  const [lang, setLang] = useState<LANG>(ALL_LANG.TH)
+  const [lang, setLang] = useState<LANG>(defaultLang)
 
   const setupLang = (_lang?: LANG) => {
-    setLang(_lang || ALL_LANG.TH)
+    setLang(_lang || defaultLang)
   }
 
   const toggleLang = (_lang?: LANG) => {
-    localStorage.setItem('lang', _lang || ALL_LANG.TH)
+    localStorage.setItem('lang', _lang || defaultLang)
     setupLang(_lang)
   }
 

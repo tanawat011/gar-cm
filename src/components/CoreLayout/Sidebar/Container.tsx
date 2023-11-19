@@ -12,7 +12,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   return (
     <div
       className={clsx(
-        'dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r',
+        'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r',
         isMobileDevice ? 'hidden' : 'hidden lg:block',
       )}
     >
