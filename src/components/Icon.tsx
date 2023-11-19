@@ -18,7 +18,7 @@ import {
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
-const iconAllowed = {
+export const ICON_ALLOWED = {
   FaAlignJustify,
   FaAngleDown,
   FaBars,
@@ -35,15 +35,16 @@ const iconAllowed = {
 }
 
 export type IconProps = {
-  name: keyof typeof iconAllowed
+  name: keyof typeof ICON_ALLOWED
   className?: string
+  onClick?: () => void
 }
 
-export const Icon: React.FC<IconProps> = ({ name, className }) => {
-  const IconComponent = iconAllowed[name]
+export const Icon: React.FC<IconProps> = ({ name, className, onClick }) => {
+  const IconComponent = ICON_ALLOWED[name]
 
   return (
-    <div className={className}>
+    <div className={className} onClick={onClick}>
       <IconComponent />
     </div>
   )

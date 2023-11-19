@@ -8,20 +8,11 @@ import {
 } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
-import { IconCountryFlag } from '@/components/IconCountryFlag'
+
+import { ToggleLang } from './ToggleLang'
+import { ToggleTheme } from './ToggleTheme'
 
 export const RightContainer = () => {
-  const langs = [
-    {
-      lang: 'th',
-      label: 'ไทย',
-    },
-    {
-      lang: 'en',
-      label: 'English',
-    },
-  ]
-
   return (
     <div className='mr-6 py-4 flex items-center'>
       <Input
@@ -42,32 +33,10 @@ export const RightContainer = () => {
           name='FaRegBell'
           className='cursor-pointer mx-3 hover:opacity-80'
         />
-        <Icon
-          name='FaRegMoon'
-          className='cursor-pointer mx-3 hover:opacity-80'
-        />
-
-        <Dropdown placement='bottom-end'>
-          <DropdownTrigger>
-            <div className='cursor-pointer'>
-              <IconCountryFlag lang='th' className='mx-3' />
-            </div>
-          </DropdownTrigger>
-
-          <DropdownMenu aria-label='Profile Actions' variant='flat'>
-            {langs.map(({ lang, label }) => (
-              <DropdownItem
-                key={lang}
-                startContent={
-                  <IconCountryFlag lang={lang as never} className='mx-3' />
-                }
-              >
-                {label}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
+        <ToggleTheme />
+        <ToggleLang />
       </div>
+
       <Dropdown placement='bottom-end'>
         <DropdownTrigger>
           <Avatar

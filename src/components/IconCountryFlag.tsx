@@ -3,7 +3,7 @@ import type { LANG } from '@/constants'
 import React from 'react'
 
 export type IconCountryFlagProps = {
-  lang: (typeof LANG)[number]
+  lang: (typeof LANG)[keyof typeof LANG]
   className?: string
 }
 

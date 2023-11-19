@@ -14,7 +14,7 @@ export const Container: React.FC<ContainerProps> = ({
   return (
     <div
       className={clsx(
-        'overflow-y-scroll scrolling-touch w-full',
+        'overflow-y-scroll scrolling-touch w-full bg-base-gradient-content',
         !isMobileDevice && 'scrolling-auto h-screen',
       )}
     >
