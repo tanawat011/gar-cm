@@ -20,7 +20,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
     >
       <LeftContainer isMobileDevice={isMobileDevice} />
 
-      <RightContainer />
+      <RightContainer isMobileDevice={isMobileDevice} />
     </div>
   )
 }

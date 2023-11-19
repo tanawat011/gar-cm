@@ -13,7 +13,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
     <div
       className={clsx(
         'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r',
-        isMobileDevice ? 'hidden' : 'hidden lg:block',
+        isMobileDevice ? 'hidden' : 'hidden md:block',
       )}
     >
       <Content items={[]} />

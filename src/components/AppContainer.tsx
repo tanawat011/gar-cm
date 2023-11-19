@@ -9,7 +9,7 @@ import { THEME } from '@/constants'
 export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
-      <body className='font-monaspace-neon bg-white bg-base-gradient-content text-black dark:text-white'>
+      <body className='w-full h-full font-monaspace-neon bg-white dark:bg-base-gradient-content text-black dark:text-white'>
         <time dateTime={new Date().toISOString()} suppressHydrationWarning />
 
         <NextUIProvider>

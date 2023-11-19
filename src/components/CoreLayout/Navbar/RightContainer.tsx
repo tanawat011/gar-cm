@@ -1,18 +1,26 @@
-import { Input, User } from '@nextui-org/react'
+import React from 'react'
+
+import { Input } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
-import { DropdownInput } from '@/components/Input'
 
+import { Profile } from './Profile'
 import { ToggleLang } from './ToggleLang'
 import { ToggleTheme } from './ToggleTheme'
 
-export const RightContainer = () => {
+type RightContainerProps = {
+  isMobileDevice?: boolean
+}
+
+export const RightContainer: React.FC<RightContainerProps> = ({
+  isMobileDevice,
+}) => {
   return (
     <div className='mr-6 py-4 flex items-center'>
       <Input
         size='sm'
         placeholder='Quick Search...'
-        className='mx-2 w-60 hidden lg:block'
+        className='mx-2 max-w-60 hidden lg:block'
         startContent={<Icon name='FaMagnifyingGlass' />}
         classNames={{
           inputWrapper:
@@ -31,38 +39,7 @@ export const RightContainer = () => {
         <ToggleLang />
       </div>
 
-      <DropdownInput
-        ariaLabel='Profile Actions'
-        mode='none'
-        items={[
-          {
-            key: 'settings',
-            label: 'My Settings',
-          },
-          {
-            key: 'help_and_feedback',
-            label: 'Help & Feedback',
-          },
-          {
-            key: 'logout',
-            label: 'Log Out',
-          },
-        ]}
-      >
-        <User
-          name='Tanawat P'
-          description='tanawat.p@gmail.com'
-          className='cursor-pointer mx-3'
-          avatarProps={{
-            isBordered: true,
-            as: 'button',
-            className: 'transition-transform',
-            color: 'success',
-            size: 'sm',
-            src: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
-          }}
-        />
-      </DropdownInput>
+      <Profile isMobileDevice={isMobileDevice} />
     </div>
   )
 }
