@@ -17,11 +17,21 @@ export const Content: React.FC<ContentProps> = () => {
       <p>Sidebar</p>
       <br />
       <br />
+
       <p className='underline'>
         <Link href={'/'}>Dashboard</Link>
       </p>
+
       <p className='underline'>
         <Link href={'/app/to-do'}>Road Map</Link>
+      </p>
+
+      <p className='underline'>
+        <Link href={'/error'}>Example Error Page</Link>
+      </p>
+
+      <p className='underline'>
+        <Link href={'/not-found'}>Example Not-Found Page</Link>
       </p>
     </div>
   )

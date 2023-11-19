@@ -1,6 +1,9 @@
 export default function ToDo() {
   return (
     <div>
+      <p className='line-through'>NextUI</p>
+      <p className='line-through'>Core Layout</p>
+      <p className='line-through'>Dark Theme</p>
       <p className='line-through'>Toggle Theme</p>
       <p className='line-through'>Toggle Language</p>
       <p>Sidebar Logo</p>
