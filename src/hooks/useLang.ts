@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react'
 
+import { useDispatch } from 'react-redux'
+
 import { LANG as ALL_LANG } from '@/constants'
+import { setLang as setLangSetting } from '@/store/appSettingSlice'
 
 type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 
+const storageName = 'lang'
 const defaultLang = ALL_LANG.EN
 
 export const useLang = () => {
+  const dispatch = useDispatch()
   const [lang, setLang] = useState<LANG>(defaultLang)
 
   const setupLang = (_lang?: LANG) => {
     setLang(_lang || defaultLang)
+    dispatch(setLangSetting(_lang || defaultLang))
   }
 
   const toggleLang = (_lang?: LANG) => {
-    localStorage.setItem('lang', _lang || defaultLang)
+    localStorage.setItem(storageName, _lang || defaultLang)
     setupLang(_lang)
   }
 
   useEffect(() => {
-    const localLang = localStorage.getItem('lang') as LANG
+    const localLang = localStorage.getItem(storageName) as LANG
 
     setupLang(localLang)
   }, [])

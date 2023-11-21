@@ -9,6 +9,8 @@ export default function ToDo() {
       <p className='line-through'>Toggle Language</p>
       <p className='line-through'>Support Mobile Device(IOS & ANDROID)</p>
       <p className='line-through'>Support IPad & Tablet Device</p>
+      <p className='line-through'>Redux & Redux Toolkit</p>
+      <p>Constant Local Storage Name Title</p>
       <p>Sidebar Toggle</p>
       <p>Sidebar Minimize</p>
       <p>Mobile Device Option Setting</p>

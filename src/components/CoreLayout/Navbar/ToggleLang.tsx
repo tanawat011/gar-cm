@@ -3,7 +3,7 @@ import type { LANG as ALL_LANG } from '@/constants'
 import { IconCountryFlag } from '@/components/IconCountryFlag'
 import { DropdownInput } from '@/components/Input'
 import { LANG_LABEL } from '@/constants'
-import { useLang } from '@/hooks/useLang'
+import { useLang } from '@/hooks'
 
 type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 

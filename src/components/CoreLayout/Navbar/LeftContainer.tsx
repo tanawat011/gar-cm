@@ -1,47 +1,12 @@
-import { useEffect, useState } from 'react'
-
-import clsx from 'clsx'
-
 import { Icon } from '@/components/Icon'
+import { useSidebar } from '@/hooks'
 
 type ContainerProps = {
   isMobileDevice?: boolean
 }
 
 export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
-  const [isCollapse, setIsCollapse] = useState<boolean>()
-
-  const toggleSidebar = (collapse?: boolean) => {
-    localStorage.setItem('sidebarCollapse', `${!!collapse}`)
-    setIsCollapse(collapse)
-  }
-
-  const setupSidebarType = () => {
-    const elToggleIcon = document.getElementById('sidebar-toggle')
-    const display = elToggleIcon?.computedStyleMap().get('display')
-
-    if (display && display.toString() === 'block') {
-      return localStorage.setItem('sidebarType', 'drawer')
-    }
-
-    localStorage.setItem('sidebarType', 'normal')
-  }
-
-  useEffect(() => {
-    const collapse = localStorage.getItem('sidebarCollapse')
-
-    setIsCollapse(collapse === 'true')
-  }, [])
-
-  useEffect(() => {
-    if (isMobileDevice) {
-      localStorage.setItem('sidebarType', 'drawer')
-    } else {
-      window.addEventListener('resize', setupSidebarType)
-
-      return () => window.removeEventListener('resize', setupSidebarType)
-    }
-  }, [])
+  const { isCollapse, toggleSidebarCollapse } = useSidebar(isMobileDevice)
 
   const DesktopIcon = () => {
     return (
@@ -50,21 +15,21 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
           <Icon
             name='FaIndent'
             className='cursor-pointer mx-3 hidden md:block'
-            onClick={() => toggleSidebar()}
+            onClick={() => toggleSidebarCollapse()}
           />
         ) : (
           <Icon
             name='FaOutdent'
             className='cursor-pointer mx-3 hidden md:block'
-            onClick={() => toggleSidebar(true)}
+            onClick={() => toggleSidebarCollapse(true)}
           />
         )}
 
         <Icon
-          id='sidebar-toggle'
+          id='sidebar-toggle-icon-drawer'
           name='FaBars'
           className='cursor-pointer mx-3 block md:hidden'
-          onClick={() => toggleSidebar(!isCollapse)}
+          onClick={() => toggleSidebarCollapse(!isCollapse)}
         />
       </>
     )
@@ -75,7 +40,7 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
       <Icon
         name='FaBars'
         className={'cursor-pointer mx-3'}
-        onClick={() => toggleSidebar(!isCollapse)}
+        onClick={() => toggleSidebarCollapse(!isCollapse)}
       />
     )
   }
