@@ -16,7 +16,7 @@ const initialState: AppSettingState = {
   theme: 'dark',
   lang: 'en',
   sidebarCollapsed: false,
-  sidebarType: 'normal',
+  sidebarType: 'full',
 }
 
 export const appSettingSlice = createSlice({

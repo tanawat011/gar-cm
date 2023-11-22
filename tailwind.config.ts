@@ -6,9 +6,10 @@ import plugin from 'tailwindcss/plugin'
 const config: Config = {
   darkMode: 'class',
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{ts,tsx}',
+    './src/components/**/*.{ts,tsx}',
+    './src/pages/**/*.{ts,tsx}',
+    './src/utils/**/*.{ts,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {

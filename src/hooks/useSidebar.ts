@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { SIDEBAR_TYPE as ALL_SIDEBAR_TYPE } from '@/constants'
 import {
@@ -10,16 +10,12 @@ import {
 
 type SIDEBAR_TYPE = (typeof ALL_SIDEBAR_TYPE)[keyof typeof ALL_SIDEBAR_TYPE]
 
-const storageNameSidebarCollapsed = 'sidebarCollapsed'
 const storageNameSidebarType = 'sidebarType'
 const defaultSidebarCollapsed = false
-const defaultSidebarType = ALL_SIDEBAR_TYPE.NORMAL
+const defaultSidebarType = ALL_SIDEBAR_TYPE.FULL
 
 export const useSidebar = (isMobileDevice?: boolean) => {
   const dispatch = useDispatch()
-  const { sidebarType: currSidebarType } = useSelector(
-    (state: any) => state.appSetting,
-  )
   const [isCollapse, setIsCollapse] = useState<boolean>(defaultSidebarCollapsed)
   const [sidebarType, setSidebarType] =
     useState<SIDEBAR_TYPE>(defaultSidebarType)
@@ -35,10 +31,6 @@ export const useSidebar = (isMobileDevice?: boolean) => {
   }
 
   const toggleSidebarCollapse = (_isCollapse?: boolean) => {
-    localStorage.setItem(
-      storageNameSidebarCollapsed,
-      `${_isCollapse || defaultSidebarCollapsed}`,
-    )
     setupSidebarCollapse(_isCollapse)
   }
 
@@ -51,13 +43,11 @@ export const useSidebar = (isMobileDevice?: boolean) => {
   }
 
   useEffect(() => {
-    const localSidebarCollapsed =
-      localStorage.getItem(storageNameSidebarCollapsed) === 'true'
     const localSidebarType = localStorage.getItem(
       storageNameSidebarType,
     ) as SIDEBAR_TYPE
 
-    setupSidebarCollapse(localSidebarCollapsed)
+    setupSidebarCollapse(false)
     setupSidebarType(localSidebarType)
   }, [])
 
@@ -70,7 +60,7 @@ export const useSidebar = (isMobileDevice?: boolean) => {
       toggleSidebarType('drawer')
     } else {
       toggleSidebarCollapse(false)
-      toggleSidebarType('normal')
+      toggleSidebarType('full')
     }
   }
 

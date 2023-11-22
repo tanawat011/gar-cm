@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import { useSelector } from 'react-redux'
 
+import { toggleOnSidebarContainer } from '@/utils/sidebar'
+
 import { Content } from './Content'
 
 type ContainerProps = {
@@ -15,21 +17,18 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   )
 
   useEffect(() => {
-    const elContainer = document.getElementById('sidebar-container')
-
-    if (sidebarCollapsed) {
-      elContainer?.classList.add('-translate-x-full')
-    } else {
-      elContainer?.classList.remove('-translate-x-full')
-    }
+    toggleOnSidebarContainer({
+      id: 'sidebar-container',
+      sidebarType,
+      sidebarCollapsed,
+    })
   }, [sidebarCollapsed, sidebarType])
 
   return (
     <div
       id='sidebar-container'
       className={clsx(
-        'bg-white dark:bg-base-gradient-sidebar absolute z-10 h-full dark:border-gunmetal border-solid border-r transition-all',
-        // isMobileDevice ? 'hidden' : 'hidden md:flex',
+        'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-all',
       )}
     >
       <Content isMobileDevice={isMobileDevice} items={[]} />

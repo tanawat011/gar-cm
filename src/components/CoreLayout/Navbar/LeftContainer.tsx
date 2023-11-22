@@ -8,32 +8,38 @@ type ContainerProps = {
 }
 
 export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
-  const { toggleSidebarCollapse } = useSidebar(isMobileDevice)
-  const { sidebarCollapsed } = useSelector((state: any) => state.appSetting)
+  const { toggleSidebarCollapse, toggleSidebarType } =
+    useSidebar(isMobileDevice)
+  const { sidebarCollapsed, sidebarType } = useSelector(
+    (state: any) => state.appSetting,
+  )
 
   const DesktopIcon = () => {
     return (
       <>
-        {sidebarCollapsed ? (
+        {sidebarType !== 'drawer' &&
+          (sidebarCollapsed ? (
+            <Icon
+              name='FaIndent'
+              className='cursor-pointer mx-3 hidden md:block'
+              onClick={() => toggleSidebarCollapse()}
+            />
+          ) : (
+            <Icon
+              name='FaOutdent'
+              className='cursor-pointer mx-3 hidden md:block'
+              onClick={() => toggleSidebarCollapse(true)}
+            />
+          ))}
+
+        {sidebarType === 'drawer' && (
           <Icon
-            name='FaIndent'
-            className='cursor-pointer mx-3 hidden md:block'
-            onClick={() => toggleSidebarCollapse()}
-          />
-        ) : (
-          <Icon
-            name='FaOutdent'
-            className='cursor-pointer mx-3 hidden md:block'
-            onClick={() => toggleSidebarCollapse(true)}
+            id='sidebar-toggle-icon-drawer'
+            name='FaBars'
+            className='cursor-pointer mx-3'
+            onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}
           />
         )}
-
-        <Icon
-          id='sidebar-toggle-icon-drawer'
-          name='FaBars'
-          className='cursor-pointer mx-3 block md:hidden'
-          onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}
-        />
       </>
     )
   }
@@ -51,6 +57,21 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   return (
     <div className='ml-6 py-4 flex items-center'>
       {isMobileDevice ? <MobileIcon /> : <DesktopIcon />}
+      <Icon
+        name='FaFile'
+        className='cursor-pointer mx-3 hidden md:block'
+        onClick={() => toggleSidebarType('drawer')}
+      />
+      <Icon
+        name='FaFile'
+        className='cursor-pointer mx-3 hidden md:block'
+        onClick={() => toggleSidebarType('mini')}
+      />
+      <Icon
+        name='FaFile'
+        className='cursor-pointer mx-3 hidden md:block'
+        onClick={() => toggleSidebarType('full')}
+      />
     </div>
   )
 }

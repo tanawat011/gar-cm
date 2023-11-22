@@ -1,4 +1,5 @@
 export const SIDEBAR_TYPE = {
-  NORMAL: 'normal',
+  FULL: 'full',
+  MINI: 'mini',
   DRAWER: 'drawer',
 } as const
