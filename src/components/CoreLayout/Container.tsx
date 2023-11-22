@@ -32,11 +32,7 @@ export default function Container({ children }: SidebarContainerProps) {
     window.addEventListener('resize', setupChildrenContainerHeight)
 
     // NOTE: for mobile or IPad device
-    window.addEventListener(
-      'orientationchange',
-      setupChildrenContainerHeight,
-      false,
-    )
+    window.addEventListener('orientationchange', setupChildrenContainerHeight)
 
     return () => {
       window.removeEventListener('resize', setupChildrenContainerHeight)

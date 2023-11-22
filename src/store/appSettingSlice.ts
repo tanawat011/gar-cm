@@ -2,6 +2,7 @@ import type { LANG, SIDEBAR_TYPE, THEME } from '@/constants'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
+import { isMobile } from 'react-device-detect'
 
 export type AppSettingState = {
   theme: (typeof THEME)[keyof typeof THEME]
@@ -16,7 +17,7 @@ const initialState: AppSettingState = {
   theme: 'dark',
   lang: 'en',
   sidebarCollapsed: false,
-  sidebarType: 'full',
+  sidebarType: isMobile ? 'drawer' : 'full',
 }
 
 export const appSettingSlice = createSlice({

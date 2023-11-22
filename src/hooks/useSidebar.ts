@@ -43,12 +43,21 @@ export const useSidebar = (isMobileDevice?: boolean) => {
   }
 
   useEffect(() => {
-    const localSidebarType = localStorage.getItem(
-      storageNameSidebarType,
-    ) as SIDEBAR_TYPE
+    if (isMobileDevice) {
+      toggleSidebarCollapse(true)
+      toggleSidebarType('drawer')
+    } else {
+      const localSidebarType = localStorage.getItem(
+        storageNameSidebarType,
+      ) as SIDEBAR_TYPE
 
-    setupSidebarCollapse(false)
-    setupSidebarType(localSidebarType)
+      setupSidebarType(localSidebarType)
+      setupSidebarCollapse(false)
+      window.addEventListener('resize', setupSidebarTypeByResize)
+
+      return () =>
+        window.removeEventListener('resize', setupSidebarTypeByResize)
+    }
   }, [])
 
   const setupSidebarTypeByResize = () => {
@@ -63,17 +72,6 @@ export const useSidebar = (isMobileDevice?: boolean) => {
       toggleSidebarType('full')
     }
   }
-
-  useEffect(() => {
-    if (isMobileDevice) {
-      toggleSidebarType('drawer')
-    } else {
-      window.addEventListener('resize', setupSidebarTypeByResize)
-
-      return () =>
-        window.removeEventListener('resize', setupSidebarTypeByResize)
-    }
-  }, [])
 
   return { isCollapse, sidebarType, toggleSidebarCollapse, toggleSidebarType }
 }

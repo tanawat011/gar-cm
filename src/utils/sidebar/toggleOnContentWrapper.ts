@@ -4,14 +4,28 @@ type ToggleOnContentWrapperProps = {
   id: string
   sidebarCollapsed: boolean
   sidebarType: (typeof SIDEBAR_TYPE)[keyof typeof SIDEBAR_TYPE]
+  isMobileDevice?: boolean
 }
 
 export const toggleOnContentWrapper = ({
   id,
   sidebarCollapsed,
   sidebarType,
+  isMobileDevice,
 }: ToggleOnContentWrapperProps) => {
   const elContainer = document.getElementById(id)
+
+  if (isMobileDevice) {
+    if (sidebarType === 'drawer') {
+      if (sidebarCollapsed) {
+        elContainer?.classList.add('h-full')
+        elContainer?.classList.remove('h-screen')
+      } else {
+        elContainer?.classList.add('h-screen')
+        elContainer?.classList.remove('h-full')
+      }
+    }
+  }
 
   if (sidebarCollapsed) {
     switch (sidebarType) {
