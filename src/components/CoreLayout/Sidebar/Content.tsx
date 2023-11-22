@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
 import { Icon } from '@/components/Icon'
+import { TAG_ID } from '@/constants'
 import { useSidebar } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
 import { toggleOnSidebarContent } from '@/utils/sidebar'
@@ -24,19 +25,19 @@ export const Content: React.FC<ContentProps> = ({ isMobileDevice }) => {
 
   useEffect(() => {
     toggleOnSidebarContent({
-      id: 'sidebar-content',
+      id: TAG_ID.SIDEBAR_CONTENT,
       sidebarType,
     })
   }, [sidebarType])
 
   return (
-    <div id='sidebar-content' className='w-64 transition-all'>
+    <div id={TAG_ID.SIDEBAR_CONTENT} className='w-64 transition-all'>
       <div className='flex items-center justify-between'>
         <p>Sidebar</p>
 
         {sidebarType === 'drawer' && (
           <Icon
-            id='sidebar-toggle-icon-drawer'
+            id={TAG_ID.SIDEBAR_TOGGLE_ICON_DRAWER}
             name='FaBars'
             className='cursor-pointer mx-3'
             onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}

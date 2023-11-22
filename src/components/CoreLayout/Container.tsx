@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { isMobile } from 'react-device-detect'
 
+import { useResize } from '@/hooks'
+
 import { FullScreenLoading } from '../FullScreenLoading'
 
 import { Content } from './Content'
@@ -19,7 +21,7 @@ export default function Container({ children }: SidebarContainerProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isMobileDevice, setIsMobileDevice] = useState<boolean>()
 
-  const setupChildrenContainerHeight = () => {
+  const setupChildContainer = () => {
     const elNavbar = document.getElementById('navbar')
     const navbarHeight = elNavbar?.clientHeight || 0
 
@@ -28,25 +30,13 @@ export default function Container({ children }: SidebarContainerProps) {
       .style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
   }
 
-  useEffect(() => {
-    window.addEventListener('resize', setupChildrenContainerHeight)
-
-    // NOTE: for mobile or IPad device
-    window.addEventListener('orientationchange', setupChildrenContainerHeight)
-
-    return () => {
-      window.removeEventListener('resize', setupChildrenContainerHeight)
-
-      // NOTE: for mobile or IPad device
-      window.removeEventListener(
-        'orientationchange',
-        setupChildrenContainerHeight,
-      )
-    }
-  }, [])
+  useResize({
+    isMobileDevice,
+    cb: setupChildContainer,
+  })
 
   useEffect(() => {
-    setupChildrenContainerHeight()
+    setupChildContainer()
   }, [isLoading])
 
   useEffect(() => {

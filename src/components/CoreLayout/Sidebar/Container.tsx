@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import { useSelector } from 'react-redux'
 
+import { TAG_ID } from '@/constants'
 import { appSettingSelector } from '@/store/selector'
 import { toggleOnSidebarContainer } from '@/utils/sidebar'
 
@@ -17,7 +18,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
 
   useEffect(() => {
     toggleOnSidebarContainer({
-      id: 'sidebar-container',
+      id: TAG_ID.SIDEBAR,
       sidebarType,
       sidebarCollapsed,
     })
@@ -25,7 +26,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
 
   return (
     <div
-      id='sidebar-container'
+      id={TAG_ID.SIDEBAR}
       className={clsx(
         'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-all',
       )}

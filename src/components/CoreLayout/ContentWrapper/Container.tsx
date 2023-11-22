@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { useSelector } from 'react-redux'
 
 import { Backdrop } from '@/components/Common'
+import { TAG_ID } from '@/constants'
 import { useSidebar } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
 import { toggleOnContentWrapper } from '@/utils/sidebar'
@@ -22,7 +23,7 @@ export const Container: React.FC<ContainerProps> = ({
 
   useEffect(() => {
     toggleOnContentWrapper({
-      id: 'content-wrapper',
+      id: TAG_ID.CONTENT_WRAPPER,
       sidebarCollapsed,
       sidebarType,
       isMobileDevice,
@@ -38,7 +39,7 @@ export const Container: React.FC<ContainerProps> = ({
       />
 
       <div
-        id='content-wrapper'
+        id={TAG_ID.CONTENT_WRAPPER}
         className={clsx(
           'overflow-auto scrolling-touch bg-white dark:bg-base-gradient-content relative transition-all',
           isMobileDevice ? 'h-full' : 'scrolling-auto h-screen',

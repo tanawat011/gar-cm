@@ -1,4 +1,5 @@
 export * from './lang'
 export * from './metadata'
 export * from './sidebar'
+export * from './tagId'
 export * from './theme'

@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { SIDEBAR_TYPE as ALL_SIDEBAR_TYPE } from '@/constants'
+import { SIDEBAR_TYPE as ALL_SIDEBAR_TYPE, TAG_ID } from '@/constants'
 import {
   setSidebarCollapsed,
   setSidebarType as setSidebarTypeSetting,
 } from '@/store/slice'
+
+import { useResize } from '.'
 
 type SIDEBAR_TYPE = (typeof ALL_SIDEBAR_TYPE)[keyof typeof ALL_SIDEBAR_TYPE]
 
@@ -43,7 +45,9 @@ export const useSidebar = (isMobileDevice?: boolean) => {
   }
 
   const setupSidebarTypeByResize = () => {
-    const elToggleIcon = document.getElementById('sidebar-toggle-icon-drawer')
+    const elToggleIcon = document.getElementById(
+      TAG_ID.SIDEBAR_TOGGLE_ICON_DRAWER,
+    )
     const display = elToggleIcon?.computedStyleMap().get('display')
 
     if (display && display.toString() === 'block') {
@@ -54,6 +58,11 @@ export const useSidebar = (isMobileDevice?: boolean) => {
       toggleSidebarType('full')
     }
   }
+
+  useResize({
+    isMobileDevice,
+    cb: setupSidebarTypeByResize,
+  })
 
   useEffect(() => {
     if (isMobileDevice) {
@@ -66,10 +75,6 @@ export const useSidebar = (isMobileDevice?: boolean) => {
 
       setupSidebarType(localSidebarType)
       setupSidebarCollapse(false)
-      window.addEventListener('resize', setupSidebarTypeByResize)
-
-      return () =>
-        window.removeEventListener('resize', setupSidebarTypeByResize)
     }
   }, [])
 

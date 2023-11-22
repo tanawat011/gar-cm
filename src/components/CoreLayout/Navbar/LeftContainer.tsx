@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 
 import { Icon } from '@/components/Icon'
+import { TAG_ID } from '@/constants'
 import { useSidebar } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
 
@@ -33,7 +34,7 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
 
         {sidebarType === 'drawer' && (
           <Icon
-            id='sidebar-toggle-icon-drawer'
+            id={TAG_ID.SIDEBAR_TOGGLE_ICON_DRAWER}
             name='FaBars'
             className='cursor-pointer mx-3'
             onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}
