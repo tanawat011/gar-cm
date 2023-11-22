@@ -53,6 +53,10 @@ export const Content: React.FC<ContentProps> = ({ isMobileDevice }) => {
       </p>
 
       <p className='underline'>
+        <Link href={'/app/link-remember'}>Link Remember</Link>
+      </p>
+
+      <p className='underline'>
         <Link href={'/app/to-do'}>Road Map</Link>
       </p>
 
