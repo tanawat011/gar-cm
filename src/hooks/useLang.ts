@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { LANG as ALL_LANG } from '@/constants'
-import { setLang as setLangSetting } from '@/store/appSettingSlice'
+import { setLang as setLangSetting } from '@/store/slice'
 
 type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 

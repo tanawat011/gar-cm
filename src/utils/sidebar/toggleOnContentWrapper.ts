@@ -13,73 +13,49 @@ export const toggleOnContentWrapper = ({
   sidebarType,
   isMobileDevice,
 }: ToggleOnContentWrapperProps) => {
-  const elContainer = document.getElementById(id)
+  const el = document.getElementById(id)
 
   if (isMobileDevice) {
-    if (sidebarType === 'drawer') {
-      if (sidebarCollapsed) {
-        elContainer?.classList.add('h-full')
-        elContainer?.classList.remove('h-screen')
-      } else {
-        elContainer?.classList.add('h-screen')
-        elContainer?.classList.remove('h-full')
-      }
+    if (sidebarCollapsed) {
+      el?.classList.replace('h-screen', 'h-full')
+    } else {
+      el?.classList.replace('h-full', 'h-screen')
     }
   }
 
-  if (sidebarCollapsed) {
-    switch (sidebarType) {
-      case 'full':
-        elContainer?.classList.add('w-full', '-ml-64')
-        elContainer?.classList.remove(
-          'w-[calc(100%-theme(spacing.64))]',
-          '-ml-16',
-        )
-        break
-      case 'mini':
-        elContainer?.classList.add('w-full', '-ml-16')
-        elContainer?.classList.remove(
-          'w-[calc(100%-theme(spacing.16))]',
-          '-ml-64',
-        )
-        break
-      case 'drawer':
-        elContainer?.classList.add('-ml-64')
-        elContainer?.classList.remove(
-          'w-[calc(100%-theme(spacing.64))]',
-          'w-[calc(100%-theme(spacing.16))]',
-          '-ml-16',
-        )
-        break
-    }
+  const wFull = 'w-full'
+  const wFu = 'w-[calc(100%-theme(spacing.64))]'
+  const wMn = 'w-[calc(100%-theme(spacing.16))]'
+  const mlMinusFu = '-ml-64'
+  const mlMinusMn = '-ml-16'
 
-    return
+  if (sidebarType === 'full') {
+    if (sidebarCollapsed) {
+      el?.classList.add(wFull, mlMinusFu)
+      el?.classList.remove(wFu, mlMinusMn)
+    } else {
+      el?.classList.add(wFu)
+      el?.classList.remove(wMn, wFull, mlMinusFu)
+    }
   }
 
-  switch (sidebarType) {
-    case 'full':
-      elContainer?.classList.add('w-[calc(100%-theme(spacing.64))]')
-      elContainer?.classList.remove(
-        'w-[calc(100%-theme(spacing.16))]',
-        'w-full',
-        '-ml-64',
-      )
-      break
-    case 'mini':
-      elContainer?.classList.add('w-[calc(100%-theme(spacing.16))]')
-      elContainer?.classList.remove(
-        'w-[calc(100%-theme(spacing.64))]',
-        'w-full',
-        '-ml-16',
-      )
-      break
-    case 'drawer':
-      elContainer?.classList.add('w-full', '-ml-64')
-      elContainer?.classList.remove(
-        'w-[calc(100%-theme(spacing.64))]',
-        'w-[calc(100%-theme(spacing.16))]',
-        '-ml-16',
-      )
-      break
+  if (sidebarType === 'mini') {
+    if (sidebarCollapsed) {
+      el?.classList.add(wFull, mlMinusMn)
+      el?.classList.remove(wMn, mlMinusFu)
+    } else {
+      el?.classList.add(wMn)
+      el?.classList.remove(wFu, wFull, mlMinusMn)
+    }
+  }
+
+  if (sidebarType === 'drawer') {
+    if (sidebarCollapsed) {
+      el?.classList.add(mlMinusFu)
+      el?.classList.remove(wFu, wMn, mlMinusMn)
+    } else {
+      el?.classList.add(wFull, mlMinusFu)
+      el?.classList.remove(wFu, wMn, mlMinusMn)
+    }
   }
 }

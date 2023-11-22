@@ -6,7 +6,7 @@ import { SIDEBAR_TYPE as ALL_SIDEBAR_TYPE } from '@/constants'
 import {
   setSidebarCollapsed,
   setSidebarType as setSidebarTypeSetting,
-} from '@/store/appSettingSlice'
+} from '@/store/slice'
 
 type SIDEBAR_TYPE = (typeof ALL_SIDEBAR_TYPE)[keyof typeof ALL_SIDEBAR_TYPE]
 
@@ -42,6 +42,19 @@ export const useSidebar = (isMobileDevice?: boolean) => {
     setupSidebarType(_sidebarType)
   }
 
+  const setupSidebarTypeByResize = () => {
+    const elToggleIcon = document.getElementById('sidebar-toggle-icon-drawer')
+    const display = elToggleIcon?.computedStyleMap().get('display')
+
+    if (display && display.toString() === 'block') {
+      toggleSidebarCollapse(true)
+      toggleSidebarType('drawer')
+    } else {
+      toggleSidebarCollapse(false)
+      toggleSidebarType('full')
+    }
+  }
+
   useEffect(() => {
     if (isMobileDevice) {
       toggleSidebarCollapse(true)
@@ -59,19 +72,6 @@ export const useSidebar = (isMobileDevice?: boolean) => {
         window.removeEventListener('resize', setupSidebarTypeByResize)
     }
   }, [])
-
-  const setupSidebarTypeByResize = () => {
-    const elToggleIcon = document.getElementById('sidebar-toggle-icon-drawer')
-    const display = elToggleIcon?.computedStyleMap().get('display')
-
-    if (display && display.toString() === 'block') {
-      toggleSidebarCollapse(true)
-      toggleSidebarType('drawer')
-    } else {
-      toggleSidebarCollapse(false)
-      toggleSidebarType('full')
-    }
-  }
 
   return { isCollapse, sidebarType, toggleSidebarCollapse, toggleSidebarType }
 }

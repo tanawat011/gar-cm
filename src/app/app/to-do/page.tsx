@@ -10,10 +10,10 @@ export default function ToDo() {
       <p className='line-through'>Support Mobile Device(IOS & ANDROID)</p>
       <p className='line-through'>Support IPad & Tablet Device</p>
       <p className='line-through'>Redux & Redux Toolkit</p>
-      <p>Sidebar Toggle</p>
-      <p>Full Sidebar</p>
-      <p>Mini Sidebar</p>
-      <p>Drawer Sidebar</p>
+      <p className='line-through'>Sidebar Toggle</p>
+      <p className='line-through'>Full Sidebar</p>
+      <p className='line-through'>Mini Sidebar</p>
+      <p className='line-through'>Drawer Sidebar</p>
       <p>Drawer setting Sidebar</p>
       <p>Mobile Device Option Setting</p>
       <p>Mobile Device Sidebar Toggle</p>

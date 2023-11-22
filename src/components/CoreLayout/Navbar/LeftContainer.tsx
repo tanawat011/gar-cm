@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { Icon } from '@/components/Icon'
 import { useSidebar } from '@/hooks'
+import { appSettingSelector } from '@/store/selector'
 
 type ContainerProps = {
   isMobileDevice?: boolean
@@ -10,9 +11,7 @@ type ContainerProps = {
 export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   const { toggleSidebarCollapse, toggleSidebarType } =
     useSidebar(isMobileDevice)
-  const { sidebarCollapsed, sidebarType } = useSelector(
-    (state: any) => state.appSetting,
-  )
+  const { sidebarCollapsed, sidebarType } = useSelector(appSettingSelector)
 
   const DesktopIcon = () => {
     return (

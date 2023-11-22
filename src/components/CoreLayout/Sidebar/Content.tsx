@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 
 import { Icon } from '@/components/Icon'
 import { useSidebar } from '@/hooks'
+import { appSettingSelector } from '@/store/selector'
 import { toggleOnSidebarContent } from '@/utils/sidebar'
 
 export type ContentProps = {
@@ -19,9 +20,7 @@ export type ContentProps = {
 
 export const Content: React.FC<ContentProps> = ({ isMobileDevice }) => {
   const { toggleSidebarCollapse } = useSidebar(isMobileDevice)
-  const { sidebarCollapsed, sidebarType } = useSelector(
-    (state: any) => state.appSetting,
-  )
+  const { sidebarCollapsed, sidebarType } = useSelector(appSettingSelector)
 
   useEffect(() => {
     toggleOnSidebarContent({

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import { useSelector } from 'react-redux'
 
+import { appSettingSelector } from '@/store/selector'
 import { toggleOnSidebarContainer } from '@/utils/sidebar'
 
 import { Content } from './Content'
@@ -12,9 +13,7 @@ type ContainerProps = {
 }
 
 export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
-  const { sidebarCollapsed, sidebarType } = useSelector(
-    (state: any) => state.appSetting,
-  )
+  const { sidebarCollapsed, sidebarType } = useSelector(appSettingSelector)
 
   useEffect(() => {
     toggleOnSidebarContainer({

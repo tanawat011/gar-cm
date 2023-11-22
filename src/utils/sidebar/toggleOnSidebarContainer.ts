@@ -11,17 +11,13 @@ export const toggleOnSidebarContainer = ({
   sidebarType,
   sidebarCollapsed,
 }: ToggleOnSidebarContainerProps) => {
-  const elContainer = document.getElementById(id)
+  const el = document.getElementById(id)
+  const drawerClass = ['z-[3]', 'sticky', 'top-0', 'h-screen']
+  const translateX = '-translate-x-full'
 
-  if (sidebarType === 'drawer') {
-    elContainer?.classList.add('z-[3]', 'sticky', 'top-0', 'h-screen')
-  } else {
-    elContainer?.classList.remove('z-[3]', 'sticky', 'top-0', 'h-screen')
-  }
+  if (sidebarType === 'drawer') el?.classList.add(...drawerClass)
+  else el?.classList.remove(...drawerClass)
 
-  if (sidebarCollapsed) {
-    elContainer?.classList.add('-translate-x-full')
-  } else {
-    elContainer?.classList.remove('-translate-x-full')
-  }
+  if (sidebarCollapsed) el?.classList.add(translateX)
+  else el?.classList.remove(translateX)
 }

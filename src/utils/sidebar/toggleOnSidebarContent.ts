@@ -9,17 +9,9 @@ export const toggleOnSidebarContent = ({
   id,
   sidebarType,
 }: ToggleOnSidebarContentProps) => {
-  const elContainer = document.getElementById(id)
+  const el = document.getElementById(id)
 
-  switch (sidebarType) {
-    case 'mini':
-      elContainer?.classList.add('w-16')
-      elContainer?.classList.remove('w-64')
-      break
-    case 'full':
-    case 'drawer':
-      elContainer?.classList.add('w-64')
-      elContainer?.classList.remove('w-16')
-      break
-  }
+  if (sidebarType === 'mini') return el?.classList.replace('w-64', 'w-16')
+
+  el?.classList.replace('w-16', 'w-64')
 }

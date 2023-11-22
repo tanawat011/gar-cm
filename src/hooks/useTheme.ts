@@ -6,7 +6,7 @@ import { useTheme as useNextTheme } from 'next-themes'
 import { useDispatch } from 'react-redux'
 
 import { THEME as ALL_THEME } from '@/constants'
-import { setTheme as setThemeSetting } from '@/store/appSettingSlice'
+import { setTheme as setThemeSetting } from '@/store/slice'
 
 type ICON = keyof typeof ICON_ALLOWED
 
