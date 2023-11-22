@@ -15,18 +15,24 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   )
 
   useEffect(() => {
-    console.log('sidebarType', sidebarType)
-    console.log('sidebarCollapsed', sidebarCollapsed)
-  }, [sidebarCollapsed])
+    const elContainer = document.getElementById('sidebar-container')
+
+    if (sidebarCollapsed) {
+      elContainer?.classList.add('-translate-x-full')
+    } else {
+      elContainer?.classList.remove('-translate-x-full')
+    }
+  }, [sidebarCollapsed, sidebarType])
 
   return (
     <div
+      id='sidebar-container'
       className={clsx(
-        'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r',
-        isMobileDevice ? 'hidden' : 'hidden md:block',
+        'bg-white dark:bg-base-gradient-sidebar absolute z-10 h-full dark:border-gunmetal border-solid border-r transition-all',
+        // isMobileDevice ? 'hidden' : 'hidden md:flex',
       )}
     >
-      <Content items={[]} />
+      <Content isMobileDevice={isMobileDevice} items={[]} />
     </div>
   )
 }

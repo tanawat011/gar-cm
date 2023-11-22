@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { SIDEBAR_TYPE as ALL_SIDEBAR_TYPE } from '@/constants'
 import {
@@ -17,6 +17,9 @@ const defaultSidebarType = ALL_SIDEBAR_TYPE.NORMAL
 
 export const useSidebar = (isMobileDevice?: boolean) => {
   const dispatch = useDispatch()
+  const { sidebarType: currSidebarType } = useSelector(
+    (state: any) => state.appSetting,
+  )
   const [isCollapse, setIsCollapse] = useState<boolean>(defaultSidebarCollapsed)
   const [sidebarType, setSidebarType] =
     useState<SIDEBAR_TYPE>(defaultSidebarType)
@@ -63,10 +66,12 @@ export const useSidebar = (isMobileDevice?: boolean) => {
     const display = elToggleIcon?.computedStyleMap().get('display')
 
     if (display && display.toString() === 'block') {
-      return toggleSidebarType('drawer')
+      toggleSidebarCollapse(true)
+      toggleSidebarType('drawer')
+    } else {
+      toggleSidebarCollapse(false)
+      toggleSidebarType('normal')
     }
-
-    toggleSidebarType('normal')
   }
 
   useEffect(() => {

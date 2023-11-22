@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux'
+
 import { Icon } from '@/components/Icon'
 import { useSidebar } from '@/hooks'
 
@@ -6,12 +8,13 @@ type ContainerProps = {
 }
 
 export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
-  const { isCollapse, toggleSidebarCollapse } = useSidebar(isMobileDevice)
+  const { toggleSidebarCollapse } = useSidebar(isMobileDevice)
+  const { sidebarCollapsed } = useSelector((state: any) => state.appSetting)
 
   const DesktopIcon = () => {
     return (
       <>
-        {isCollapse ? (
+        {sidebarCollapsed ? (
           <Icon
             name='FaIndent'
             className='cursor-pointer mx-3 hidden md:block'
@@ -29,7 +32,7 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
           id='sidebar-toggle-icon-drawer'
           name='FaBars'
           className='cursor-pointer mx-3 block md:hidden'
-          onClick={() => toggleSidebarCollapse(!isCollapse)}
+          onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}
         />
       </>
     )
@@ -40,7 +43,7 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
       <Icon
         name='FaBars'
         className={'cursor-pointer mx-3'}
-        onClick={() => toggleSidebarCollapse(!isCollapse)}
+        onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}
       />
     )
   }
