@@ -28,7 +28,7 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
     <div
       id={TAG_ID.SIDEBAR}
       className={clsx(
-        'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-all',
+        'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-transform',
       )}
     >
       <Content isMobileDevice={isMobileDevice} items={[]} />

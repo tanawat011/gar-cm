@@ -6,6 +6,7 @@ import { isMobile } from 'react-device-detect'
 
 import { useResize } from '@/hooks'
 
+import { Drawer } from '../Common'
 import { FullScreenLoading } from '../FullScreenLoading'
 
 import { Content } from './Content'
@@ -50,14 +51,18 @@ export default function Container({ children }: SidebarContainerProps) {
   if (isLoading) return <FullScreenLoading />
 
   return (
-    <div className='flex'>
-      <Sidebar isMobileDevice={isMobileDevice} />
+    <>
+      <div className='flex relative overflow-hidden'>
+        <Sidebar isMobileDevice={isMobileDevice} />
 
-      <ContentWrapper isMobileDevice={isMobileDevice}>
-        <Navbar isMobileDevice={isMobileDevice} />
+        <ContentWrapper isMobileDevice={isMobileDevice}>
+          <Navbar isMobileDevice={isMobileDevice} />
 
-        <Content isMobileDevice={isMobileDevice}>{children}</Content>
-      </ContentWrapper>
-    </div>
+          <Content isMobileDevice={isMobileDevice}>{children}</Content>
+        </ContentWrapper>
+      </div>
+
+      <Drawer id='drawer' position='right' />
+    </>
   )
 }
