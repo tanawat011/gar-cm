@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux'
 
-import { DrawerTrigger } from '@/components/Common'
 import { Icon } from '@/components/Icon'
 import { TAG_ID } from '@/constants'
 import { useSidebar } from '@/hooks'
