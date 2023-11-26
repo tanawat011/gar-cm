@@ -6,11 +6,11 @@ import { isMobile } from 'react-device-detect'
 
 import { useResize } from '@/hooks'
 
-import { Drawer } from '../Common'
 import { FullScreenLoading } from '../FullScreenLoading'
 
 import { Content } from './Content'
 import { ContentWrapper } from './ContentWrapper'
+import { DrawerIconTrigger, DrawerSetting } from './DrawerSetting'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
 
@@ -60,9 +60,11 @@ export default function Container({ children }: SidebarContainerProps) {
 
           <Content isMobileDevice={isMobileDevice}>{children}</Content>
         </ContentWrapper>
+
+        <DrawerIconTrigger />
       </div>
 
-      <Drawer id='drawer' position='right' />
+      <DrawerSetting />
     </>
   )
 }

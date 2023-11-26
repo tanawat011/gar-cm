@@ -11,9 +11,14 @@ import { Backdrop } from '..'
 type DrawerProps = {
   id: string
   position?: 'left' | 'right' | 'top' | 'bottom'
+  children: React.ReactNode
 }
 
-export const Drawer: React.FC<DrawerProps> = ({ id, position = 'left' }) => {
+export const Drawer: React.FC<DrawerProps> = ({
+  id,
+  position = 'left',
+  children,
+}) => {
   const triggerId = `${id}-trigger`
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
@@ -63,10 +68,7 @@ export const Drawer: React.FC<DrawerProps> = ({ id, position = 'left' }) => {
         onClick={toggleDrawer}
       />
 
-      <div className='dark:bg-black w-full h-full'>
-        <p onClick={toggleDrawer}>Drawer</p>
-        <p>Drawer</p>
-      </div>
+      <div className='dark:bg-black w-full h-full'>{children}</div>
     </div>
   )
 }

@@ -14,7 +14,7 @@ export const Container: React.FC<ContainerProps> = ({
   return (
     <div
       className={clsx(
-        'bg-white dark:bg-base-gradient-content px-6 pt-4 pb-6',
+        'bg-white dark:bg-base-gradient-content px-8 py-8',
         isMobileDevice ? 'mt-[--navbar-h]' : 'mt-0',
       )}
     >

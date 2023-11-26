@@ -58,7 +58,7 @@ export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   return (
     <div className='ml-6 py-4 flex items-center'>
       {isMobileDevice ? <MobileIcon /> : <DesktopIcon />}
-      <DrawerTrigger id='drawer'>xxx</DrawerTrigger>
+
       <Icon
         name='FaFile'
         className='cursor-pointer mx-3 hidden md:block'

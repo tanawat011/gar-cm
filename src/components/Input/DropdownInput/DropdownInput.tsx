@@ -49,10 +49,10 @@ export const DropdownInput: React.FC<DropdownInputProps> = (props) => {
         selectedKeys={selectedKeys}
         onAction={onSelected}
       >
-        {items.map(({ key, label, startContent }) => {
+        {items.map(({ key, label, startContent, children: itemChildren }) => {
           return (
             <DropdownItem key={key} startContent={startContent}>
-              {label}
+              {itemChildren || label}
             </DropdownItem>
           )
         })}

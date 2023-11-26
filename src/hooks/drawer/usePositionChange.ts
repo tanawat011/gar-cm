@@ -10,7 +10,7 @@ export const usePositionChange = ({ id, position }: UsePositionChangeProps) => {
     const el = document.getElementById(id)
 
     if (el) {
-      el.classList.add(position)
+      el.classList.add(`${id}-${position}`)
 
       switch (position) {
         case 'top':
