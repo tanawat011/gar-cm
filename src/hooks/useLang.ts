@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 
+import { DEFAULT_APP_SETTING } from '@/configs/defaultAppSetting'
 import { LANG as ALL_LANG, LS_LANG } from '@/constants'
 import { setLang as setLangSetting } from '@/store/slice'
 
 type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 
 const storageName = LS_LANG
-const defaultLang = ALL_LANG.EN
+const defaultLang = DEFAULT_APP_SETTING.lang
 
 export const useLang = () => {
   const dispatch = useDispatch()

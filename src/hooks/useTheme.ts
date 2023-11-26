@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTheme as useNextTheme } from 'next-themes'
 import { useDispatch } from 'react-redux'
 
+import { DEFAULT_APP_SETTING } from '@/configs/defaultAppSetting'
 import { THEME as ALL_THEME, LS_THEME } from '@/constants'
 import { setTheme as setThemeSetting } from '@/store/slice'
 
@@ -13,7 +14,7 @@ type ICON = keyof typeof ICON_ALLOWED
 type THEME = (typeof ALL_THEME)[keyof typeof ALL_THEME]
 
 const storageName = LS_THEME
-const defaultTheme = ALL_THEME.DARK
+const defaultTheme = DEFAULT_APP_SETTING.theme
 const ICON_TOGGLE: { [key in THEME]: ICON } = {
   dark: 'FaRegMoon',
   light: 'FaRegSun',

@@ -3,7 +3,8 @@ import React, { useContext } from 'react'
 import clsx from 'clsx'
 
 import { DRAWER_POSITION } from '@/constants'
-import { DrawerContext } from '@/contexts'
+
+import { DrawerContext } from '.'
 
 type DrawerTriggerProps = {
   id: string

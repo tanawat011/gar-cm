@@ -1,22 +1,26 @@
-import type { DRAWER_POSITION } from '@/constants'
+import { useEffect } from 'react'
 
-import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { Drawer } from '@/components/Common'
-import { useLang, useTheme } from '@/hooks'
-
-type POSITION = (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
+import { useDrawerPosition, useLang, useTheme } from '@/hooks'
+import { appSettingSelector } from '@/store/selector'
 
 export const coreDrawerId = 'drawer'
 
 export const DrawerSetting = () => {
+  const { drawerPosition } = useSelector(appSettingSelector)
+
   const { toggleTheme } = useTheme()
   const { toggleLang } = useLang()
+  const { togglePosition } = useDrawerPosition()
 
-  const [position, setPosition] = useState<POSITION>('right')
+  useEffect(() => {
+    togglePosition(drawerPosition)
+  }, [drawerPosition])
 
   return (
-    <Drawer id={coreDrawerId} position={position} className='p-4'>
+    <Drawer id={coreDrawerId} position={drawerPosition} className='p-4'>
       <div className='flex flex-col gap-8'>
         <div>
           <p>Theme</p>
@@ -58,16 +62,25 @@ export const DrawerSetting = () => {
           <p>Drawer Setting Position</p>
 
           <div className='flex items-center justify-around'>
-            <p className='cursor-pointer' onClick={() => setPosition('top')}>
+            <p className='cursor-pointer' onClick={() => togglePosition('top')}>
               TOP
             </p>
-            <p className='cursor-pointer' onClick={() => setPosition('right')}>
+            <p
+              className='cursor-pointer'
+              onClick={() => togglePosition('right')}
+            >
               RIGHT
             </p>
-            <p className='cursor-pointer' onClick={() => setPosition('bottom')}>
+            <p
+              className='cursor-pointer'
+              onClick={() => togglePosition('bottom')}
+            >
               BOTTOM
             </p>
-            <p className='cursor-pointer' onClick={() => setPosition('left')}>
+            <p
+              className='cursor-pointer'
+              onClick={() => togglePosition('left')}
+            >
               LEFT
             </p>
           </div>

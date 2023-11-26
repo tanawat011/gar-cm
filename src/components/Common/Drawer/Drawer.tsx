@@ -3,10 +3,9 @@ import React, { useContext } from 'react'
 import clsx from 'clsx'
 
 import { DRAWER_POSITION, DRAWER_STATUS } from '@/constants'
-import { DrawerContext } from '@/contexts'
 import { useInitialPosition, usePositionChange } from '@/hooks'
 
-import { Backdrop } from '..'
+import { Backdrop, DrawerContext } from '..'
 
 type DrawerProps = {
   id: string
