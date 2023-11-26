@@ -26,5 +26,5 @@ export const usePositionChange = ({ id, position }: UsePositionChangeProps) => {
           el.classList.add('top-0', 'left-0', 'w-[300px]', 'h-full')
       }
     }
-  }, [position])
+  }, [id, position])
 }

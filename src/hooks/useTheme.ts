@@ -26,15 +26,25 @@ export const useTheme = () => {
   const [theme, setTheme] = useState<THEME>(defaultTheme)
   const [themeIcon, setThemeIcon] = useState<ICON>(ICON_TOGGLE.dark)
 
-  const setupTheme = (_theme?: THEME) => {
+  const setupTheme = (_theme?: THEME, noDispatch?: boolean) => {
     const isDark = _theme === ALL_THEME.DARK
 
     setThemeIcon(isDark ? ICON_TOGGLE.dark : ICON_TOGGLE.light)
     setTheme(_theme || defaultTheme)
-    dispatch(setThemeSetting(_theme || defaultTheme))
+
+    if (!noDispatch) {
+      dispatch(setThemeSetting(_theme || defaultTheme))
+    }
   }
 
-  const toggleTheme = () => {
+  const toggleTheme = (_theme?: THEME, noDispatch?: boolean) => {
+    if (_theme) {
+      localStorage.setItem(storageName, _theme)
+      setupTheme(_theme, noDispatch)
+
+      return
+    }
+
     const localTheme = localStorage.getItem(storageName) as THEME
     const isDark = localTheme === ALL_THEME.DARK
     const currTheme = isDark ? ALL_THEME.LIGHT : ALL_THEME.DARK
@@ -50,6 +60,9 @@ export const useTheme = () => {
   }, [])
 
   useEffect(() => {
+    const isDark = theme === ALL_THEME.DARK
+
+    setThemeIcon(isDark ? ICON_TOGGLE.dark : ICON_TOGGLE.light)
     setNextTheme(theme)
   }, [theme])
 

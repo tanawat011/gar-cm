@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import clsx from 'clsx'
+
 import {
   useInitialPosition,
   useObserveTrigger,
@@ -12,12 +14,14 @@ type DrawerProps = {
   id: string
   position?: 'left' | 'right' | 'top' | 'bottom'
   children: React.ReactNode
+  className?: string
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
   id,
   position = 'left',
   children,
+  className,
 }) => {
   const triggerId = `${id}-trigger`
 
@@ -35,9 +39,9 @@ export const Drawer: React.FC<DrawerProps> = ({
     const el = document.getElementById(id)
 
     if (el) {
-      const isContain = (className: string) => el.classList.contains(className)
-      const toggleClass = (className: string, contain: boolean) =>
-        el.classList.toggle(className, contain)
+      const isContain = (cn: string) => el.classList.contains(cn)
+      const toggleClass = (cn: string, contain: boolean) =>
+        el.classList.toggle(cn, contain)
 
       switch (position) {
         case 'top':
@@ -68,7 +72,9 @@ export const Drawer: React.FC<DrawerProps> = ({
         onClick={toggleDrawer}
       />
 
-      <div className='dark:bg-black w-full h-full'>{children}</div>
+      <div className={clsx('bg-white dark:bg-black w-full h-full', className)}>
+        {children}
+      </div>
     </div>
   )
 }

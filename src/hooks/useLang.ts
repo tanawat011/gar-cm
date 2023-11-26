@@ -14,14 +14,17 @@ export const useLang = () => {
   const dispatch = useDispatch()
   const [lang, setLang] = useState<LANG>(defaultLang)
 
-  const setupLang = (_lang?: LANG) => {
+  const setupLang = (_lang?: LANG, noDispatch?: boolean) => {
     setLang(_lang || defaultLang)
-    dispatch(setLangSetting(_lang || defaultLang))
+
+    if (!noDispatch) {
+      dispatch(setLangSetting(_lang || defaultLang))
+    }
   }
 
-  const toggleLang = (_lang?: LANG) => {
+  const toggleLang = (_lang?: LANG, noDispatch?: boolean) => {
     localStorage.setItem(storageName, _lang || defaultLang)
-    setupLang(_lang)
+    setupLang(_lang, noDispatch)
   }
 
   useEffect(() => {

@@ -14,7 +14,8 @@ export default function ToDo() {
       <p className='line-through'>Full Sidebar</p>
       <p className='line-through'>Mini Sidebar</p>
       <p className='line-through'>Drawer Sidebar</p>
-      <p>Drawer setting Sidebar</p>
+      <p>Setting drawer position</p>
+      <p>Setting sidebar type</p>
       <p>Mobile Device Option Setting</p>
       <p>Mobile Device Sidebar Toggle</p>
       <p>Sidebar Logo</p>
