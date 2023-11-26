@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 
 import clsx from 'clsx'
 
 import { DRAWER_POSITION, DRAWER_STATUS } from '@/constants'
-import {
-  useInitialPosition,
-  useObserveTrigger,
-  usePositionChange,
-} from '@/hooks'
+import { DrawerContext } from '@/contexts'
+import { useInitialPosition, usePositionChange } from '@/hooks'
 
 import { Backdrop } from '..'
 
@@ -25,15 +22,17 @@ export const Drawer: React.FC<DrawerProps> = ({
   className,
 }) => {
   const triggerId = `${id}-trigger`
+  const backdropId = `${id}-backdrop`
 
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
+  const drawerCtx = useContext(DrawerContext)
 
-  useObserveTrigger({ triggerId, setSidebarCollapsed })
   useInitialPosition({ id, position })
   usePositionChange({ id, position })
   usePositionChange({ id, position }, [position])
 
   const toggleDrawer = () => {
+    drawerCtx.setCollapsed(!drawerCtx.collapsed)
+
     document
       .getElementById(triggerId)
       ?.classList.replace(DRAWER_STATUS.EXPANDED, DRAWER_STATUS.COLLAPSED)
@@ -47,37 +46,37 @@ export const Drawer: React.FC<DrawerProps> = ({
 
       const setup = (cn: string) => {
         toggleClass(cn, !isContain(cn))
-        setSidebarCollapsed(!isContain(cn))
       }
 
       switch (position) {
         case DRAWER_POSITION.TOP:
-          setup('-translate-y-full')
-          break
+          return setup('-translate-y-full')
         case DRAWER_POSITION.RIGHT:
-          setup('translate-x-full')
-          break
+          return setup('translate-x-full')
         case DRAWER_POSITION.BOTTOM:
-          setup('translate-y-full')
-          break
+          return setup('translate-y-full')
         case DRAWER_POSITION.LEFT:
-          setup('-translate-x-full')
+          return setup('-translate-x-full')
       }
     }
   }
 
   return (
-    <div id={id} className='fixed transition-transform z-10'>
+    <>
       <Backdrop
-        id={`${id}-backdrop`}
-        open={!sidebarCollapsed}
-        zIndex={-1}
+        id={backdropId}
+        zIndex={1}
+        open={!drawerCtx.collapsed}
         onClick={toggleDrawer}
       />
 
-      <div className={clsx('bg-white dark:bg-black w-full h-full', className)}>
-        {children}
+      <div id={id} className='fixed transition-transform z-10'>
+        <div
+          className={clsx('bg-white dark:bg-black w-full h-full', className)}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

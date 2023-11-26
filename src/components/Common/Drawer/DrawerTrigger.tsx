@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import clsx from 'clsx'
 
-import { DRAWER_POSITION, DRAWER_STATUS } from '@/constants'
+import { DRAWER_POSITION } from '@/constants'
+import { DrawerContext } from '@/contexts'
 
 type DrawerTriggerProps = {
   id: string
@@ -17,7 +18,11 @@ export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
 }) => {
   const selfId = `${id}-trigger`
 
+  const drawerCtx = useContext(DrawerContext)
+
   const toggleDrawer = () => {
+    drawerCtx.setCollapsed(!drawerCtx.collapsed)
+
     const el = document.getElementById(id)
     const selfEl = document.getElementById(selfId)
 
@@ -26,28 +31,17 @@ export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
       const toggleClass = (cn: string, contain: boolean) =>
         el.classList.toggle(cn, contain)
 
+      const getPos = (pos: string) => `${id}-${pos}`
       const setup = (cn: string) => toggleClass(cn, !isContain(cn))
 
       // NOTE: toggle drawer position class name
-      if (isContain(`${id}-${DRAWER_POSITION.TOP}`)) setup('-translate-y-full')
+      if (isContain(getPos(DRAWER_POSITION.TOP))) setup('-translate-y-full')
 
-      if (isContain(`${id}-${DRAWER_POSITION.RIGHT}`)) setup('translate-x-full')
+      if (isContain(getPos(DRAWER_POSITION.RIGHT))) setup('translate-x-full')
 
-      if (isContain(`${id}-${DRAWER_POSITION.BOTTOM}`))
-        setup('translate-y-full')
+      if (isContain(getPos(DRAWER_POSITION.BOTTOM))) setup('translate-y-full')
 
-      if (isContain(`${id}-${DRAWER_POSITION.LEFT}`)) setup('-translate-x-full')
-
-      // NOTE: toggle drawer trigger class name
-      const isCollapsed = selfEl.classList.contains(DRAWER_STATUS.COLLAPSED)
-
-      if (isCollapsed) {
-        selfEl.classList.add(DRAWER_STATUS.EXPANDED)
-        selfEl.classList.remove(DRAWER_STATUS.COLLAPSED)
-      } else {
-        selfEl.classList.add(DRAWER_STATUS.COLLAPSED)
-        selfEl.classList.remove(DRAWER_STATUS.EXPANDED)
-      }
+      if (isContain(getPos(DRAWER_POSITION.LEFT))) setup('-translate-x-full')
     }
   }
 

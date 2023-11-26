@@ -16,7 +16,7 @@ export const DrawerSetting = () => {
   const [position, setPosition] = useState<POSITION>('right')
 
   return (
-    <Drawer id={coreDrawerId} position={position} className='p-4 w-[300px]'>
+    <Drawer id={coreDrawerId} position={position} className='p-4'>
       <div className='flex flex-col gap-8'>
         <div>
           <p>Theme</p>
