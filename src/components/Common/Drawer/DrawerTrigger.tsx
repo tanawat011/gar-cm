@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import clsx from 'clsx'
 
 import { DRAWER_POSITION } from '@/constants'
 
-import { DrawerContext } from '.'
+import { setIsCollapsed } from './Drawer.utils'
 
 type DrawerTriggerProps = {
   id: string
@@ -19,15 +19,13 @@ export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
 }) => {
   const selfId = `${id}-trigger`
 
-  const drawerCtx = useContext(DrawerContext)
-
   const toggleDrawer = () => {
-    drawerCtx.setCollapsed(!drawerCtx.collapsed)
-
     const el = document.getElementById(id)
     const selfEl = document.getElementById(selfId)
 
     if (el && selfEl) {
+      setIsCollapsed(selfEl)
+
       const isContain = (cn: string) => el.classList.contains(cn)
       const toggleClass = (cn: string, contain: boolean) =>
         el.classList.toggle(cn, contain)

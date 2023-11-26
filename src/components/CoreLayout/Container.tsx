@@ -6,7 +6,6 @@ import { isMobile } from 'react-device-detect'
 
 import { useInitAppSetting, useResize } from '@/hooks'
 
-import { DrawerProvider } from '../Common'
 import { FullScreenLoading } from '../FullScreenLoading'
 
 import { Content } from './Content'
@@ -53,7 +52,7 @@ export default function Container({ children }: SidebarContainerProps) {
   if (isLoading) return <FullScreenLoading />
 
   return (
-    <DrawerProvider>
+    <>
       <div className='flex relative overflow-hidden'>
         <Sidebar isMobileDevice={isMobileDevice} />
 
@@ -67,6 +66,6 @@ export default function Container({ children }: SidebarContainerProps) {
       </div>
 
       <DrawerSetting />
-    </DrawerProvider>
+    </>
   )
 }

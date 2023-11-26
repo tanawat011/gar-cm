@@ -1,11 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 
 import clsx from 'clsx'
 
-import { DRAWER_POSITION, DRAWER_STATUS } from '@/constants'
-import { useInitialPosition, usePositionChange } from '@/hooks'
+import { DRAWER_POSITION } from '@/constants'
+import {
+  useInitialPosition,
+  useObserverMutation,
+  usePositionChange,
+} from '@/hooks'
 
-import { Backdrop, DrawerContext } from '..'
+import { Backdrop } from '..'
+
+import { setIsCollapsed } from './Drawer.utils'
 
 type DrawerProps = {
   id: string
@@ -23,22 +29,20 @@ export const Drawer: React.FC<DrawerProps> = ({
   const triggerId = `${id}-trigger`
   const backdropId = `${id}-backdrop`
 
-  const drawerCtx = useContext(DrawerContext)
+  const [collapsed, setCollapsed] = useState(true)
 
+  useObserverMutation({ id: triggerId, setCollapsed })
   useInitialPosition({ id, position })
   usePositionChange({ id, position })
   usePositionChange({ id, position }, [position])
 
   const toggleDrawer = () => {
-    drawerCtx.setCollapsed(!drawerCtx.collapsed)
-
-    document
-      .getElementById(triggerId)
-      ?.classList.replace(DRAWER_STATUS.EXPANDED, DRAWER_STATUS.COLLAPSED)
-
     const el = document.getElementById(id)
+    const triggerEl = document.getElementById(triggerId)
 
-    if (el) {
+    if (el && triggerEl) {
+      setIsCollapsed(triggerEl)
+
       const isContain = (cn: string) => el.classList.contains(cn)
       const toggleClass = (cn: string, contain: boolean) =>
         el.classList.toggle(cn, contain)
@@ -65,7 +69,7 @@ export const Drawer: React.FC<DrawerProps> = ({
       <Backdrop
         id={backdropId}
         zIndex={1}
-        open={!drawerCtx.collapsed}
+        open={!collapsed}
         onClick={toggleDrawer}
       />
 
