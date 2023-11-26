@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { LANG as ALL_LANG } from '@/constants'
+import { LANG as ALL_LANG, LS_LANG } from '@/constants'
 import { setLang as setLangSetting } from '@/store/slice'
 
 type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 
-const storageName = 'lang'
+const storageName = LS_LANG
 const defaultLang = ALL_LANG.EN
 
 export const useLang = () => {
@@ -26,12 +26,6 @@ export const useLang = () => {
     localStorage.setItem(storageName, _lang || defaultLang)
     setupLang(_lang, noDispatch)
   }
-
-  useEffect(() => {
-    const localLang = localStorage.getItem(storageName) as LANG
-
-    setupLang(localLang)
-  }, [])
 
   useEffect(() => {
     const htmlEl = document.getElementsByTagName('html')[0]

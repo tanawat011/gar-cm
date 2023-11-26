@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { isMobile } from 'react-device-detect'
 
-import { useResize } from '@/hooks'
+import { useInitAppSetting, useResize } from '@/hooks'
 
 import { FullScreenLoading } from '../FullScreenLoading'
 
@@ -31,6 +31,7 @@ export default function Container({ children }: SidebarContainerProps) {
       .style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
   }
 
+  useInitAppSetting()
   useResize({
     isMobileDevice,
     cb: setupChildContainer,

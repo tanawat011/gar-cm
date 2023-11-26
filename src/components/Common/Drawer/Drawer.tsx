@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import clsx from 'clsx'
 
+import { DRAWER_POSITION } from '@/constants'
 import {
   useInitialPosition,
   useObserveTrigger,
@@ -12,14 +13,14 @@ import { Backdrop } from '..'
 
 type DrawerProps = {
   id: string
-  position?: 'left' | 'right' | 'top' | 'bottom'
+  position?: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
   children: React.ReactNode
   className?: string
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
   id,
-  position = 'left',
+  position = DRAWER_POSITION.LEFT,
   children,
   className,
 }) => {
@@ -44,19 +45,19 @@ export const Drawer: React.FC<DrawerProps> = ({
         el.classList.toggle(cn, contain)
 
       switch (position) {
-        case 'top':
+        case DRAWER_POSITION.TOP:
           toggleClass('-translate-y-full', !isContain('-translate-y-full'))
           setSidebarCollapsed(!isContain('-translate-y-full'))
           break
-        case 'right':
+        case DRAWER_POSITION.RIGHT:
           toggleClass('translate-x-full', !isContain('translate-x-full'))
           setSidebarCollapsed(!isContain('translate-x-full'))
           break
-        case 'bottom':
+        case DRAWER_POSITION.BOTTOM:
           toggleClass('translate-y-full', !isContain('translate-y-full'))
           setSidebarCollapsed(!isContain('translate-y-full'))
           break
-        case 'left':
+        case DRAWER_POSITION.LEFT:
           toggleClass('-translate-x-full', !isContain('-translate-x-full'))
           setSidebarCollapsed(!isContain('-translate-x-full'))
       }

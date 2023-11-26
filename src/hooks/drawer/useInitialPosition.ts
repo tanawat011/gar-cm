@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 
+import { DRAWER_POSITION } from '@/constants'
+
 type UseInitialPositionProps = {
   id: string
-  position: 'top' | 'right' | 'bottom' | 'left'
+  position: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
 }
 
 export const useInitialPosition = ({
@@ -13,10 +15,10 @@ export const useInitialPosition = ({
     const el = document.getElementById(id)
 
     el?.classList.remove(
-      'left',
-      'right',
-      'top',
-      'bottom',
+      DRAWER_POSITION.LEFT,
+      DRAWER_POSITION.RIGHT,
+      DRAWER_POSITION.TOP,
+      DRAWER_POSITION.BOTTOM,
       'left-0',
       'right-0',
       'bottom-0',
@@ -32,16 +34,16 @@ export const useInitialPosition = ({
     )
 
     switch (position) {
-      case 'top':
+      case DRAWER_POSITION.TOP:
         el?.classList.add('-translate-y-full')
         break
-      case 'right':
+      case DRAWER_POSITION.RIGHT:
         el?.classList.add('translate-x-full')
         break
-      case 'bottom':
+      case DRAWER_POSITION.BOTTOM:
         el?.classList.add('translate-y-full')
         break
-      case 'left':
+      case DRAWER_POSITION.LEFT:
         el?.classList.add('-translate-x-full')
     }
   }, [])

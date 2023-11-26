@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react'
 import { useTheme as useNextTheme } from 'next-themes'
 import { useDispatch } from 'react-redux'
 
-import { THEME as ALL_THEME } from '@/constants'
+import { THEME as ALL_THEME, LS_THEME } from '@/constants'
 import { setTheme as setThemeSetting } from '@/store/slice'
 
 type ICON = keyof typeof ICON_ALLOWED
 
 type THEME = (typeof ALL_THEME)[keyof typeof ALL_THEME]
 
-const storageName = 'theme'
+const storageName = LS_THEME
 const defaultTheme = ALL_THEME.DARK
 const ICON_TOGGLE: { [key in THEME]: ICON } = {
   dark: 'FaRegMoon',
@@ -54,15 +54,6 @@ export const useTheme = () => {
   }
 
   useEffect(() => {
-    const localTheme = localStorage.getItem(storageName) as THEME
-
-    setupTheme(localTheme)
-  }, [])
-
-  useEffect(() => {
-    const isDark = theme === ALL_THEME.DARK
-
-    setThemeIcon(isDark ? ICON_TOGGLE.dark : ICON_TOGGLE.light)
     setNextTheme(theme)
   }, [theme])
 

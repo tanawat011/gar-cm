@@ -2,6 +2,8 @@ import React from 'react'
 
 import clsx from 'clsx'
 
+import { DRAWER_POSITION } from '@/constants'
+
 type DrawerTriggerProps = {
   id: string
   children: React.ReactNode
@@ -30,16 +32,16 @@ export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
         el.classList.toggle(cn, contain)
 
       // NOTE: toggle drawer position class name
-      if (isContain(`${id}-top`))
+      if (isContain(`${id}-${DRAWER_POSITION.TOP}`))
         toggleClass(transYMinus, !isContain(transYMinus))
 
-      if (isContain(`${id}-right`))
+      if (isContain(`${id}-${DRAWER_POSITION.RIGHT}`))
         toggleClass(transXPlus, !isContain(transXPlus))
 
-      if (isContain(`${id}-bottom`))
+      if (isContain(`${id}-${DRAWER_POSITION.BOTTOM}`))
         toggleClass(transYPlus, !isContain(transYPlus))
 
-      if (isContain(`${id}-left`))
+      if (isContain(`${id}-${DRAWER_POSITION.LEFT}`))
         toggleClass(transXMinus, !isContain(transXMinus))
 
       // NOTE: toggle drawer trigger class name
