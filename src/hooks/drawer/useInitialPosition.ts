@@ -15,10 +15,10 @@ export const useInitialPosition = ({
     const el = document.getElementById(id)
 
     el?.classList.remove(
-      DRAWER_POSITION.LEFT,
-      DRAWER_POSITION.RIGHT,
-      DRAWER_POSITION.TOP,
-      DRAWER_POSITION.BOTTOM,
+      `${id}-${DRAWER_POSITION.TOP}`,
+      `${id}-${DRAWER_POSITION.RIGHT}`,
+      `${id}-${DRAWER_POSITION.BOTTOM}`,
+      `${id}-${DRAWER_POSITION.LEFT}`,
       'left-0',
       'right-0',
       'bottom-0',

@@ -1,5 +1,11 @@
+import type { DRAWER_POSITION } from '@/constants'
+
+import { useState } from 'react'
+
 import { Drawer } from '@/components/Common'
 import { useLang, useTheme } from '@/hooks'
+
+type POSITION = (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
 
 export const coreDrawerId = 'drawer'
 
@@ -7,8 +13,10 @@ export const DrawerSetting = () => {
   const { toggleTheme } = useTheme()
   const { toggleLang } = useLang()
 
+  const [position, setPosition] = useState<POSITION>('right')
+
   return (
-    <Drawer id={coreDrawerId} position='right' className='p-4 w-[300px]'>
+    <Drawer id={coreDrawerId} position={position} className='p-4 w-[300px]'>
       <div className='flex flex-col gap-8'>
         <div>
           <p>Theme</p>
@@ -50,10 +58,18 @@ export const DrawerSetting = () => {
           <p>Drawer Setting Position</p>
 
           <div className='flex items-center justify-around'>
-            <p className='cursor-pointer'>TOP</p>
-            <p className='cursor-pointer'>RIGHT</p>
-            <p className='cursor-pointer'>BOTTOM</p>
-            <p className='cursor-pointer'>LEFT</p>
+            <p className='cursor-pointer' onClick={() => setPosition('top')}>
+              TOP
+            </p>
+            <p className='cursor-pointer' onClick={() => setPosition('right')}>
+              RIGHT
+            </p>
+            <p className='cursor-pointer' onClick={() => setPosition('bottom')}>
+              BOTTOM
+            </p>
+            <p className='cursor-pointer' onClick={() => setPosition('left')}>
+              LEFT
+            </p>
           </div>
         </div>
       </div>

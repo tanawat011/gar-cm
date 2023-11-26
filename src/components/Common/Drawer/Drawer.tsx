@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import clsx from 'clsx'
 
-import { DRAWER_POSITION } from '@/constants'
+import { DRAWER_POSITION, DRAWER_STATUS } from '@/constants'
 import {
   useInitialPosition,
   useObserveTrigger,
@@ -31,11 +31,12 @@ export const Drawer: React.FC<DrawerProps> = ({
   useObserveTrigger({ triggerId, setSidebarCollapsed })
   useInitialPosition({ id, position })
   usePositionChange({ id, position })
+  usePositionChange({ id, position }, [position])
 
   const toggleDrawer = () => {
     document
       .getElementById(triggerId)
-      ?.classList.replace('expanded', 'collapsed')
+      ?.classList.replace(DRAWER_STATUS.EXPANDED, DRAWER_STATUS.COLLAPSED)
 
     const el = document.getElementById(id)
 
@@ -44,22 +45,23 @@ export const Drawer: React.FC<DrawerProps> = ({
       const toggleClass = (cn: string, contain: boolean) =>
         el.classList.toggle(cn, contain)
 
+      const setup = (cn: string) => {
+        toggleClass(cn, !isContain(cn))
+        setSidebarCollapsed(!isContain(cn))
+      }
+
       switch (position) {
         case DRAWER_POSITION.TOP:
-          toggleClass('-translate-y-full', !isContain('-translate-y-full'))
-          setSidebarCollapsed(!isContain('-translate-y-full'))
+          setup('-translate-y-full')
           break
         case DRAWER_POSITION.RIGHT:
-          toggleClass('translate-x-full', !isContain('translate-x-full'))
-          setSidebarCollapsed(!isContain('translate-x-full'))
+          setup('translate-x-full')
           break
         case DRAWER_POSITION.BOTTOM:
-          toggleClass('translate-y-full', !isContain('translate-y-full'))
-          setSidebarCollapsed(!isContain('translate-y-full'))
+          setup('translate-y-full')
           break
         case DRAWER_POSITION.LEFT:
-          toggleClass('-translate-x-full', !isContain('-translate-x-full'))
-          setSidebarCollapsed(!isContain('-translate-x-full'))
+          setup('-translate-x-full')
       }
     }
   }

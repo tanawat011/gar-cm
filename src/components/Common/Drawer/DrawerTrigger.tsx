@@ -2,18 +2,13 @@ import React from 'react'
 
 import clsx from 'clsx'
 
-import { DRAWER_POSITION } from '@/constants'
+import { DRAWER_POSITION, DRAWER_STATUS } from '@/constants'
 
 type DrawerTriggerProps = {
   id: string
   children: React.ReactNode
   className?: string
 }
-
-const transYMinus = '-translate-y-full'
-const transYPlus = 'translate-y-full'
-const transXMinus = '-translate-x-full'
-const transXPlus = 'translate-x-full'
 
 export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
   id,
@@ -31,26 +26,27 @@ export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
       const toggleClass = (cn: string, contain: boolean) =>
         el.classList.toggle(cn, contain)
 
-      // NOTE: toggle drawer position class name
-      if (isContain(`${id}-${DRAWER_POSITION.TOP}`))
-        toggleClass(transYMinus, !isContain(transYMinus))
+      const setup = (cn: string) => toggleClass(cn, !isContain(cn))
 
-      if (isContain(`${id}-${DRAWER_POSITION.RIGHT}`))
-        toggleClass(transXPlus, !isContain(transXPlus))
+      // NOTE: toggle drawer position class name
+      if (isContain(`${id}-${DRAWER_POSITION.TOP}`)) setup('-translate-y-full')
+
+      if (isContain(`${id}-${DRAWER_POSITION.RIGHT}`)) setup('translate-x-full')
 
       if (isContain(`${id}-${DRAWER_POSITION.BOTTOM}`))
-        toggleClass(transYPlus, !isContain(transYPlus))
+        setup('translate-y-full')
 
-      if (isContain(`${id}-${DRAWER_POSITION.LEFT}`))
-        toggleClass(transXMinus, !isContain(transXMinus))
+      if (isContain(`${id}-${DRAWER_POSITION.LEFT}`)) setup('-translate-x-full')
 
       // NOTE: toggle drawer trigger class name
-      const isCollapsed = el.className.includes('translate-')
+      const isCollapsed = selfEl.classList.contains(DRAWER_STATUS.COLLAPSED)
 
       if (isCollapsed) {
-        selfEl.classList.replace('expanded', 'collapsed')
+        selfEl.classList.add(DRAWER_STATUS.EXPANDED)
+        selfEl.classList.remove(DRAWER_STATUS.COLLAPSED)
       } else {
-        selfEl.classList.replace('collapsed', 'expanded')
+        selfEl.classList.add(DRAWER_STATUS.COLLAPSED)
+        selfEl.classList.remove(DRAWER_STATUS.EXPANDED)
       }
     }
   }

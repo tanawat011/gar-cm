@@ -4,3 +4,8 @@ export const DRAWER_POSITION = {
   BOTTOM: 'bottom',
   LEFT: 'left',
 } as const
+
+export const DRAWER_STATUS = {
+  EXPANDED: 'expanded',
+  COLLAPSED: 'collapsed',
+} as const

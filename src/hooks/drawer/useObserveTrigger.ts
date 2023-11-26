@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { DRAWER_STATUS } from '@/constants'
+
 type UseObserveTriggerProps = {
   triggerId: string
   setSidebarCollapsed: (isCollapsed: boolean) => void
@@ -14,7 +16,11 @@ export const useObserveTrigger = ({
 
     if (triggerEl) {
       const observer = new MutationObserver((mutationList) => {
-        const isCollapsed = triggerEl?.classList.contains('collapsed')
+        const isCollapsed = triggerEl?.classList.contains(
+          DRAWER_STATUS.COLLAPSED,
+        )
+
+        setSidebarCollapsed(isCollapsed)
 
         const mutationFilter = mutationList.filter(
           ({ type, attributeName }) =>
@@ -29,8 +35,6 @@ export const useObserveTrigger = ({
           } else {
             elCoreBody?.classList.add('overflow-hidden')
           }
-
-          setSidebarCollapsed(isCollapsed)
         }
       })
 
