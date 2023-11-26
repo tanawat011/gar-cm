@@ -19,9 +19,15 @@ export default function ToDo() {
       <p>Setting font family</p>
       <p className='line-through'>Mobile Device Option Setting</p>
       <p>Mobile Device Sidebar Toggle</p>
+      <p>Modal Notification List</p>
+      <p>Modal Quick Search</p>
       <p>Sidebar Logo</p>
       <p>Sidebar Menu</p>
       <p>Sidebar Footer</p>
+      <p>DrawerSetting Decoration</p>
+      <p>Sidebar Decoration</p>
+      <p>Manage Dark Theme Color</p>
+      <p>Manage Light Theme Color</p>
       <p>Refactor Core Layout Container</p>
       <p>Refactor Core Layout Navbar Left</p>
       <p>Breadcrumb</p>

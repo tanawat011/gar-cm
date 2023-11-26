@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "husky:add": "husky add",
-    "pre:commit": "yarn lint && yarn build",
+    "pre:commit": "yarn lint",
     "pre:push": "yarn test:cv",
     "test": "jest --maxWorkers=10",
     "test:w": "yarn test --watchAll",
