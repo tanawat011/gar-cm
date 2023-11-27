@@ -53,7 +53,7 @@ export default function Container({ children }: SidebarContainerProps) {
   return (
     <CoreLayoutProvider>
       <div className='flex relative overflow-hidden'>
-        <Sidebar isMobileDevice={isMobileDevice} />
+        <Sidebar />
 
         <ContentWrapper isMobileDevice={isMobileDevice}>
           <Navbar isMobileDevice={isMobileDevice} />

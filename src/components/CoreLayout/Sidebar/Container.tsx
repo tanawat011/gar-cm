@@ -10,13 +10,9 @@ import { CoreLayoutContext } from '../Provider'
 
 import { Content } from './Content'
 
-type ContainerProps = {
-  isMobileDevice?: boolean
-}
-
 const sidebarId = 'sidebar-container'
 
-export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
+export const Container = () => {
   const { openSidebar, onToggleSidebar } = useContext(CoreLayoutContext)
 
   const { sidebarType } = useSelector(appSettingSelector)
@@ -43,14 +39,14 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
     <div id={sidebarId} className='transition-all'>
       {sidebarType === 'drawer' && (
         <Drawer id='sidebar-drawer' open={openSidebar} onClose={() => onToggleSidebar(false)}>
-          <Content isMobileDevice={isMobileDevice} items={[]} />
+          <Content className='w-64' />
         </Drawer>
       )}
 
       {sidebarType === 'mini' && (
         <div className='h-full w-16'>
           <div className='h-full w-16 hover:w-64 fixed z-20 overflow-hidden hover:overflow-auto bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width'>
-            <Content isMobileDevice={isMobileDevice} items={[]} />
+            <Content className='w-[calc(theme(spacing.64)-1px)]' />
           </div>
         </div>
       )}
@@ -58,10 +54,10 @@ export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
       {sidebarType === 'full' && (
         <div
           className={clsx(
-            'bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-transform',
+            'bg-white h-full dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-transform',
           )}
         >
-          <Content isMobileDevice={isMobileDevice} items={[]} />
+          <Content className='w-64' />
         </div>
       )}
     </div>
