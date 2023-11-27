@@ -1,18 +1,15 @@
-import type { SidebarItem } from '@/types/sidebar'
-
 import React from 'react'
 
+import clsx from 'clsx'
 import Link from 'next/link'
 
 export type ContentProps = {
-  isMobileDevice?: boolean
-  items: SidebarItem[]
-  onClick?: (item: SidebarItem) => void
+  className?: string
 }
 
-export const Content: React.FC<ContentProps> = () => {
+export const Content: React.FC<ContentProps> = ({ className }) => {
   return (
-    <div className='w-64 transition-all'>
+    <div className={clsx('transition-all', className)}>
       <div className='flex items-center justify-between'>
         <p>Sidebar</p>
       </div>
