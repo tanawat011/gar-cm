@@ -22,21 +22,22 @@ export const Container = () => {
 
     switch (sidebarType) {
       case 'drawer':
-        sidebarEl?.classList.remove('min-w-unit-16', 'min-w-unit-64')
+        sidebarEl?.classList.add('w-0')
+        sidebarEl?.classList.remove('w-16', 'w-64')
         break
       case 'mini':
-        sidebarEl?.classList.add('min-w-unit-16')
-        sidebarEl?.classList.remove('min-w-unit-64')
+        sidebarEl?.classList.add('w-16')
+        sidebarEl?.classList.remove('w-64', 'w-0')
         break
       case 'full':
-        sidebarEl?.classList.add('min-w-unit-64')
-        sidebarEl?.classList.remove('min-w-unit-16')
+        sidebarEl?.classList.add('w-64')
+        sidebarEl?.classList.remove('w-16', 'w-0')
         break
     }
   }, [sidebarType])
 
   return (
-    <div id={sidebarId} className='transition-all'>
+    <div id={sidebarId} className='transition-width'>
       {sidebarType === 'drawer' && (
         <Drawer id='sidebar-drawer' open={openSidebar} onClose={() => onToggleSidebar(false)}>
           <Content className='w-64' />
@@ -44,7 +45,7 @@ export const Container = () => {
       )}
 
       {sidebarType === 'mini' && (
-        <div className='h-full w-16'>
+        <div className='h-full w-16 transition-width'>
           <div className='h-full w-16 hover:w-64 fixed z-20 overflow-hidden hover:overflow-auto bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width'>
             <Content className='w-[calc(theme(spacing.64)-1px)]' />
           </div>
@@ -54,7 +55,7 @@ export const Container = () => {
       {sidebarType === 'full' && (
         <div
           className={clsx(
-            'bg-white h-full dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-transform',
+            'bg-white h-full dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width',
           )}
         >
           <Content className='w-64' />

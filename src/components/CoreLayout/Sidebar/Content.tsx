@@ -9,7 +9,7 @@ export type ContentProps = {
 
 export const Content: React.FC<ContentProps> = ({ className }) => {
   return (
-    <div className={clsx('transition-all', className)}>
+    <div className={clsx('transition-width', className)}>
       <div className='flex items-center justify-between'>
         <p>Sidebar</p>
       </div>
