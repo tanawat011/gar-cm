@@ -12,6 +12,7 @@ import { Content } from './Content'
 import { ContentWrapper } from './ContentWrapper'
 import { DrawerIconTrigger, DrawerSetting } from './DrawerSetting'
 import { Navbar } from './Navbar'
+import { CoreLayoutProvider } from './Provider'
 import { Sidebar } from './Sidebar'
 
 type SidebarContainerProps = {
@@ -26,9 +27,7 @@ export default function Container({ children }: SidebarContainerProps) {
     const elNavbar = document.getElementById('navbar')
     const navbarHeight = elNavbar?.clientHeight || 0
 
-    document
-      .getElementsByTagName('html')[0]
-      .style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
+    document.getElementsByTagName('html')[0].style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
   }
 
   useInitAppSetting()
@@ -52,7 +51,7 @@ export default function Container({ children }: SidebarContainerProps) {
   if (isLoading) return <FullScreenLoading />
 
   return (
-    <>
+    <CoreLayoutProvider>
       <div className='flex relative overflow-hidden'>
         <Sidebar isMobileDevice={isMobileDevice} />
 
@@ -66,6 +65,6 @@ export default function Container({ children }: SidebarContainerProps) {
       </div>
 
       <DrawerSetting />
-    </>
+    </CoreLayoutProvider>
   )
 }
