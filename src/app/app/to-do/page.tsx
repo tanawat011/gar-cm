@@ -35,7 +35,11 @@ export default function ToDo() {
       <p>Refactor Core Layout Navbar Left</p>
       <p>Breadcrumb</p>
       <p>Card</p>
-      <p>Todo List Page</p>
+      <p>Todo List Application</p>
+      <p>Link Remember Application</p>
+      <p>Home Loan Calculation Application</p>
+      <p>Car Loan Calculation Application</p>
+      <p>Tax Calculation Application</p>
       <p>I18N</p>
       <p>Storybook</p>
       <p>Login Page</p>
