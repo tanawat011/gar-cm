@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import clsx from 'clsx'
 import { useSelector } from 'react-redux'
@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import { Drawer } from '@/components/Common'
 import { TAG_ID } from '@/constants'
 import { appSettingSelector } from '@/store/selector'
-import { toggleOnSidebarContainer } from '@/utils/sidebar'
 
 import { CoreLayoutContext } from '../Provider'
 
@@ -19,21 +18,23 @@ type ContainerProps = {
 export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
   const { openSidebar, onToggleSidebar } = useContext(CoreLayoutContext)
 
-  const { sidebarCollapsed, sidebarType } = useSelector(appSettingSelector)
-
-  useEffect(() => {
-    // toggleOnSidebarContainer({
-    //   id: TAG_ID.SIDEBAR,
-    //   sidebarType,
-    //   sidebarCollapsed,
-    // })
-  }, [sidebarCollapsed, sidebarType])
+  const { sidebarType } = useSelector(appSettingSelector)
 
   if (sidebarType === 'drawer') {
     return (
       <Drawer id='sidebar-drawer' open={openSidebar} onClose={() => onToggleSidebar(false)}>
         <Content isMobileDevice={isMobileDevice} items={[]} />
       </Drawer>
+    )
+  }
+
+  if (sidebarType === 'mini') {
+    return (
+      <div className='min-w-unit-16 z-10'>
+        <div className='h-full w-16 hover:w-64 hover:fixed hover:z-10 transition-all overflow-hidden hover:overflow-auto'>
+          <Content isMobileDevice={isMobileDevice} items={[]} />
+        </div>
+      </div>
     )
   }
 
