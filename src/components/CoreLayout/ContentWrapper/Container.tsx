@@ -14,30 +14,21 @@ type ContainerProps = {
   children: React.ReactNode
 }
 
-export const Container: React.FC<ContainerProps> = ({
-  children,
-  isMobileDevice,
-}) => {
+export const Container: React.FC<ContainerProps> = ({ children, isMobileDevice }) => {
   const { toggleSidebarCollapse } = useSidebar(isMobileDevice)
   const { sidebarCollapsed, sidebarType } = useSelector(appSettingSelector)
 
   useEffect(() => {
-    toggleOnContentWrapper({
-      id: TAG_ID.CONTENT_WRAPPER,
-      sidebarCollapsed,
-      sidebarType,
-      isMobileDevice,
-    })
+    // toggleOnContentWrapper({
+    //   id: TAG_ID.CONTENT_WRAPPER,
+    //   sidebarCollapsed,
+    //   sidebarType,
+    //   isMobileDevice,
+    // })
   }, [sidebarCollapsed, sidebarType])
 
   return (
     <>
-      <Backdrop
-        open={sidebarType === 'drawer' && !sidebarCollapsed}
-        zIndex={2}
-        onClick={() => toggleSidebarCollapse(!sidebarCollapsed)}
-      />
-
       <div
         id={TAG_ID.CONTENT_WRAPPER}
         className={clsx(
