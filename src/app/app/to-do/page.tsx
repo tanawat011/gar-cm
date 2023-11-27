@@ -15,12 +15,15 @@ export default function ToDo() {
       <p className='line-through'>Mini Sidebar</p>
       <p className='line-through'>Drawer Sidebar</p>
       <p className='line-through'>Setting drawer position</p>
-      <p>Setting sidebar type</p>
+      <p className='line-through'>Setting sidebar type</p>
       <p>Setting font family</p>
       <p className='line-through'>Mobile Device Option Setting</p>
-      <p>Mobile Device Sidebar Toggle</p>
+      <p className='line-through'>Mobile Device Sidebar Toggle</p>
       <p>Modal Notification List</p>
       <p>Modal Quick Search</p>
+      <p className='line-through'>Sidebar Drawer</p>
+      <p className='line-through'>Sidebar Mini</p>
+      <p className='line-through'>Sidebar Full</p>
       <p>Sidebar Logo</p>
       <p>Sidebar Menu</p>
       <p>Sidebar Footer</p>
