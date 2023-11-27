@@ -4,8 +4,6 @@ import React from 'react'
 
 import Link from 'next/link'
 
-import { TAG_ID } from '@/constants'
-
 export type ContentProps = {
   isMobileDevice?: boolean
   items: SidebarItem[]
@@ -14,7 +12,7 @@ export type ContentProps = {
 
 export const Content: React.FC<ContentProps> = () => {
   return (
-    <div id={TAG_ID.SIDEBAR_CONTENT} className='w-64 transition-all'>
+    <div className='w-64 transition-all'>
       <div className='flex items-center justify-between'>
         <p>Sidebar</p>
       </div>

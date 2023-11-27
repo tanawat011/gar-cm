@@ -48,21 +48,23 @@ export const Content = () => {
         </div>
       </div>
 
-      <div>
-        <p>Sidebar</p>
+      {!isMobile && (
+        <div className='hidden lg:block'>
+          <p>Sidebar</p>
 
-        <div className='flex items-center justify-around'>
-          <p className='cursor-pointer' onClick={() => toggleSidebarType('drawer')}>
-            Drawer
-          </p>
-          <p className='cursor-pointer' onClick={() => toggleSidebarType('mini')}>
-            Mini
-          </p>
-          <p className='cursor-pointer' onClick={() => toggleSidebarType('full')}>
-            Full
-          </p>
+          <div className='flex items-center justify-around'>
+            <p className='cursor-pointer' onClick={() => toggleSidebarType('drawer')}>
+              Drawer
+            </p>
+            <p className='cursor-pointer' onClick={() => toggleSidebarType('mini')}>
+              Mini
+            </p>
+            <p className='cursor-pointer' onClick={() => toggleSidebarType('full')}>
+              Full
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div>
         <p>Drawer Setting Position</p>
