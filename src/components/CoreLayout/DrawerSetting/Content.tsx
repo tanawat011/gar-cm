@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 
+import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 
-import { useDrawerPosition, useLang, useTheme } from '@/hooks'
+import { useDrawerPosition, useLang, useSidebar, useTheme } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
 
 export const coreDrawerId = 'drawer'
@@ -12,6 +13,7 @@ export const Content = () => {
 
   const { toggleTheme } = useTheme()
   const { toggleLang } = useLang()
+  const { toggleSidebarType } = useSidebar(isMobile)
   const { togglePosition } = useDrawerPosition()
 
   useEffect(() => {
@@ -50,9 +52,15 @@ export const Content = () => {
         <p>Sidebar</p>
 
         <div className='flex items-center justify-around'>
-          <p className='cursor-pointer'>Drawer</p>
-          <p className='cursor-pointer'>Mini</p>
-          <p className='cursor-pointer'>Full</p>
+          <p className='cursor-pointer' onClick={() => toggleSidebarType('drawer')}>
+            Drawer
+          </p>
+          <p className='cursor-pointer' onClick={() => toggleSidebarType('mini')}>
+            Mini
+          </p>
+          <p className='cursor-pointer' onClick={() => toggleSidebarType('full')}>
+            Full
+          </p>
         </div>
       </div>
 

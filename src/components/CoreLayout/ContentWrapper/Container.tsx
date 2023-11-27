@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import clsx from 'clsx'
-import { useSelector } from 'react-redux'
 
-import { Backdrop } from '@/components/Common'
 import { TAG_ID } from '@/constants'
-import { useSidebar } from '@/hooks'
-import { appSettingSelector } from '@/store/selector'
-import { toggleOnContentWrapper } from '@/utils/sidebar'
 
 type ContainerProps = {
   isMobileDevice?: boolean
@@ -15,18 +10,6 @@ type ContainerProps = {
 }
 
 export const Container: React.FC<ContainerProps> = ({ children, isMobileDevice }) => {
-  const { toggleSidebarCollapse } = useSidebar(isMobileDevice)
-  const { sidebarCollapsed, sidebarType } = useSelector(appSettingSelector)
-
-  useEffect(() => {
-    // toggleOnContentWrapper({
-    //   id: TAG_ID.CONTENT_WRAPPER,
-    //   sidebarCollapsed,
-    //   sidebarType,
-    //   isMobileDevice,
-    // })
-  }, [sidebarCollapsed, sidebarType])
-
   return (
     <>
       <div

@@ -8,7 +8,6 @@ import { DEFAULT_APP_SETTING } from '@/configs/defaultAppSetting'
 export type AppSettingState = {
   theme: (typeof THEME)[keyof typeof THEME]
   lang: (typeof LANG)[keyof typeof LANG]
-  sidebarCollapsed: boolean
   sidebarType: (typeof SIDEBAR_TYPE)[keyof typeof SIDEBAR_TYPE]
   drawerPosition: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
 }
@@ -27,33 +26,15 @@ export const appSettingSlice = createSlice({
     setLang: (state, action: PayloadAction<AppSettingState['lang']>) => {
       state.lang = action.payload
     },
-    setSidebarCollapsed: (
-      state,
-      action: PayloadAction<AppSettingState['sidebarCollapsed']>,
-    ) => {
-      state.sidebarCollapsed = action.payload
-    },
-    setSidebarType: (
-      state,
-      action: PayloadAction<AppSettingState['sidebarType']>,
-    ) => {
+    setSidebarType: (state, action: PayloadAction<AppSettingState['sidebarType']>) => {
       state.sidebarType = action.payload
     },
-    setDrawerPosition: (
-      state,
-      action: PayloadAction<AppSettingState['drawerPosition']>,
-    ) => {
+    setDrawerPosition: (state, action: PayloadAction<AppSettingState['drawerPosition']>) => {
       state.drawerPosition = action.payload
     },
   },
 })
 
-export const {
-  setTheme,
-  setLang,
-  setSidebarCollapsed,
-  setSidebarType,
-  setDrawerPosition,
-} = appSettingSlice.actions
+export const { setTheme, setLang, setSidebarType, setDrawerPosition } = appSettingSlice.actions
 
 export default appSettingSlice.reducer
