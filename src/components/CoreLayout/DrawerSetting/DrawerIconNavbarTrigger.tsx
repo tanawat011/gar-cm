@@ -1,15 +1,15 @@
-import { DrawerTrigger } from '@/components/Common'
+import { useContext } from 'react'
+
 import { Icon } from '@/components/Icon'
 
-import { coreDrawerId } from '.'
+import { CoreLayoutContext } from '../Provider'
 
 export const DrawerIconNavbarTrigger = () => {
+  const { onToggleDrawer } = useContext(CoreLayoutContext)
+
   return (
-    <DrawerTrigger
-      id={coreDrawerId}
-      className='cursor-pointer mx-3 hover:opacity-80 block lg:hidden'
-    >
+    <div className='cursor-pointer mx-3 hover:opacity-80 block lg:hidden' onClick={() => onToggleDrawer(true)}>
       <Icon name='FaGear' />
-    </DrawerTrigger>
+    </div>
   )
 }

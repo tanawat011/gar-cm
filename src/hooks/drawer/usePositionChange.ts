@@ -7,11 +7,7 @@ type UsePositionChangeProps = {
   position: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
 }
 
-export const usePositionChange = (
-  { id, position }: UsePositionChangeProps,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dependencies?: any[],
-) => {
+export const usePositionChange = ({ id, position }: UsePositionChangeProps) => {
   useEffect(() => {
     const el = document.getElementById(id)
 
@@ -47,5 +43,5 @@ export const usePositionChange = (
           el.classList.add('top-0', 'left-0', 'w-[300px]', 'h-full')
       }
     }
-  }, dependencies || [])
+  }, [position])
 }
