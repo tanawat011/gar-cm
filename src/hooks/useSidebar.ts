@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { isMobile } from 'react-device-detect'
 import { useDispatch } from 'react-redux'
 
 import { SIDEBAR_TYPE as ALL_SIDEBAR_TYPE } from '@/constants'
@@ -10,7 +11,7 @@ type SIDEBAR_TYPE = (typeof ALL_SIDEBAR_TYPE)[keyof typeof ALL_SIDEBAR_TYPE]
 const storageNameSidebarType = 'sidebarType'
 const defaultSidebarType = ALL_SIDEBAR_TYPE.FULL
 
-export const useSidebar = (isMobileDevice?: boolean) => {
+export const useSidebar = () => {
   const dispatch = useDispatch()
   const [sidebarType, setSidebarType] = useState<SIDEBAR_TYPE>(defaultSidebarType)
 
@@ -25,7 +26,7 @@ export const useSidebar = (isMobileDevice?: boolean) => {
   }
 
   useEffect(() => {
-    if (isMobileDevice) {
+    if (isMobile) {
       toggleSidebarType('drawer')
     } else {
       const localSidebarType = localStorage.getItem(storageNameSidebarType) as SIDEBAR_TYPE

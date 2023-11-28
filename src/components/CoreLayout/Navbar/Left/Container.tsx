@@ -6,16 +6,12 @@ import { Icon } from '@/components/Icon'
 import { useSidebar } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
 
-import { CoreLayoutContext } from '../Provider'
+import { CoreLayoutContext } from '../../Provider'
 
-type ContainerProps = {
-  isMobileDevice?: boolean
-}
-
-export const LeftContainer: React.FC<ContainerProps> = ({ isMobileDevice }) => {
+export const Container = () => {
   const { onToggleSidebar } = useContext(CoreLayoutContext)
 
-  const { toggleSidebarType } = useSidebar(isMobileDevice)
+  const { toggleSidebarType } = useSidebar()
   const { sidebarType } = useSelector(appSettingSelector)
 
   return (

@@ -1,25 +1,22 @@
 import React from 'react'
 
 import clsx from 'clsx'
+import { isMobile } from 'react-device-detect'
 
-import { LeftContainer } from './LeftContainer'
-import { RightContainer } from './RightContainer'
+import { LeftContainer } from './Left'
+import { RightContainer } from './Right'
 
-type ContainerProps = {
-  isMobileDevice?: boolean
-}
-
-export const Container: React.FC<ContainerProps> = ({ isMobileDevice }) => {
+export const Container = () => {
   return (
     <div
       className={clsx(
         'bg-white dark:bg-base-gradient-navbar dark:border-gunmetal border-solid border-b flex justify-between w-full top-0',
-        isMobileDevice ? 'fixed' : 'sticky',
+        isMobile ? 'fixed' : 'sticky',
       )}
     >
-      <LeftContainer isMobileDevice={isMobileDevice} />
+      <LeftContainer />
 
-      <RightContainer isMobileDevice={isMobileDevice} />
+      <RightContainer />
     </div>
   )
 }

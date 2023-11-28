@@ -19,20 +19,18 @@ export const Container = () => {
 
   useEffect(() => {
     const sidebarEl = document.getElementById(sidebarId)
+    const setup = (add: string[], remove: string[]) => {
+      sidebarEl?.classList.add(...add)
+      sidebarEl?.classList.remove(...remove)
+    }
 
     switch (sidebarType) {
       case 'drawer':
-        sidebarEl?.classList.add('w-0')
-        sidebarEl?.classList.remove('w-16', 'w-64')
-        break
+        return setup(['w-0'], ['w-16', 'w-64'])
       case 'mini':
-        sidebarEl?.classList.add('w-16')
-        sidebarEl?.classList.remove('w-64', 'w-0')
-        break
+        return setup(['w-16'], ['w-64', 'w-0'])
       case 'full':
-        sidebarEl?.classList.add('w-64')
-        sidebarEl?.classList.remove('w-16', 'w-0')
-        break
+        return setup(['w-64'], ['w-16', 'w-0'])
     }
   }, [sidebarType])
 

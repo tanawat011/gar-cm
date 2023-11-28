@@ -6,11 +6,7 @@ import { Avatar, User } from '@nextui-org/react'
 
 import { DropdownInput } from '@/components/Input'
 
-type ProfileProps = {
-  isMobileDevice?: boolean
-}
-
-export const Profile: React.FC<ProfileProps> = () => {
+export const Profile = () => {
   const profileInfo: Partial<AvatarProps> = {
     isBordered: true,
     as: 'button',
@@ -47,10 +43,7 @@ export const Profile: React.FC<ProfileProps> = () => {
           avatarProps={profileInfo}
         />
 
-        <Avatar
-          {...profileInfo}
-          className='cursor-pointer mx-3 block md:hidden'
-        />
+        <Avatar {...profileInfo} className='cursor-pointer mx-3 block md:hidden' />
       </div>
     </DropdownInput>
   )

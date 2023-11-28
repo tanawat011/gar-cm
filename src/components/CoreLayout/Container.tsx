@@ -9,7 +9,7 @@ import { useInitAppSetting, useResize } from '@/hooks'
 import { FullScreenLoading } from '../FullScreenLoading'
 
 import { Content } from './Content'
-import { ContentWrapper } from './ContentWrapper'
+import { ContentContainer } from './ContentContainer'
 import { DrawerIconTrigger, DrawerSetting } from './DrawerSetting'
 import { Navbar } from './Navbar'
 import { CoreLayoutProvider } from './Provider'
@@ -55,11 +55,11 @@ export default function Container({ children }: SidebarContainerProps) {
       <div className='flex relative overflow-hidden'>
         <Sidebar />
 
-        <ContentWrapper isMobileDevice={isMobileDevice}>
-          <Navbar isMobileDevice={isMobileDevice} />
+        <ContentContainer>
+          <Navbar />
 
-          <Content isMobileDevice={isMobileDevice}>{children}</Content>
-        </ContentWrapper>
+          <Content>{children}</Content>
+        </ContentContainer>
 
         <DrawerIconTrigger />
       </div>
