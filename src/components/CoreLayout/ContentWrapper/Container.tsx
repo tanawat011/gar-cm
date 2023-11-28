@@ -12,7 +12,7 @@ export const Container: React.FC<ContainerProps> = ({ children, isMobileDevice }
     <div
       className={clsx(
         'overflow-auto scrolling-touch bg-white dark:bg-base-gradient-content relative transition-all w-full',
-        isMobileDevice ? 'h-full' : 'scrolling-auto h-screen',
+        isMobileDevice ? 'h-full mt-16' : 'scrolling-auto h-screen',
       )}
     >
       {children}
