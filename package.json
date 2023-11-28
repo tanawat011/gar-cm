@@ -1,5 +1,6 @@
 {
   "name": "gar-nst2023",
+  "description": "Gu Ask Real - Non-First",
   "version": "0.1.0",
   "private": true,
   "scripts": {
