@@ -28,9 +28,15 @@ export const Content: React.FC<ContentProps> = ({ className }) => {
       )}
 
       {sidebarType === 'mini' && (
-        <div id='logo-mini' className='flex items-center h-[--navbar-h] logo-mini'>
-          <Image src={LogoMini} width={60} alt='Logo' className='ml-[theme(spacing.1)-1px]' />
-        </div>
+        <>
+          <div id='logo' className='hidden items-center justify-center h-[--navbar-h]'>
+            <Image src={Logo} width={170} alt='Logo' />
+          </div>
+
+          <div id='logo-mini' className='flex items-center justify-center h-[--navbar-h]'>
+            <Image src={LogoMini} width={55} alt='Logo' className='ml-[theme(spacing.1)-1px]' />
+          </div>
+        </>
       )}
 
       <br />

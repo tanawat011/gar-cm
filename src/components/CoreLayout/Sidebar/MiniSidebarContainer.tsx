@@ -1,6 +1,6 @@
 import React from 'react'
 
-import tw, { styled } from 'twin.macro'
+import tw, { css, styled } from 'twin.macro'
 
 type MiniSidebarContainerProps = {
   children?: React.ReactNode
@@ -24,5 +24,18 @@ const StyledChildrenContainer = styled.div(() => {
     tw`bg-white`,
     tw`dark:bg-base-gradient-sidebar dark:border-gunmetal`,
     tw`hover:(w-64 overflow-auto)`,
+    css`
+      &:hover > div {
+        ${tw`w-[calc(theme(spacing.64)-1px)]`}
+
+        & > #logo {
+          ${tw`flex`}
+        }
+
+        & > #logo-mini {
+          ${tw`hidden`}
+        }
+      }
+    `,
   ]
 })
