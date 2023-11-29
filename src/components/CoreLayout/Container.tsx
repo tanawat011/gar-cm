@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { isMobile } from 'react-device-detect'
+import tw from 'twin.macro'
 
 import { useInitAppSetting, useResize } from '@/hooks'
 
@@ -10,7 +11,7 @@ import { FullScreenLoading } from '../FullScreenLoading'
 
 import { Content } from './Content'
 import { ContentContainer } from './ContentContainer'
-import { DrawerIconTrigger, DrawerSetting } from './DrawerSetting'
+import { DrawerSetting, DrawerTriggerButton } from './DrawerSetting'
 import { Navbar } from './Navbar'
 import { CoreLayoutProvider } from './Provider'
 import { Sidebar } from './Sidebar'
@@ -54,7 +55,7 @@ export default function Container({ children }: SidebarContainerProps) {
 
   return (
     <CoreLayoutProvider>
-      <div className='flex relative overflow-hidden'>
+      <StyledCoreLayoutContainer>
         <Sidebar />
 
         <ContentContainer>
@@ -63,10 +64,12 @@ export default function Container({ children }: SidebarContainerProps) {
           <Content>{children}</Content>
         </ContentContainer>
 
-        <DrawerIconTrigger />
-      </div>
+        <DrawerTriggerButton />
+      </StyledCoreLayoutContainer>
 
       <DrawerSetting />
     </CoreLayoutProvider>
   )
 }
+
+const StyledCoreLayoutContainer = tw.div`flex relative overflow-hidden`

@@ -1,21 +1,21 @@
 import React from 'react'
 
-import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
+import tw, { styled } from 'twin.macro'
 
 type ContentContainerProps = {
   children: React.ReactNode
 }
 
 export const ContentContainer: React.FC<ContentContainerProps> = ({ children }) => {
-  return (
-    <div
-      className={clsx(
-        'overflow-auto scrolling-touch bg-white dark:bg-base-gradient-content relative transition-all w-full',
-        isMobile ? 'h-full mt-16' : 'scrolling-auto h-screen',
-      )}
-    >
-      {children}
-    </div>
-  )
+  return <StyledContentContainer>{children}</StyledContentContainer>
 }
+
+const StyledContentContainer = styled.div(() => {
+  return [
+    tw`overflow-auto scrolling-touch relative transition-all w-full`,
+    tw`bg-white`,
+    tw`dark:bg-base-gradient-content`,
+    isMobile ? tw`h-full mt-16` : tw`scrolling-auto h-screen`,
+  ]
+})

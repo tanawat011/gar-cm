@@ -1,11 +1,13 @@
 import React from 'react'
 
-import clsx from 'clsx'
+import tw from 'twin.macro'
 
 type ContentProps = {
   children: React.ReactNode
 }
 
 export const Content: React.FC<ContentProps> = ({ children }) => {
-  return <div className={clsx('bg-white dark:bg-base-gradient-content px-8 py-8')}>{children}</div>
+  return <StyledContent>{children}</StyledContent>
 }
+
+const StyledContent = tw.div`bg-white dark:bg-base-gradient-content px-8 py-8`

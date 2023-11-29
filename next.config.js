@@ -1,8 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withTwin = require('./withTwin')
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withTwin({
+  reactStrictMode: true,
   images: {
-    domains: ['tecdn.b-cdn.net', 'tailwind-elements.com'],
+    domains: ['tailwind-elements.com'],
   },
-}
+})
 
 module.exports = nextConfig
