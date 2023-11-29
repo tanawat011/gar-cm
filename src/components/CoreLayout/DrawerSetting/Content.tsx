@@ -13,7 +13,7 @@ export const Content = () => {
 
   const { toggleTheme } = useTheme()
   const { toggleLang } = useLang()
-  const { toggleSidebarType } = useSidebar(isMobile)
+  const { toggleSidebarType } = useSidebar()
   const { togglePosition } = useDrawerPosition()
 
   useEffect(() => {
