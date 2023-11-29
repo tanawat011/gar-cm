@@ -38,6 +38,8 @@ export const ICON_ALLOWED = {
   FaSignal,
 }
 
+export type IconType = keyof typeof ICON_ALLOWED
+
 export type IconProps = {
   id?: string
   name: keyof typeof ICON_ALLOWED

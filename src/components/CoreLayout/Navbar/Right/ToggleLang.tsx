@@ -1,4 +1,4 @@
-import type { LANG as ALL_LANG } from '@/constants'
+import type { Lang } from '@/types'
 
 import { useEffect } from 'react'
 
@@ -9,8 +9,6 @@ import { DropdownInput } from '@/components/Input'
 import { LANG_LABEL } from '@/constants'
 import { useLang } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
-
-type LANG = (typeof ALL_LANG)[keyof typeof ALL_LANG]
 
 export const ToggleLang = () => {
   const { lang } = useSelector(appSettingSelector)
@@ -26,7 +24,7 @@ export const ToggleLang = () => {
       mode='single'
       disallowEmptySelection
       selectedKeys={[lang]}
-      onSelected={(key) => toggleLang(key as LANG)}
+      onSelected={(key) => toggleLang(key as Lang)}
       items={[...LANG_LABEL].map((allLang) => ({
         ...allLang,
         startContent: <IconCountryFlag lang={allLang.key} className='mx-3' />,

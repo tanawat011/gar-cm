@@ -1,16 +1,15 @@
+import type { DrawerPosition } from '@/types'
+
 import { useEffect } from 'react'
 
 import { DRAWER_POSITION } from '@/constants'
 
 type UseInitialPositionProps = {
   id: string
-  position: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
+  position: DrawerPosition
 }
 
-export const useInitialPosition = ({
-  id,
-  position,
-}: UseInitialPositionProps) => {
+export const useInitialPosition = ({ id, position }: UseInitialPositionProps) => {
   useEffect(() => {
     const el = document.getElementById(id)
 
