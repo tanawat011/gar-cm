@@ -27,11 +27,11 @@ export const Container = () => {
 
     switch (sidebarType) {
       case 'drawer':
-        return setup(['w-0'], ['w-16', 'w-64'])
+        return setup(['w-0'], ['w-20', 'w-64'])
       case 'mini':
-        return setup(['w-16'], ['w-64', 'w-0'])
+        return setup(['w-20'], ['w-64', 'w-0'])
       case 'full':
-        return setup(['w-64'], ['w-16', 'w-0'])
+        return setup(['w-64'], ['w-20', 'w-0'])
     }
   }, [sidebarType])
 
@@ -39,19 +39,19 @@ export const Container = () => {
     <div id={sidebarId} className='transition-width'>
       {sidebarType === 'drawer' && (
         <Drawer id='sidebar-drawer' open={openSidebar} onClose={() => onToggleSidebar(false)}>
-          <Content className='w-64' />
+          <Content />
         </Drawer>
       )}
 
       {sidebarType === 'mini' && (
         <MiniSidebarContainer>
-          <Content className='w-16' />
+          <Content />
         </MiniSidebarContainer>
       )}
 
       {sidebarType === 'full' && (
         <FullSidebarContainer>
-          <Content className='w-64' />
+          <Content />
         </FullSidebarContainer>
       )}
     </div>
