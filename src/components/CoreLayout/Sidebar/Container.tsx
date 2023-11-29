@@ -44,7 +44,7 @@ export const Container = () => {
 
       {sidebarType === 'mini' && (
         <div className='h-full w-16 transition-width'>
-          <div className='h-full w-16 hover:w-64 fixed z-20 overflow-hidden hover:overflow-auto bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width'>
+          <div className='h-full w-16 hover:w-64 fixed z-20 overflow-hidden hover:overflow-auto bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width [&>.logo-mini]:hover:bg-red-300'>
             <Content className='w-[calc(theme(spacing.64)-1px)]' />
           </div>
         </div>

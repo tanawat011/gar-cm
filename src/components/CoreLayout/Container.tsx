@@ -19,12 +19,14 @@ type SidebarContainerProps = {
   children: React.ReactNode
 }
 
+const navbarId = 'navbar'
+
 export default function Container({ children }: SidebarContainerProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isMobileDevice, setIsMobileDevice] = useState<boolean>()
 
   const setupChildContainer = () => {
-    const elNavbar = document.getElementById('navbar')
+    const elNavbar = document.getElementById(navbarId)
     const navbarHeight = elNavbar?.clientHeight || 0
 
     document.getElementsByTagName('html')[0].style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
@@ -56,7 +58,7 @@ export default function Container({ children }: SidebarContainerProps) {
         <Sidebar />
 
         <ContentContainer>
-          <Navbar />
+          <Navbar id={navbarId} />
 
           <Content>{children}</Content>
         </ContentContainer>
