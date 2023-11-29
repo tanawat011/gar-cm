@@ -45,7 +45,7 @@ export const Container = () => {
 
       {sidebarType === 'mini' && (
         <MiniSidebarContainer>
-          <Content className='w-16 hover:w-[calc(theme(spacing.64)-1px)]' />
+          <Content className='w-16' />
         </MiniSidebarContainer>
       )}
 
