@@ -4,9 +4,8 @@ import { Input } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
 
-import { DrawerIconNavbarTrigger } from '../../DrawerSetting'
-
 import { Profile } from './Profile'
+import { ToggleDrawerSetting } from './ToggleDrawerSetting'
 import { ToggleLang } from './ToggleLang'
 import { ToggleTheme } from './ToggleTheme'
 
@@ -23,7 +22,7 @@ export const Container = () => {
         }}
       />
 
-      <DrawerIconNavbarTrigger />
+      <ToggleDrawerSetting />
 
       <div className='items-center hidden lg:flex'>
         <Icon name='FaRegBell' className='cursor-pointer mx-3 hover:opacity-80' />

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react'
 
-import clsx from 'clsx'
 import { useSelector } from 'react-redux'
 
 import { Drawer } from '@/components/Common'
@@ -9,6 +8,8 @@ import { appSettingSelector } from '@/store/selector'
 import { CoreLayoutContext } from '../Provider'
 
 import { Content } from './Content'
+import { FullSidebarContainer } from './FullSidebarContainer'
+import { MiniSidebarContainer } from './MiniSidebarContainer'
 
 const sidebarId = 'sidebar-container'
 
@@ -43,21 +44,15 @@ export const Container = () => {
       )}
 
       {sidebarType === 'mini' && (
-        <div className='h-full w-16 transition-width'>
-          <div className='h-full w-16 hover:w-64 fixed z-20 overflow-hidden hover:overflow-auto bg-white dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width [&>.logo-mini]:hover:bg-red-300'>
-            <Content className='w-[calc(theme(spacing.64)-1px)]' />
-          </div>
-        </div>
+        <MiniSidebarContainer>
+          <Content className='w-[calc(theme(spacing.64)-1px)]' />
+        </MiniSidebarContainer>
       )}
 
       {sidebarType === 'full' && (
-        <div
-          className={clsx(
-            'bg-white h-full dark:bg-base-gradient-sidebar dark:border-gunmetal border-solid border-r transition-width',
-          )}
-        >
+        <FullSidebarContainer>
           <Content className='w-64' />
-        </div>
+        </FullSidebarContainer>
       )}
     </div>
   )
