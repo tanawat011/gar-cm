@@ -1,17 +1,16 @@
-import type { LANG } from '@/constants'
+import type { Lang } from '@/types'
 
 import React from 'react'
 
+export type IconFlagType = Lang
+
 export type IconCountryFlagProps = {
-  lang: (typeof LANG)[keyof typeof LANG]
+  lang: IconFlagType
   className?: string
 }
 
-export const IconCountryFlag: React.FC<IconCountryFlagProps> = ({
-  lang,
-  className,
-}) => {
-  const transformLangToFlag = (l: string) => {
+export const IconCountryFlag: React.FC<IconCountryFlagProps> = ({ lang, className }) => {
+  const transformLangToFlag = (l: IconFlagType) => {
     switch (l) {
       case 'en':
         return 'us'

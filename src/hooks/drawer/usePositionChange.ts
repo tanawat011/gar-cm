@@ -1,10 +1,12 @@
+import type { DrawerPosition } from '@/types'
+
 import { useEffect } from 'react'
 
 import { DRAWER_POSITION } from '@/constants'
 
 type UsePositionChangeProps = {
   id: string
-  position: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
+  position: DrawerPosition
 }
 
 export const usePositionChange = ({ id, position }: UsePositionChangeProps) => {

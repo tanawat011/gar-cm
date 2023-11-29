@@ -1,20 +1,21 @@
 import { useEffect } from 'react'
 
+import { isMobile } from 'react-device-detect'
+
 type UseResizeProps = {
-  isMobileDevice?: boolean
   cb: () => void
 }
 
-export const useResize = ({ isMobileDevice, cb }: UseResizeProps) => {
+export const useResize = ({ cb }: UseResizeProps) => {
   useEffect(() => {
-    if (isMobileDevice) {
+    if (isMobile) {
       window.addEventListener('orientationchange', cb)
     } else {
       window.addEventListener('resize', cb)
     }
 
     return () => {
-      if (isMobileDevice) {
+      if (isMobile) {
         window.removeEventListener('orientationchange', cb)
       } else {
         window.removeEventListener('resize', cb)

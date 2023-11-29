@@ -24,7 +24,6 @@ const navbarId = 'navbar'
 
 export default function Container({ children }: SidebarContainerProps) {
   const [isLoading, setIsLoading] = useState(true)
-  const [isMobileDevice, setIsMobileDevice] = useState<boolean>()
 
   const setupChildContainer = () => {
     const elNavbar = document.getElementById(navbarId)
@@ -35,7 +34,6 @@ export default function Container({ children }: SidebarContainerProps) {
 
   useInitAppSetting()
   useResize({
-    isMobileDevice,
     cb: setupChildContainer,
   })
 
@@ -44,8 +42,6 @@ export default function Container({ children }: SidebarContainerProps) {
   }, [isLoading])
 
   useEffect(() => {
-    setIsMobileDevice(isMobile)
-
     setTimeout(() => {
       setIsLoading(false)
     }, 1000)

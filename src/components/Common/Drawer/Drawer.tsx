@@ -1,3 +1,5 @@
+import type { DrawerPosition } from '@/types'
+
 import React, { useEffect } from 'react'
 
 import clsx from 'clsx'
@@ -11,7 +13,7 @@ type DrawerProps = {
   id: string
   open?: boolean
   onClose?: () => void
-  position?: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
+  position?: DrawerPosition
   children: React.ReactNode
   className?: string
 }

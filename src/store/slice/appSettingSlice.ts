@@ -1,15 +1,15 @@
-import type { THEME, DRAWER_POSITION, LANG, SIDEBAR_TYPE } from '@/constants'
+import type { DrawerPosition, Lang, SidebarType, Theme } from '@/types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
 
-import { DEFAULT_APP_SETTING } from '@/configs/defaultAppSetting'
+import { DEFAULT_APP_SETTING } from '@/configs'
 
 export type AppSettingState = {
-  theme: (typeof THEME)[keyof typeof THEME]
-  lang: (typeof LANG)[keyof typeof LANG]
-  sidebarType: (typeof SIDEBAR_TYPE)[keyof typeof SIDEBAR_TYPE]
-  drawerPosition: (typeof DRAWER_POSITION)[keyof typeof DRAWER_POSITION]
+  theme: Theme
+  lang: Lang
+  sidebarType: SidebarType
+  drawerPosition: DrawerPosition
 }
 
 // NOTE: this is the initial state of the appSetting, not the default setting

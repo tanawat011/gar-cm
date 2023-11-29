@@ -1,9 +1,12 @@
+import type { SidebarType } from '@/types'
+
 import React from 'react'
 
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
+import { styled } from 'twin.macro'
 
 import Logo from '@/assets/images/logo/logo-crop.png'
 import LogoMini from '@/assets/images/logo/logo-mini.png'
@@ -55,3 +58,7 @@ export const Content: React.FC<ContentProps> = ({ className }) => {
     </div>
   )
 }
+
+const StyledContent = styled.div<{ sidebarType: SidebarType }>(({ sidebarType }) => {
+  return []
+})
