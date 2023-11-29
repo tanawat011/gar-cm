@@ -24,7 +24,7 @@ export default function ToDo() {
       <p className='line-through'>Sidebar Drawer</p>
       <p className='line-through'>Sidebar Mini</p>
       <p className='line-through'>Sidebar Full</p>
-      <p>Sidebar Logo</p>
+      <p className='line-through'>Sidebar Logo</p>
       <p>Sidebar Menu</p>
       <p>Sidebar Footer</p>
       <p>DrawerSetting Decoration</p>
@@ -33,6 +33,7 @@ export default function ToDo() {
       <p>Manage Light Theme Color</p>
       <p>Refactor Core Layout Container</p>
       <p>Refactor Core Layout Navbar Left</p>
+      <p className='line-through'>Styled component</p>
       <p>Breadcrumb</p>
       <p>Card</p>
       <p>Todo List Application</p>
