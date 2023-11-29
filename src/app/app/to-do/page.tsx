@@ -26,7 +26,7 @@ export default function ToDo() {
       <p className='line-through'>Sidebar Full</p>
       <p className='line-through'>Sidebar Logo</p>
       <p>Sidebar Menu</p>
-      <p>Sidebar Footer</p>
+      <p className='line-through'>Sidebar Footer</p>
       <p>DrawerSetting Decoration</p>
       <p>Sidebar Decoration</p>
       <p>Manage Dark Theme Color</p>

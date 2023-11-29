@@ -15,12 +15,12 @@ export const MiniSidebarContainer: React.FC<MiniSidebarContainerProps> = ({ chil
 }
 
 const StyledContainer = styled.div(() => {
-  return [tw`h-full w-16 transition-width`]
+  return [tw`h-full w-20 transition-width`]
 })
 
 const StyledChildrenContainer = styled.div(() => {
   return [
-    tw`h-full w-16 fixed z-20 border-solid border-r transition-width overflow-hidden`,
+    tw`h-full w-20 fixed z-20 border-solid border-r transition-width overflow-hidden`,
     tw`bg-white`,
     tw`dark:bg-base-gradient-sidebar dark:border-gunmetal`,
     tw`hover:(w-64 overflow-auto)`,
@@ -34,6 +34,10 @@ const StyledChildrenContainer = styled.div(() => {
 
         & > #logo-mini {
           ${tw`hidden`}
+        }
+
+        & > div p #powered-by {
+          ${tw`inline-block`}
         }
       }
     `,
