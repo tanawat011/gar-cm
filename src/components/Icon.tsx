@@ -17,6 +17,8 @@ import {
   FaRegMoon,
   FaRegSun,
   FaSignal,
+  FaChevronDown,
+  FaShop,
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
@@ -36,6 +38,8 @@ export const ICON_ALLOWED = {
   FaRegMoon,
   FaRegSun,
   FaSignal,
+  FaChevronDown,
+  FaShop,
 }
 
 export type IconType = keyof typeof ICON_ALLOWED
