@@ -27,6 +27,7 @@ export default function ToDo() {
       <p className='line-through'>Sidebar Logo</p>
       <p>Sidebar Menu</p>
       <p className='line-through'>Sidebar Footer</p>
+      <p>Favicon</p>
       <p>DrawerSetting Decoration</p>
       <p>Sidebar Decoration</p>
       <p>Manage Dark Theme Color</p>
@@ -38,6 +39,7 @@ export default function ToDo() {
       <p>Card</p>
       <p>Todo List Application</p>
       <p>Link Remember Application</p>
+      <p>Expense Tracker Application</p>
       <p>Home Loan Calculation Application</p>
       <p>Car Loan Calculation Application</p>
       <p>Tax Calculation Application</p>

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import tw, { css, styled } from 'twin.macro'
 
 import { Icon } from '@/components/Icon'
@@ -61,6 +62,9 @@ export const Menu = () => {
   return (
     <StyledContainer>
       {items.map((lv1) => {
+        if (lv1.items) {
+        }
+
         return (
           <StyledMenuContainer key={lv1.id}>
             <StyledMenuItem id={lv1.id} onClick={() => handleToggleItem(lv1.id)}>
@@ -76,9 +80,36 @@ export const Menu = () => {
               <StyledMenuItemChildrenContainer id={`${lv1.id}-children`} count={lv1.items.length}>
                 {lv1.items.map((lv2) => {
                   return (
-                    <StyledMenuItem key={lv2.id} isChildren>
-                      {lv2.label}
-                    </StyledMenuItem>
+                    <>
+                      <StyledMenuItem key={lv2.id} isChildren id={lv2.id} onClick={() => handleToggleItem(lv2.id)}>
+                        <div className='flex items-center'>
+                          <div className='w-6' />
+                          <p>{lv2.label}</p>
+                        </div>
+
+                        {lv2.items && <Icon id='arrow-down' name='FaChevronDown' className='transition-all' />}
+                      </StyledMenuItem>
+
+                      {lv2.items && (
+                        <StyledMenuItemChildrenContainer id={`${lv2.id}-children`}>
+                          {lv2.items.map((lv3) => {
+                            return (
+                              <StyledMenuItem
+                                key={lv3.id}
+                                isChildren
+                                id={lv3.id}
+                                onClick={() => handleToggleItem(lv3.id)}
+                              >
+                                <div className='flex items-center'>
+                                  <div className='w-12' />
+                                  <p>{lv3.label}</p>
+                                </div>
+                              </StyledMenuItem>
+                            )
+                          })}
+                        </StyledMenuItemChildrenContainer>
+                      )}
+                    </>
                   )
                 })}
               </StyledMenuItemChildrenContainer>
