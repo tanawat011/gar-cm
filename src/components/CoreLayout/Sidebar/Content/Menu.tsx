@@ -72,17 +72,7 @@ export const Menu = () => {
               {lv1.items && <Icon id='arrow-down' name='FaChevronDown' className='transition-all' />}
             </StyledMenuItem>
 
-            {lv1.items && (
-              <StyledMenuItemChildrenContainer id={`${lv1.id}-children`} count={lv1.items.length}>
-                {lv1.items.map((lv2) => {
-                  return (
-                    <StyledMenuItem key={lv2.id} isChildren>
-                      {lv2.label}
-                    </StyledMenuItem>
-                  )
-                })}
-              </StyledMenuItemChildrenContainer>
-            )}
+            {lv1.items && <div></div>}
           </StyledMenuContainer>
         )
       })}
