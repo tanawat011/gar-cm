@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import tw, { styled } from 'twin.macro'
 
 import { appSettingSelector } from '@/store/selector'
-import * as pkg from '~/package.json'
+import pkg from '~/package.json'
 
 export const Footer = () => {
   const { sidebarType } = useSelector(appSettingSelector)
