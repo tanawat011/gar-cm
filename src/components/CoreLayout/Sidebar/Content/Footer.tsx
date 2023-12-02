@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import tw, { styled } from 'twin.macro'
 
 import { appSettingSelector } from '@/store/selector'
-import { version } from '~/package.json'
+import * as pkg from '~/package.json'
 
 export const Footer = () => {
   const { sidebarType } = useSelector(appSettingSelector)
@@ -17,7 +17,7 @@ export const Footer = () => {
         </StyledPoweredBy>{' '}
         <span>tDev</span>
       </p>
-      <p>v{version}</p>
+      <p>v{pkg?.version}</p>
     </StyledFooterWrap>
   )
 }
