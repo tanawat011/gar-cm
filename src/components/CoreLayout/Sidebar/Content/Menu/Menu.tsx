@@ -74,32 +74,28 @@ export const Menu = () => {
 
   const handleToggleItem = (itemId: string) => {
     const rootEl = itemId.split('.')[0]
+    const rootHeight = listRef.current[rootEl]?.scrollHeight || 0
+    const itemHeight = listRef.current[itemId]?.scrollHeight || 0
 
-    if (openedMenu[itemId]?.open === true) {
-      setOpenedMenu((prevState) => ({
-        ...prevState,
-        [itemId]: {
-          open: false,
-          height: '0px',
-        },
+    if (!!openedMenu[itemId]?.open) {
+      return setOpenedMenu({
+        ...openedMenu,
+        [itemId]: { open: false, height: '0px' },
         [rootEl]: {
-          open: rootEl === itemId ? false : true,
-          height: `${(listRef.current[rootEl]?.scrollHeight || 0) - (listRef.current[itemId]?.scrollHeight || 0)}px`,
+          open: !(rootEl === itemId),
+          height: `${rootHeight - itemHeight}px`,
         },
-      }))
-    } else {
-      setOpenedMenu((prevState) => ({
-        ...prevState,
-        [itemId]: {
-          open: true,
-          height: `${listRef.current[itemId]?.scrollHeight || 0}px`,
-        },
-        [rootEl]: {
-          open: true,
-          height: `${(listRef.current[rootEl]?.scrollHeight || 0) + (listRef.current[itemId]?.scrollHeight || 0)}px`,
-        },
-      }))
+      })
     }
+
+    setOpenedMenu({
+      ...openedMenu,
+      [itemId]: { open: true, height: `${itemHeight}px` },
+      [rootEl]: {
+        open: true,
+        height: `${rootHeight + itemHeight}px`,
+      },
+    })
   }
 
   const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3) => {
