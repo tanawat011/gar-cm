@@ -102,18 +102,19 @@ export const Menu = () => {
     }
   }
 
-  const generateMenu = (item: ItemProps, idx: number, lvl: 1 | 2 | 3) => {
+  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3) => {
+    const hasItems = 'items' in item
+    const hasLink = 'link' in item
+
     if (activeName === '' && item?.link && activeLink.includes(item?.link)) {
       setActiveName(item.id)
     }
 
     const classesActive = activeName === item.id ? 'active' : ''
     const onClick = () => {
-      if ('items' in item) {
-        return handleToggleItem(item.id)
-      }
+      if (hasItems) return handleToggleItem(item.id)
 
-      if ('link' in item) {
+      if (hasLink) {
         // handleNavigate(item.id)
       }
     }
@@ -122,9 +123,9 @@ export const Menu = () => {
       const { code } = e
 
       if (code === 'Space') {
-        if ('items' in item) {
-          handleToggleItem(item.id)
-        } else if ('link' in item) {
+        if (hasItems) return handleToggleItem(item.id)
+
+        if (hasLink) {
           // handleNavigate(item.id)
         }
       }
@@ -144,7 +145,7 @@ export const Menu = () => {
         >
           <IconAndLabel {...item} isExpand={isExpand} isExpandOnHover={isExpandOnHover} />
 
-          {'items' in item && (
+          {hasItems && (
             <BadgeAndArrow
               isOpen={!!openedMenu?.[item.id]?.open}
               isExpand={isExpand}
@@ -153,7 +154,7 @@ export const Menu = () => {
           )}
         </StyledItem>
 
-        {'items' in item && (
+        {hasItems && (
           <SubItemContainer
             handleRef={(el) => (listRef.current[item.id] = el)}
             id={item.id}
@@ -161,7 +162,7 @@ export const Menu = () => {
             isExpand={isExpand}
             isExpandOnHover={isExpandOnHover}
           >
-            {item.items?.map((cldItem, cldIdx) => generateMenu(cldItem, cldIdx, (lvl + 1) as never))}
+            {item.items?.map((cldItem, cldIdx) => generateMenuItem(cldItem, cldIdx, (lvl + 1) as never))}
           </SubItemContainer>
         )}
       </li>
@@ -170,7 +171,7 @@ export const Menu = () => {
 
   return (
     <StyledContainer>
-      <StyledUlContainer>{items.map((item, idx) => generateMenu(item, idx, 1))}</StyledUlContainer>
+      <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
     </StyledContainer>
   )
 }
