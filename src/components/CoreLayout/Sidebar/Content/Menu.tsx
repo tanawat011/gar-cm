@@ -1,24 +1,24 @@
-import tw, { css, styled } from 'twin.macro'
+import type { IconType } from '@/components/Icon'
 
-import { Icon } from '@/components/Icon'
+import type { KeyboardEvent } from 'react'
+import { useRef, useState } from 'react'
+
+import tw, { styled } from 'twin.macro'
+
+import { BadgeAndArrow } from './BadgeAndArrow'
+import { IconAndLabel } from './IconAndLabel'
+import { SubItemContainer } from './SubItemContainer'
+
+type ItemProps = {
+  label: string
+  icon?: IconType
+  id: string
+  link?: string
+  items?: ItemProps[]
+}
 
 export const Menu = () => {
-  const handleToggleItem = (itemId: string) => {
-    const el = document.getElementById(itemId)
-    const elChildren = document.getElementById(`${itemId}-children`)
-
-    if (el) {
-      const isActive = el.classList.contains('active')
-
-      el.classList.toggle('active', !isActive)
-
-      if (elChildren) {
-        elChildren.classList.toggle('active', !isActive)
-      }
-    }
-  }
-
-  const items = [
+  const items: ItemProps[] = [
     {
       label: 'Dashboard',
       icon: 'FaShop',
@@ -56,61 +56,143 @@ export const Menu = () => {
         },
       ],
     },
+    {
+      label: 'Dashboard 2',
+      icon: 'FaShop',
+      id: 'dashboard2',
+    },
   ]
+
+  const activeLink = window.location.pathname
+
+  const listRef = useRef<Record<string, HTMLUListElement | null>>({})
+
+  const [isExpand, setIsExpand] = useState(true)
+  const [isExpandOnHover, setIsExpandOnHover] = useState(false)
+  const [activeName, setActiveName] = useState('')
+  const [openedMenu, setOpenedMenu] = useState<Record<string, any>>({})
+
+  const handleToggleItem = (itemId: string) => {
+    const rootEl = itemId.split('.')[0]
+
+    if (openedMenu[itemId]?.open === true) {
+      setOpenedMenu((prevState) => ({
+        ...prevState,
+        [itemId]: {
+          open: false,
+          height: '0px',
+        },
+        [rootEl]: {
+          open: rootEl === itemId ? false : true,
+          height: `${(listRef.current[rootEl]?.scrollHeight || 0) - (listRef.current[itemId]?.scrollHeight || 0)}px`,
+        },
+      }))
+    } else {
+      setOpenedMenu((prevState) => ({
+        ...prevState,
+        [itemId]: {
+          open: true,
+          height: `${listRef.current[itemId]?.scrollHeight || 0}px`,
+        },
+        [rootEl]: {
+          open: true,
+          height: `${(listRef.current[rootEl]?.scrollHeight || 0) + (listRef.current[itemId]?.scrollHeight || 0)}px`,
+        },
+      }))
+    }
+  }
+
+  const generateMenu = (item: ItemProps, idx: number, lvl: 1 | 2 | 3) => {
+    if (activeName === '' && item?.link && activeLink.includes(item?.link)) {
+      setActiveName(item.id)
+    }
+
+    const classesActive = activeName === item.id ? 'active' : ''
+    const onClick = () => {
+      if ('items' in item) {
+        return handleToggleItem(item.id)
+      }
+
+      if ('link' in item) {
+        // handleNavigate(item.id)
+      }
+    }
+
+    const onKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
+      const { code } = e
+
+      if (code === 'Space') {
+        if ('items' in item) {
+          handleToggleItem(item.id)
+        } else if ('link' in item) {
+          // handleNavigate(item.id)
+        }
+      }
+    }
+
+    return (
+      <li key={idx}>
+        <StyledItem
+          role='button'
+          tabIndex={0}
+          onClick={onClick}
+          onKeyDown={onKeyDown}
+          id={item.id}
+          lvl={lvl}
+          activeName={activeName}
+          className={classesActive}
+        >
+          <IconAndLabel {...item} isExpand={isExpand} isExpandOnHover={isExpandOnHover} />
+
+          {'items' in item && (
+            <BadgeAndArrow
+              isOpen={!!openedMenu?.[item.id]?.open}
+              isExpand={isExpand}
+              isExpandOnHover={isExpandOnHover}
+            />
+          )}
+        </StyledItem>
+
+        {'items' in item && (
+          <SubItemContainer
+            handleRef={(el) => (listRef.current[item.id] = el)}
+            id={item.id}
+            height={openedMenu?.[item.id]?.height}
+            isExpand={isExpand}
+            isExpandOnHover={isExpandOnHover}
+          >
+            {item.items?.map((cldItem, cldIdx) => generateMenu(cldItem, cldIdx, (lvl + 1) as never))}
+          </SubItemContainer>
+        )}
+      </li>
+    )
+  }
 
   return (
     <StyledContainer>
-      {items.map((lv1) => {
-        return (
-          <StyledMenuContainer key={lv1.id}>
-            <StyledMenuItem id={lv1.id} onClick={() => handleToggleItem(lv1.id)}>
-              <div className='flex items-center'>
-                <Icon name={lv1.icon as never} className='mr-2 w-4 h-4' />
-                <p>{lv1.label}</p>
-              </div>
-
-              {lv1.items && <Icon id='arrow-down' name='FaChevronDown' className='transition-all' />}
-            </StyledMenuItem>
-
-            {lv1.items && <div></div>}
-          </StyledMenuContainer>
-        )
-      })}
+      <StyledUlContainer>{items.map((item, idx) => generateMenu(item, idx, 1))}</StyledUlContainer>
     </StyledContainer>
   )
 }
 
 const StyledContainer = styled.div(() => {
-  return [tw`h-[calc(100%-(var(--navbar-h)*2))] px-4`]
+  return [tw`h-[calc(100%-(var(--navbar-h)*2))] text-sm  select-none`]
 })
 
-const StyledMenuContainer = styled.div(() => {
-  return [tw`flex flex-col items-center rounded-lg cursor-pointer select-none`]
+const StyledUlContainer = styled.ul(() => {
+  return [tw`list-none px-3`]
 })
 
-const StyledMenuItem = styled.div<{ isChildren?: boolean }>(({ isChildren }) => {
+const StyledItem = styled.a<{ id: string; lvl: 1 | 2 | 3; activeName: string }>(({ id, lvl, activeName }) => {
+  const activated = activeName === id || activeName.split('.')[0] === id
+
   return [
-    isChildren ? tw`h-0` : tw`h-10`,
-    tw`flex items-center justify-between h-10 rounded-lg w-full px-4`,
-    tw`hover:bg-gray-800`,
-    css`
-      &.active {
-        #arrow-down {
-          ${tw`-rotate-180`}
-        }
-      }
-    `,
-  ]
-})
-
-const StyledMenuItemChildrenContainer = styled.div<{ count?: number }>(({ count = 0 }) => {
-  return [
-    tw`w-full flex flex-col h-0 opacity-0 overflow-hidden transform duration-150`,
-    css`
-      &.active {
-        ${tw`opacity-100`}
-        height: calc(2.5rem * ${count});
-      }
-    `,
+    tw`cursor-pointer rounded-lg flex items-center justify-between h-12 pr-3 mb-1 `,
+    tw`hover:bg-slate-300/20 `,
+    lvl === 1 && tw`pl-4`,
+    lvl === 2 && tw`pl-11`,
+    lvl === 3 && tw`pl-16`,
+    activated ? tw`text-blue-600 font-semibold` : tw`text-slate-500`,
+    activated && lvl === 1 ? tw`bg-blue-200/20` : tw`bg-transparent`,
   ]
 })
