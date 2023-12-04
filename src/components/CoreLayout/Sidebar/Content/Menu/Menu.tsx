@@ -88,7 +88,7 @@ export const Menu = () => {
           lvl={lvl}
           activeItem={activeItem}
           className={classesActive}
-          href='/'
+          href='#'
           {...(!hasItems && { href: item?.link || '/' })}
         >
           <IconAndLabel {...item} isExpand={isExpand} isExpandOnHover={isExpandOnHover} />
