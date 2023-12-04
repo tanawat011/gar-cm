@@ -57,7 +57,7 @@ export const Icon: React.FC<IconProps> = ({ id, name, className, onClick }) => {
   const IconComponent = ICON_ALLOWED[name]
 
   return (
-    <div id={id} className={className} onClick={onClick}>
+    <div id={id} className={['flex items-center justify-center', className].join(' ')} onClick={onClick}>
       <IconComponent />
     </div>
   )

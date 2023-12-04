@@ -3,6 +3,10 @@ import type { ItemProps } from './items'
 import type { KeyboardEvent } from 'react'
 import { useRef, useState } from 'react'
 
+import { useSelector } from 'react-redux'
+
+import { appSettingSelector } from '@/store/selector'
+
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
 import { StyledContainer, StyledItem, StyledUlContainer } from './Menu.styled'
@@ -13,6 +17,8 @@ type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 
 export const Menu = () => {
   const activeLink = window.location.pathname
+
+  const { sidebarType } = useSelector(appSettingSelector)
 
   const listRef = useRef<Record<string, HTMLUListElement | null>>({})
 
@@ -51,7 +57,7 @@ export const Menu = () => {
     })
   }
 
-  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3) => {
+  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3, isJustIcon?: boolean) => {
     const itemId = item.id
     const hasItems = 'items' in item
     const hasLink = 'link' in item
@@ -91,9 +97,14 @@ export const Menu = () => {
           href='#'
           {...(!hasItems && { href: item?.link || '/' })}
         >
-          <IconAndLabel {...item} isExpand={isExpand} isExpandOnHover={isExpandOnHover} />
+          <IconAndLabel
+            {...item}
+            {...(lvl > 1 && { icon: undefined })}
+            isExpand={isExpand}
+            isExpandOnHover={isExpandOnHover}
+          />
 
-          {hasItems && (
+          {!isJustIcon && hasItems && (
             <BadgeAndArrow
               isOpen={!!openedMenu?.[itemId]?.open}
               isExpand={isExpand}
@@ -102,7 +113,7 @@ export const Menu = () => {
           )}
         </StyledItem>
 
-        {hasItems && (
+        {!isJustIcon && hasItems && (
           <SubItemContainer
             handleRef={(el) => (listRef.current[itemId] = el)}
             id={itemId}
@@ -119,7 +130,15 @@ export const Menu = () => {
 
   return (
     <StyledContainer>
-      <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
+      {sidebarType === 'mini' && (
+        <StyledUlContainer id='mini-sidebar'>
+          {items.map((item, idx) => generateMenuItem(item, idx, 1, true))}
+        </StyledUlContainer>
+      )}
+
+      <StyledUlContainer id='full-sidebar'>
+        {items.map((item, idx) => generateMenuItem(item, idx, 1))}
+      </StyledUlContainer>
     </StyledContainer>
   )
 }

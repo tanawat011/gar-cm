@@ -25,19 +25,53 @@ const StyledChildrenContainer = styled.div(() => {
     tw`dark:bg-base-gradient-sidebar dark:border-gunmetal`,
     tw`hover:(w-64 overflow-auto)`,
     css`
-      &:hover > div {
-        ${tw`w-[calc(theme(spacing.64)-1px)]`}
-
-        & > #logo {
-          ${tw`flex`}
-        }
-
-        & > #logo-mini {
+      & > div {
+        #item-label {
           ${tw`hidden`}
         }
 
-        & > div p #powered-by {
+        #arrow-down {
+          ${tw`hidden`}
+        }
+
+        #mini-sidebar {
+          ${tw`block`}
+        }
+
+        #full-sidebar {
+          ${tw`hidden`}
+        }
+      }
+
+      &:hover > div {
+        ${tw`w-[calc(theme(spacing.64)-1px)]`}
+
+        #logo {
+          ${tw`flex`}
+        }
+
+        #logo-mini {
+          ${tw`hidden`}
+        }
+
+        #mini-sidebar {
+          ${tw`hidden`}
+        }
+
+        #full-sidebar {
+          ${tw`block`}
+        }
+
+        #powered-by {
           ${tw`inline-block`}
+        }
+
+        #item-label {
+          ${tw`block`}
+        }
+
+        #arrow-down {
+          ${tw`block`}
         }
       }
     `,
