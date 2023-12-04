@@ -13,15 +13,24 @@ export const items: ItemProps[] = [
     label: 'Dashboard',
     icon: 'FaShop',
     id: 'dashboard',
+    link: '/',
   },
   {
-    label: 'Children',
-    icon: 'FaSignal',
-    id: 'children',
+    label: 'Application',
+    icon: 'FaShop',
+    id: 'app',
     items: [
       {
-        label: 'Children 2',
-        id: 'children2',
+        label: 'Link Remember',
+        icon: 'FaShop',
+        id: 'link-remember',
+        link: '/app/link-remember',
+      },
+      {
+        label: 'TODO',
+        icon: 'FaShop',
+        id: 'to-do',
+        link: '/app/to-do',
       },
     ],
   },
@@ -33,6 +42,7 @@ export const items: ItemProps[] = [
       {
         label: 'Level 2',
         id: 'level2',
+        link: '/level1/level2',
       },
       {
         label: 'Level 2(2)',
@@ -41,14 +51,22 @@ export const items: ItemProps[] = [
           {
             label: 'Level 3',
             id: 'level3',
+            link: '/level1/level2/level3',
           },
         ],
       },
     ],
   },
   {
-    label: 'Dashboard 2',
+    label: 'Example Not Found',
     icon: 'FaShop',
-    id: 'dashboard2',
+    id: 'not-found',
+    link: '/not-found',
+  },
+  {
+    label: 'Example Error',
+    icon: 'FaShop',
+    id: 'error',
+    link: '/error',
   },
 ]

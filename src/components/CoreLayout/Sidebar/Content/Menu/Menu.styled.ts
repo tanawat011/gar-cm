@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import tw, { styled } from 'twin.macro'
 
 export const StyledContainer = styled.div(() => {
@@ -8,8 +9,12 @@ export const StyledUlContainer = styled.ul(() => {
   return [tw`list-none px-3`]
 })
 
-export const StyledItem = styled.a<{ id: string; lvl: 1 | 2 | 3; activeName: string }>(({ id, lvl, activeName }) => {
-  const activated = activeName === id || activeName.split('.')[0] === id
+export const StyledItem = styled(Link)<{ id: string; lvl: 1 | 2 | 3; activeItem: string }>(({
+  id,
+  lvl,
+  activeItem,
+}) => {
+  const activated = activeItem === id || activeItem.split('.')[0] === id
 
   return [
     tw`cursor-pointer rounded-lg flex items-center justify-between h-12 pr-3 mb-1 `,
