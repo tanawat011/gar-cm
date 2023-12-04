@@ -64,7 +64,7 @@ export const Drawer: React.FC<DrawerProps> = ({
       <Backdrop id={backdropId} open={!!open} onClick={handleClose} />
 
       <div id={id} className='fixed transition-transform z-30'>
-        <div className={clsx('bg-white dark:bg-black w-full h-full', className)}>{children}</div>
+        <div className={clsx('bg-[#111c44] w-full h-full', className)}>{children}</div>
       </div>
     </>
   )

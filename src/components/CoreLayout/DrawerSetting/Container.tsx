@@ -19,7 +19,7 @@ export const Container = () => {
     <Drawer
       id={coreDrawerId}
       position={drawerPosition}
-      className='p-4'
+      className='p-4 flex flex-col'
       open={openDrawer}
       onClose={() => onToggleDrawer(false)}
     >
