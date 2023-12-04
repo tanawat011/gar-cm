@@ -3,11 +3,15 @@ import type { ItemProps } from './items'
 import type { KeyboardEvent } from 'react'
 import { useRef, useState } from 'react'
 
+import Link from 'next/link'
+
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
 import { StyledContainer, StyledItem, StyledUlContainer } from './Menu.styled'
 import { SubItemContainer } from './SubItemContainer'
 import { items } from './items'
+
+type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 
 export const Menu = () => {
   const activeLink = window.location.pathname
@@ -16,8 +20,12 @@ export const Menu = () => {
 
   const [isExpand, setIsExpand] = useState(true)
   const [isExpandOnHover, setIsExpandOnHover] = useState(false)
-  const [activeName, setActiveName] = useState('')
-  const [openedMenu, setOpenedMenu] = useState<Record<string, any>>({})
+  const [activeItem, setActiveItem] = useState('')
+  const [openedMenu, setOpenedMenu] = useState<OpenedMenu>({})
+
+  const handleNavigate = (path: string) => {
+    setActiveItem(path)
+  }
 
   const handleToggleItem = (itemId: string) => {
     const rootEl = itemId.split('.')[0]
@@ -46,51 +54,54 @@ export const Menu = () => {
   }
 
   const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3) => {
+    const itemId = item.id
     const hasItems = 'items' in item
     const hasLink = 'link' in item
 
-    if (activeName === '' && item?.link && activeLink.includes(item?.link)) {
-      setActiveName(item.id)
+    if (activeItem === '' && item?.link && activeLink.includes(item?.link)) {
+      setActiveItem(itemId)
     }
 
-    const classesActive = activeName === item.id ? 'active' : ''
+    const classesActive = activeItem === itemId ? 'active' : ''
     const onClick = () => {
-      if (hasItems) return handleToggleItem(item.id)
+      if (hasItems) return handleToggleItem(itemId)
 
-      if (hasLink) {
-        // handleNavigate(item.id)
-      }
+      if (hasLink) return handleNavigate(itemId)
     }
 
     const onKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
       const { code } = e
 
       if (code === 'Space') {
-        if (hasItems) return handleToggleItem(item.id)
+        if (hasItems) return handleToggleItem(itemId)
 
-        if (hasLink) {
-          // handleNavigate(item.id)
-        }
+        if (hasLink) return handleNavigate(itemId)
       }
     }
 
     return (
       <li key={idx}>
+        {/* {!hasItems && item?.link && (
+          <Link href={item.link}>
+            <a>{item?.label}</a>
+          </Link>
+        )} */}
         <StyledItem
           role='button'
           tabIndex={0}
           onClick={onClick}
           onKeyDown={onKeyDown}
-          id={item.id}
+          id={itemId}
           lvl={lvl}
-          activeName={activeName}
+          activeItem={activeItem}
           className={classesActive}
+          href={item?.link || '#'}
         >
           <IconAndLabel {...item} isExpand={isExpand} isExpandOnHover={isExpandOnHover} />
 
           {hasItems && (
             <BadgeAndArrow
-              isOpen={!!openedMenu?.[item.id]?.open}
+              isOpen={!!openedMenu?.[itemId]?.open}
               isExpand={isExpand}
               isExpandOnHover={isExpandOnHover}
             />
@@ -99,9 +110,9 @@ export const Menu = () => {
 
         {hasItems && (
           <SubItemContainer
-            handleRef={(el) => (listRef.current[item.id] = el)}
-            id={item.id}
-            height={openedMenu?.[item.id]?.height}
+            handleRef={(el) => (listRef.current[itemId] = el)}
+            id={itemId}
+            height={openedMenu?.[itemId]?.height}
             isExpand={isExpand}
             isExpandOnHover={isExpandOnHover}
           >
