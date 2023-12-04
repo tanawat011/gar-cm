@@ -1,32 +1,32 @@
 export default function ToDo() {
   return (
     <div>
-      <p className='line-through'>NextUI</p>
-      <p className='line-through'>Core Layout</p>
-      <p className='line-through'>Dark Theme</p>
-      <p className='line-through'>Light Theme</p>
-      <p className='line-through'>Toggle Theme</p>
-      <p className='line-through'>Toggle Language</p>
-      <p className='line-through'>Support Mobile Device(IOS & ANDROID)</p>
-      <p className='line-through'>Support IPad & Tablet Device</p>
-      <p className='line-through'>Redux & Redux Toolkit</p>
-      <p className='line-through'>Sidebar Toggle</p>
-      <p className='line-through'>Full Sidebar</p>
-      <p className='line-through'>Mini Sidebar</p>
-      <p className='line-through'>Drawer Sidebar</p>
-      <p className='line-through'>Setting drawer position</p>
-      <p className='line-through'>Setting sidebar type</p>
+      <p className='line-through text-slate-500'>NextUI</p>
+      <p className='line-through text-slate-500'>Core Layout</p>
+      <p className='line-through text-slate-500'>Dark Theme</p>
+      <p className='line-through text-slate-500'>Light Theme</p>
+      <p className='line-through text-slate-500'>Toggle Theme</p>
+      <p className='line-through text-slate-500'>Toggle Language</p>
+      <p className='line-through text-slate-500'>Support Mobile Device(IOS & ANDROID)</p>
+      <p className='line-through text-slate-500'>Support IPad & Tablet Device</p>
+      <p className='line-through text-slate-500'>Redux & Redux Toolkit</p>
+      <p className='line-through text-slate-500'>Sidebar Toggle</p>
+      <p className='line-through text-slate-500'>Full Sidebar</p>
+      <p className='line-through text-slate-500'>Mini Sidebar</p>
+      <p className='line-through text-slate-500'>Drawer Sidebar</p>
+      <p className='line-through text-slate-500'>Setting drawer position</p>
+      <p className='line-through text-slate-500'>Setting sidebar type</p>
       <p>Setting font family</p>
-      <p className='line-through'>Mobile Device Option Setting</p>
-      <p className='line-through'>Mobile Device Sidebar Toggle</p>
+      <p className='line-through text-slate-500'>Mobile Device Option Setting</p>
+      <p className='line-through text-slate-500'>Mobile Device Sidebar Toggle</p>
       <p>Modal Notification List</p>
       <p>Modal Quick Search</p>
-      <p className='line-through'>Sidebar Drawer</p>
-      <p className='line-through'>Sidebar Mini</p>
-      <p className='line-through'>Sidebar Full</p>
-      <p className='line-through'>Sidebar Logo</p>
-      <p>Sidebar Menu</p>
-      <p className='line-through'>Sidebar Footer</p>
+      <p className='line-through text-slate-500'>Sidebar Drawer</p>
+      <p className='line-through text-slate-500'>Sidebar Mini</p>
+      <p className='line-through text-slate-500'>Sidebar Full</p>
+      <p className='line-through text-slate-500'>Sidebar Logo</p>
+      <p className='line-through text-slate-500'>Sidebar Menu</p>
+      <p className='line-through text-slate-500'>Sidebar Footer</p>
       <p>Favicon</p>
       <p>DrawerSetting Decoration</p>
       <p>Sidebar Decoration</p>
@@ -34,7 +34,7 @@ export default function ToDo() {
       <p>Manage Light Theme Color</p>
       <p>Refactor Core Layout Container</p>
       <p>Refactor Core Layout Navbar Left</p>
-      <p className='line-through'>Styled component</p>
+      <p className='line-through text-slate-500'>Styled component</p>
       <p>Breadcrumb</p>
       <p>Card</p>
       <p>Todo List Application</p>

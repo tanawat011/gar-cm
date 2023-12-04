@@ -3,8 +3,6 @@ import type { ItemProps } from './items'
 import type { KeyboardEvent } from 'react'
 import { useRef, useState } from 'react'
 
-import Link from 'next/link'
-
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
 import { StyledContainer, StyledItem, StyledUlContainer } from './Menu.styled'
@@ -81,11 +79,6 @@ export const Menu = () => {
 
     return (
       <li key={idx}>
-        {/* {!hasItems && item?.link && (
-          <Link href={item.link}>
-            <a>{item?.label}</a>
-          </Link>
-        )} */}
         <StyledItem
           role='button'
           tabIndex={0}
@@ -95,7 +88,8 @@ export const Menu = () => {
           lvl={lvl}
           activeItem={activeItem}
           className={classesActive}
-          href={item?.link || '#'}
+          href='/'
+          {...(!hasItems && { href: item?.link || '/' })}
         >
           <IconAndLabel {...item} isExpand={isExpand} isExpandOnHover={isExpandOnHover} />
 
