@@ -22,7 +22,7 @@ export const StyledItem = styled(Link)<{ id: string; lvl: 1 | 2 | 3; activeItem:
     lvl === 1 && tw`pl-4`,
     lvl === 2 && tw`pl-11`,
     lvl === 3 && tw`pl-16`,
-    activated ? tw`text-blue-600 font-semibold` : tw`text-slate-500`,
+    activated ? tw`text-blue-600 font-semibold` : tw`text-black dark:text-white`,
     activated && lvl === 1 ? tw`bg-blue-200/20` : tw`bg-transparent`,
   ]
 })
