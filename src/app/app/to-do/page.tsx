@@ -29,7 +29,7 @@ export default function ToDo() {
       <p className='line-through text-slate-500'>Sidebar Footer</p>
       <p>Favicon</p>
       <p>DrawerSetting Decoration</p>
-      <p>Sidebar Decoration</p>
+      <p className='line-through text-slate-500'>Sidebar Decoration</p>
       <p>Manage Dark Theme Color</p>
       <p>Manage Light Theme Color</p>
       <p>Refactor Core Layout Container</p>
