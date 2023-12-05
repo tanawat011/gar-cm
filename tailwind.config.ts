@@ -39,28 +39,29 @@ const config: Config = {
       themes: {
         dark: {
           colors: {
-            background: {
+            default: {
+              DEFAULT: '#f4f8ff',
               foreground: '#3c4158',
-              DEFAULT: '#1a2035',
-              '50': '#f4f8ff',
-              '100': '#eff3ff',
-              '200': '#e8ecff',
-              '300': '#dadefc',
-              '400': '#b7bbd8',
-              '500': '#989cb8',
-              '600': '#6f738d',
-              '700': '#5b6079',
-              '800': '#3c4158',
-              '900': '#1a2035',
+              '50': '#1a2035',
+              '100': '#3c4158',
+              '200': '#5b6079',
+              '300': '#6f738d',
+              '400': '#989cb8',
+              '500': '#b7bbd8',
+              '600': '#dadefc',
+              '700': '#e8ecff',
+              '800': '#eff3ff',
+              '900': '#f4f8ff',
             },
+            background: '#202940',
             content1: '#282828',
           },
         },
         light: {
           colors: {
-            background: {
-              DEFAULT: '#f0f2f5',
-              foreground: '#d9dfe6',
+            default: {
+              DEFAULT: '#d9dfe6',
+              foreground: '#92a3b4',
               '50': '#f0f2f5',
               '100': '#d9dfe6',
               '200': '#c1cad5',
@@ -72,6 +73,7 @@ const config: Config = {
               '800': '#4f5a65',
               '900': '#3c444d',
             },
+            background: '#f0f2f5',
             content1: '#d1d3d7',
           },
         },

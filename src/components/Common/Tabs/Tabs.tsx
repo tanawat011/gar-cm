@@ -36,6 +36,7 @@ export const Tabs: React.FC<TabsProps> = ({
         return (
           <Tab
             key={item.key}
+            className='font-bold'
             title={
               renderTab ? (
                 renderTab(item)

@@ -11,5 +11,5 @@ export const FullSidebarContainer: React.FC<FullSidebarContainerProps> = ({ chil
 }
 
 const StyledContainer = styled.div(() => {
-  return [tw`h-full border-solid border-r transition-width`, tw`dark:border-gunmetal`]
+  return [tw`h-full border-solid border-r transition-width bg-background`, tw`dark:border-gunmetal`]
 })
