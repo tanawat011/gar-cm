@@ -10,4 +10,4 @@ export const Content: React.FC<ContentProps> = ({ children }) => {
   return <StyledContent>{children}</StyledContent>
 }
 
-const StyledContent = tw.div`bg-white dark:bg-base-gradient-content px-8 py-8`
+const StyledContent = tw.div`px-8 py-8`

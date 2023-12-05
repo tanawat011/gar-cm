@@ -1,21 +1,24 @@
 import { useEffect } from 'react'
 
-import { Divider, Switch } from '@nextui-org/react'
+import { Divider } from '@nextui-org/react'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 
 import { Icon } from '@/components/Icon'
-import { useDrawerPosition, useLang, useSidebar, useTheme } from '@/hooks'
+import { useDrawerPosition } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
+
+import { ToggleCoreColors } from './ToggleCoreColors'
+import { ToggleDrawerPosition } from './ToggleDrawerPosition'
+import { ToggleLang } from './ToggleLang'
+import { ToggleSidebarType } from './ToggleSidebarType'
+import { ToggleTheme } from './ToggleTheme'
 
 export const coreDrawerId = 'drawer'
 
 export const Content = () => {
-  const { theme, drawerPosition } = useSelector(appSettingSelector)
+  const { drawerPosition } = useSelector(appSettingSelector)
 
-  const { toggleTheme } = useTheme()
-  const { toggleLang } = useLang()
-  const { toggleSidebarType } = useSidebar()
   const { togglePosition } = useDrawerPosition()
 
   useEffect(() => {
@@ -39,110 +42,15 @@ export const Content = () => {
 
       <Divider className='my-1' />
 
-      <div className='my-4'>
-        <p className='text-lg font-bold flex'>
-          <span>Core Colors</span>
-        </p>
+      <ToggleCoreColors />
 
-        <div className='flex gap-2'>
-          <div className='cursor-pointer w-6 h-6 rounded-full border border-solid border-white bg-default' />
-          <div className='cursor-pointer w-6 h-6 rounded-full border border-solid border-white bg-primary' />
-          <div className='cursor-pointer w-6 h-6 rounded-full border border-solid border-white bg-secondary' />
-          <div className='cursor-pointer w-6 h-6 rounded-full border border-solid border-white bg-success' />
-          <div className='cursor-pointer w-6 h-6 rounded-full border border-solid border-white bg-warning' />
-          <div className='cursor-pointer w-6 h-6 rounded-full border border-solid border-white bg-danger' />
-        </div>
-      </div>
+      <ToggleTheme />
 
-      <Divider className='my-1' />
+      <ToggleLang />
 
-      <div className='my-4'>
-        <p className='text-lg font-bold flex'>
-          <span>Theme</span>
-        </p>
+      {!isMobile && <ToggleSidebarType />}
 
-        <div className='flex gap-2'>
-          <Switch
-            defaultSelected
-            size='lg'
-            color='success'
-            startContent={<Icon name='FaRegSun' />}
-            endContent={<Icon name='FaRegMoon' />}
-            value={theme}
-            isSelected={theme === 'light'}
-            onValueChange={(isLight) => {
-              toggleTheme(isLight ? 'light' : 'dark')
-            }}
-          >
-            {theme[0].toUpperCase() + theme.slice(1)} mode
-          </Switch>
-        </div>
-      </div>
-
-      <Divider className='my-1' />
-
-      <div className='my-4'>
-        <p className='text-lg font-bold flex'>
-          <span>Language</span>
-        </p>
-
-        <div className='flex items-center justify-around'>
-          <p className='cursor-pointer' onClick={() => toggleLang('th')}>
-            TH
-          </p>
-          <p className='cursor-pointer' onClick={() => toggleLang('en')}>
-            EN
-          </p>
-        </div>
-      </div>
-
-      <Divider className='my-1' />
-
-      {!isMobile && (
-        <>
-          <div className='my-4'>
-            <p className='text-lg font-bold flex'>
-              <span>Sidebar Type</span>
-            </p>
-
-            <div className='flex items-center justify-around'>
-              <p className='cursor-pointer' onClick={() => toggleSidebarType('drawer')}>
-                Drawer
-              </p>
-              <p className='cursor-pointer' onClick={() => toggleSidebarType('mini')}>
-                Mini
-              </p>
-              <p className='cursor-pointer' onClick={() => toggleSidebarType('full')}>
-                Full
-              </p>
-            </div>
-          </div>
-          <Divider className='my-1' />
-        </>
-      )}
-
-      <div className='my-4'>
-        <p className='text-lg font-bold flex'>
-          <span>Drawer Position</span>
-        </p>
-
-        <div className='flex items-center justify-around'>
-          <p className='cursor-pointer' onClick={() => togglePosition('top')}>
-            TOP
-          </p>
-          <p className='cursor-pointer' onClick={() => togglePosition('right')}>
-            RIGHT
-          </p>
-          <p className='cursor-pointer' onClick={() => togglePosition('bottom')}>
-            BOTTOM
-          </p>
-          <p className='cursor-pointer' onClick={() => togglePosition('left')}>
-            LEFT
-          </p>
-        </div>
-      </div>
-
-      <Divider className='my-1' />
+      <ToggleDrawerPosition />
     </>
   )
 }

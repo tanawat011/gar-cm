@@ -38,7 +38,13 @@ export const Container = () => {
   return (
     <div id={sidebarId} className='transition-width'>
       {sidebarType === 'drawer' && (
-        <Drawer id='sidebar-drawer' open={openSidebar} onClose={() => onToggleSidebar(false)}>
+        <Drawer
+          id='sidebar-drawer'
+          open={openSidebar}
+          onClose={() => onToggleSidebar(false)}
+          containerClassName='bg-background'
+          specifySize='256px'
+        >
           <Content />
         </Drawer>
       )}

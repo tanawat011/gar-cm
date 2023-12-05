@@ -13,7 +13,7 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
     <html suppressHydrationWarning>
       <body
         id='core-body'
-        className='w-full h-full relative font-monaspace-neon bg-white dark:bg-base-gradient-content text-black dark:text-white'
+        className='w-full h-full relative font-monaspace-neon bg-background text-black dark:text-white'
       >
         <time dateTime={new Date().toISOString()} suppressHydrationWarning />
 
