@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 
-import { Divider } from '@nextui-org/react'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 
+import { Divider } from '@/components/Common'
 import { Icon } from '@/components/Icon'
 import { useDrawerPosition } from '@/hooks'
 import { appSettingSelector } from '@/store/selector'
@@ -40,7 +40,7 @@ export const Content = () => {
         </p>
       </div>
 
-      <Divider className='my-1' />
+      <Divider />
 
       <ToggleCoreColors />
 
