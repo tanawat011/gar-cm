@@ -4,7 +4,7 @@ export default function LinkRemember() {
   const NextLink = ({ href, label }: { href: string; label: string }) => {
     return (
       <p>
-        <Link className='underline' href={href}>
+        <Link className='underline' href={href} target='_blank'>
           {label}
         </Link>
       </p>
@@ -19,6 +19,8 @@ export default function LinkRemember() {
       <NextLink label='Color Name' href='https://www.color-name.com/hex' />
       <NextLink label='Make Logo' href='https://www.brandcrowd.com/maker/logos' />
       <NextLink label='Crop Image' href='https://www.iloveimg.com/crop-image' />
+      <NextLink label='Color Palette Generator' href='https://materialpalettes.com/' />
+      <NextLink label='DaisyUI' href='https://daisyui.com/components/button/' />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Divider } from '@nextui-org/react'
+import { Divider } from '@/components/Common'
 
 type ItemProps = {
   label: string
@@ -20,7 +20,7 @@ export const Item: React.FC<ItemProps> = ({ label, children, center, hideDivider
         <div className={['flex', center ? 'items-center justify-around' : 'gap-2'].join(' ')}>{children}</div>
       </div>
 
-      {!hideDivider && <Divider className='my-1' />}
+      {!hideDivider && <Divider gradient />}
     </>
   )
 }
