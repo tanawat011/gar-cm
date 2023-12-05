@@ -20,9 +20,8 @@ const StyledContainer = styled.div(() => {
 
 const StyledChildrenContainer = styled.div(() => {
   return [
-    tw`h-full w-20 fixed z-20 border-solid border-r transition-width overflow-hidden`,
-    tw`bg-white`,
-    tw`dark:bg-base-gradient-sidebar dark:border-gunmetal`,
+    tw`h-full w-20 fixed z-20 border-solid border-r transition-width overflow-hidden bg-background`,
+    tw`dark:border-gunmetal`,
     tw`hover:(w-64 overflow-auto)`,
     css`
       & > div {

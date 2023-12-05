@@ -22,10 +22,6 @@ export const usePositionChange = ({ id, position }: UsePositionChangeProps) => {
       'right-0',
       'bottom-0',
       'top-0',
-      'w-full',
-      'w-[300px]',
-      'h-full',
-      'h-[300px]',
     )
 
     if (el) {
@@ -33,16 +29,16 @@ export const usePositionChange = ({ id, position }: UsePositionChangeProps) => {
 
       switch (position) {
         case DRAWER_POSITION.TOP:
-          el.classList.add('top-0', 'left-0', 'w-full', 'h-[300px]')
+          el.classList.add('top-0', 'left-0')
           break
         case DRAWER_POSITION.RIGHT:
-          el.classList.add('top-0', 'right-0', 'w-[300px]', 'h-full')
+          el.classList.add('top-0', 'right-0')
           break
         case DRAWER_POSITION.BOTTOM:
-          el.classList.add('bottom-0', 'left-0', 'w-full', 'h-[300px]')
+          el.classList.add('bottom-0', 'left-0')
           break
         case DRAWER_POSITION.LEFT:
-          el.classList.add('top-0', 'left-0', 'w-[300px]', 'h-full')
+          el.classList.add('top-0', 'left-0')
       }
     }
   }, [position])

@@ -15,7 +15,7 @@ export const Container: React.FC<NavbarContainerProps> = ({ id }) => {
     <div
       id={id}
       className={clsx(
-        'bg-white dark:bg-base-gradient-navbar dark:border-gunmetal border-solid border-b flex justify-between w-full top-0',
+        'dark:border-gunmetal border-solid border-b flex justify-between w-full top-0 bg-background',
         isMobile ? 'fixed' : 'sticky',
       )}
     >
