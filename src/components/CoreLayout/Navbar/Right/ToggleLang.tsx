@@ -27,7 +27,7 @@ export const ToggleLang = () => {
       onSelected={(key) => toggleLang(key as Lang)}
       items={[...LANG_LABEL].map((allLang) => ({
         ...allLang,
-        startContent: <IconCountryFlag lang={allLang.key} className='mx-3' />,
+        startContent: <IconCountryFlag lang={allLang.key as Lang} className='mx-3' />,
       }))}
     >
       <div className='cursor-pointer'>
