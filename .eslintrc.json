@@ -17,7 +17,7 @@
         "allow": []
       }
     ],
-    "no-console": "warn",
+    "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
     "spaced-comment": "error"
   },
   "overrides": [
