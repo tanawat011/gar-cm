@@ -16,7 +16,7 @@ const httpLink = new HttpLink({
 })
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/api/graphql',
+  uri: process.env.NEXT_PUBLIC_URL_SERVER_GRAPHQL,
   cache: new InMemoryCache(),
   link: from([errorLink, httpLink]),
 })

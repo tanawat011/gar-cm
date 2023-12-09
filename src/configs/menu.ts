@@ -1,14 +1,14 @@
 import type { IconType } from '@/components/Icon'
 
-export type ItemProps = {
+export type MenuProps = {
   label: string
   icon?: IconType
   id: string
   link?: string
-  items?: ItemProps[]
+  items?: MenuProps[]
 }
 
-export const items: ItemProps[] = [
+export const menu: MenuProps[] = [
   {
     label: 'Dashboard',
     icon: 'FaShop',
@@ -29,8 +29,8 @@ export const items: ItemProps[] = [
       {
         label: 'TODO',
         icon: 'FaShop',
-        id: 'to-do',
-        link: '/app/to-do',
+        id: 'todo',
+        link: '/app/todo',
       },
     ],
   },

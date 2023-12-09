@@ -1,17 +1,17 @@
-import type { ItemProps } from './items'
+import type { MenuProps as ItemProps } from '@/configs'
 
 import type { KeyboardEvent } from 'react'
 import { useRef, useState } from 'react'
 
 import { useSelector } from 'react-redux'
 
+import { menu as items } from '@/configs'
 import { appSettingSelector } from '@/store/selector'
 
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
 import { StyledContainer, StyledItem, StyledUlContainer } from './Menu.styled'
 import { SubItemContainer } from './SubItemContainer'
-import { items } from './items'
 
 type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 
@@ -22,8 +22,8 @@ export const Menu = () => {
 
   const listRef = useRef<Record<string, HTMLUListElement | null>>({})
 
-  const [isExpand, setIsExpand] = useState(true)
-  const [isExpandOnHover, setIsExpandOnHover] = useState(false)
+  const [isExpand] = useState(true)
+  const [isExpandOnHover] = useState(false)
   const [activeItem, setActiveItem] = useState('')
   const [openedMenu, setOpenedMenu] = useState<OpenedMenu>({})
 
@@ -92,7 +92,7 @@ export const Menu = () => {
           onKeyDown={onKeyDown}
           id={itemId}
           lvl={lvl}
-          activeItem={activeItem}
+          $activeItem={activeItem}
           className={classesActive}
           href='#'
           {...(!hasItems && { href: item?.link || '/' })}

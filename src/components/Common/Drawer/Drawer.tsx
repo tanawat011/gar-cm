@@ -18,7 +18,7 @@ type DrawerProps = {
   children: React.ReactNode
   className?: string
   containerClassName?: string
-  specifySize?: `${number}px`
+  $specifySize?: `${number}px`
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
@@ -29,7 +29,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   children,
   className,
   containerClassName,
-  specifySize = '300px',
+  $specifySize = '300px',
 }) => {
   const backdropId = `${id}-backdrop`
 
@@ -73,7 +73,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         className={['fixed transition-transform z-30', containerClassName].join(' ')}
         position={position}
         size={0}
-        specifySize={specifySize}
+        $specifySize={$specifySize}
       >
         <div className={className}>{children}</div>
       </StyledDrawerContainer>
@@ -83,15 +83,15 @@ export const Drawer: React.FC<DrawerProps> = ({
 
 const StyledDrawerContainer = styled(ScrollShadow)<{
   position: DrawerProps['position']
-  specifySize: DrawerProps['specifySize']
-}>(({ position, specifySize }) => {
+  $specifySize: DrawerProps['$specifySize']
+}>(({ position, $specifySize }) => {
   switch (position) {
     case DRAWER_POSITION.TOP:
     case DRAWER_POSITION.BOTTOM:
       return [
         tw`w-full h-0`,
         css`
-          height: ${specifySize};
+          height: ${$specifySize};
         `,
       ]
     case DRAWER_POSITION.RIGHT:
@@ -99,7 +99,7 @@ const StyledDrawerContainer = styled(ScrollShadow)<{
       return [
         tw`h-full w-0`,
         css`
-          width: ${specifySize};
+          width: ${$specifySize};
         `,
       ]
   }

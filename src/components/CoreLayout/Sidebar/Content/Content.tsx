@@ -15,7 +15,7 @@ export const Content = () => {
   const { sidebarType } = useSelector(appSettingSelector)
 
   return (
-    <StyledContent sidebarType={sidebarType}>
+    <StyledContent $sidebarType={sidebarType}>
       <Logo />
 
       <Menu />
@@ -25,6 +25,6 @@ export const Content = () => {
   )
 }
 
-const StyledContent = styled.div<{ sidebarType: SidebarType }>(({ sidebarType }) => {
-  return [tw`flex flex-col h-full transition-width`, sidebarType === 'mini' ? tw`w-20` : tw`w-64`]
+const StyledContent = styled.div<{ $sidebarType: SidebarType }>(({ $sidebarType }) => {
+  return [tw`flex flex-col h-full transition-width`, $sidebarType === 'mini' ? tw`w-20` : tw`w-64`]
 })

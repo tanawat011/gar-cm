@@ -12,7 +12,7 @@ export const Footer = () => {
   return (
     <StyledFooterWrap>
       <p>
-        <StyledPoweredBy id='powered-by' sidebarType={sidebarType}>
+        <StyledPoweredBy id='powered-by' $sidebarType={sidebarType}>
           Powered by
         </StyledPoweredBy>{' '}
         <span>tDev</span>
@@ -29,6 +29,6 @@ const StyledFooterWrap = styled.div(() => {
   ]
 })
 
-const StyledPoweredBy = styled.span<{ sidebarType: SidebarType }>(({ sidebarType }) => {
-  return [sidebarType === 'mini' && tw`hidden`]
+const StyledPoweredBy = styled.span<{ $sidebarType: SidebarType }>(({ $sidebarType }) => {
+  return [$sidebarType === 'mini' && tw`hidden`]
 })

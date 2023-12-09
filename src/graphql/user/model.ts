@@ -4,11 +4,7 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const schema = new Schema<Document>({
-  _id: {
-    type: Schema.Types.ObjectId,
-    required: [true, 'All fields are required'],
-  },
+const schema = new Schema<Omit<Document, '_id'>>({
   username: {
     type: String,
     required: [true, 'All fields are required'],
@@ -26,17 +22,25 @@ const schema = new Schema<Document>({
     type: String,
     required: [true, 'All fields are required'],
   },
-  age: {
-    type: String,
-    required: [true, 'All fields are required'],
+  age: Number,
+  active: {
+    type: Boolean,
+    default: true,
   },
-  active: Boolean,
-  createdAt: Date,
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
   createdBy: String,
-  updatedAt: Date,
+  updatedAt: {
+    type: Date,
+    default: new Date(),
+  },
   updatedBy: String,
   deletedAt: Date,
   deletedBy: String,
 })
 
-export const Model = mongoose.models.users || mongoose.model('users', schema)
+export const collectionName = 'users'
+
+export const Model = mongoose.models[collectionName] || mongoose.model(collectionName, schema)

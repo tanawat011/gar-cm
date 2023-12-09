@@ -1,6 +1,7 @@
 'use client'
 
 import { ApolloProvider } from '@apollo/client'
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -11,6 +12,12 @@ import client from '@/libs/apolloClient'
 import { store } from '@/store'
 
 export const AppContainer = ({ children }: { children: React.ReactNode }) => {
+  if (process.env.NODE_ENV === 'development') {
+    // Adds messages only in a dev environment
+    loadDevMessages()
+    loadErrorMessages()
+  }
+
   return (
     <html suppressHydrationWarning>
       <body
