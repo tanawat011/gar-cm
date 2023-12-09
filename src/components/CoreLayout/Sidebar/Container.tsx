@@ -43,7 +43,7 @@ export const Container = () => {
           open={openSidebar}
           onClose={() => onToggleSidebar(false)}
           containerClassName='bg-background'
-          specifySize='256px'
+          $specifySize='256px'
         >
           <Content />
         </Drawer>

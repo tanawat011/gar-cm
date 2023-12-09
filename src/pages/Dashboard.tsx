@@ -1,16 +1,22 @@
+'use client'
+
 import { useQuery, gql, useMutation } from '@apollo/client'
 
 const Dashboard = () => {
-  // const { loading, error, data, refetch } = useQuery(gql`
-  //   query GetUsers {
-  //     users {
-  //       id
-  //       first_name
-  //     }
-  //   }
-  // `)
+  const { loading, error, data, refetch } = useQuery(gql`
+    query Query {
+      users {
+        _id
+        firstName
+        lastName
+        email
+        age
+        active
+      }
+    }
+  `)
 
-  // console.log('data', data)
+  console.log('data', data)
 
   return (
     <div>
