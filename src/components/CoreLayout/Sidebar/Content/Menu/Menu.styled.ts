@@ -10,12 +10,12 @@ export const StyledUlContainer = styled.ul(() => {
   return [tw`list-none px-3 scroll-smooth`]
 })
 
-export const StyledItem = styled(Link)<{ id: string; lvl: 1 | 2 | 3; activeItem: string }>(({
+export const StyledItem = styled(Link)<{ id: string; lvl: 1 | 2 | 3; $activeItem: string }>(({
   id,
   lvl,
-  activeItem,
+  $activeItem,
 }) => {
-  const activated = activeItem === id || activeItem.split('.')[0] === id
+  const activated = $activeItem === id || $activeItem.split('.')[0] === id
 
   return [
     tw`cursor-pointer rounded-lg flex items-center justify-between h-12 pr-3 mb-1`,

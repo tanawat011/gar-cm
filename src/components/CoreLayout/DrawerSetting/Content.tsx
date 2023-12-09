@@ -28,12 +28,12 @@ export const Content = () => {
   return (
     <>
       <div className='my-4'>
-        <p className='text-xl font-bold flex'>
+        <div className='text-xl font-bold flex'>
           <span className='mr-2'>
             <Icon name='FaGear' />
           </span>
           <span>Configurations</span>
-        </p>
+        </div>
 
         <p className='flex items-center text-slate-400'>
           <span>See all setting</span>
