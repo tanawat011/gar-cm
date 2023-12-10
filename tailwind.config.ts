@@ -36,48 +36,48 @@ const config: Config = {
   },
   plugins: [
     nextui({
-      themes: {
-        dark: {
-          colors: {
-            default: {
-              DEFAULT: '#f4f8ff',
-              foreground: '#3c4158',
-              '50': '#1a2035',
-              '100': '#3c4158',
-              '200': '#5b6079',
-              '300': '#6f738d',
-              '400': '#989cb8',
-              '500': '#b7bbd8',
-              '600': '#dadefc',
-              '700': '#e8ecff',
-              '800': '#eff3ff',
-              '900': '#f4f8ff',
-            },
-            background: '#202940',
-            content1: '#282828',
-          },
-        },
-        light: {
-          colors: {
-            default: {
-              DEFAULT: '#d9dfe6',
-              foreground: '#92a3b4',
-              '50': '#f0f2f5',
-              '100': '#d9dfe6',
-              '200': '#c1cad5',
-              '300': '#a7b5c3',
-              '400': '#92a3b4',
-              '500': '#7e92a6',
-              '600': '#708294',
-              '700': '#5f6d7c',
-              '800': '#4f5a65',
-              '900': '#3c444d',
-            },
-            background: '#f0f2f5',
-            content1: '#d1d3d7',
-          },
-        },
-      },
+      // themes: {
+      //   dark: {
+      //     colors: {
+      //       default: {
+      //         DEFAULT: '#f4f8ff',
+      //         foreground: '#3c4158',
+      //         '50': '#1a2035',
+      //         '100': '#3c4158',
+      //         '200': '#5b6079',
+      //         '300': '#6f738d',
+      //         '400': '#989cb8',
+      //         '500': '#b7bbd8',
+      //         '600': '#dadefc',
+      //         '700': '#e8ecff',
+      //         '800': '#eff3ff',
+      //         '900': '#f4f8ff',
+      //       },
+      //       background: '#202940',
+      //       content1: '#282828',
+      //     },
+      //   },
+      //   light: {
+      //     colors: {
+      //       default: {
+      //         DEFAULT: '#d9dfe6',
+      //         foreground: '#92a3b4',
+      //         '50': '#f0f2f5',
+      //         '100': '#d9dfe6',
+      //         '200': '#c1cad5',
+      //         '300': '#a7b5c3',
+      //         '400': '#92a3b4',
+      //         '500': '#7e92a6',
+      //         '600': '#708294',
+      //         '700': '#5f6d7c',
+      //         '800': '#4f5a65',
+      //         '900': '#3c444d',
+      //       },
+      //       background: '#f0f2f5',
+      //       content1: '#d1d3d7',
+      //     },
+      //   },
+      // },
     }),
     plugin(({ addUtilities }) => {
       addUtilities({

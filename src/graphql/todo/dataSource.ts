@@ -10,16 +10,16 @@ export default class DataSource extends MongoDataSource<Document> {
   async getAll() {
     try {
       return await Model.find().where('active').equals(true)
-    } catch (error) {
-      throw new Error(`Collection ${collectionName}: Failed to fetch all`)
+    } catch (err) {
+      throw new Error(`Collection ${collectionName}: Failed to fetch all [${errorMessage(err)}]`)
     }
   }
 
   async getById(_id: string) {
     try {
       return await Model.findById(_id)
-    } catch (error) {
-      throw new Error(`Collection ${collectionName}: Failed to fetch by id`)
+    } catch (err) {
+      throw new Error(`Collection ${collectionName}: Failed to fetch by id [${errorMessage(err)}]`)
     }
   }
 
