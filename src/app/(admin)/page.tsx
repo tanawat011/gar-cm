@@ -1,3 +1,5 @@
+'use client'
+
 import PageDashboard from '@/pages/Dashboard'
 
 export default function Home() {
