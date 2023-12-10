@@ -3,12 +3,12 @@ import { gql } from '@apollo/client'
 export const schema = gql`
   type User {
     _id: ID!
-    username: String!
-    email: String!
+    username: String
+    email: String
     firstName: String
     lastName: String
     age: Int
-    active: Boolean!
+    active: Boolean
   }
 
   input NewUserInput {
@@ -22,9 +22,10 @@ export const schema = gql`
 
   input UpdateUserInput {
     _id: String!
+    username: String
+    email: String
     firstName: String
     lastName: String
-    email: String
     age: Int
   }
 
@@ -37,5 +38,6 @@ export const schema = gql`
     createUser(input: NewUserInput!): User
     updateUser(input: UpdateUserInput!): User
     deleteUser(_id: ID!): String
+    # deletePermanentlyUser(_id: ID!): String
   }
 `
