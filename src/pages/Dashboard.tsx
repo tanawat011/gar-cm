@@ -1,22 +1,22 @@
 'use client'
 
-// import { useQuery, gql } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 
 const Dashboard = () => {
-  // const { data } = useQuery(gql`
-  //   query Query {
-  //     users {
-  //       _id
-  //       firstName
-  //       lastName
-  //       email
-  //       age
-  //       active
-  //     }
-  //   }
-  // `)
+  const { data } = useQuery(gql`
+    query Query {
+      users {
+        _id
+        firstName
+        lastName
+        email
+        age
+        active
+      }
+    }
+  `)
 
-  // console.log('data', data)
+  console.log('data', data)
 
   return (
     <div>
