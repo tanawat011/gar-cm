@@ -1,4 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 
 const errorLink = onError(({ networkError, graphQLErrors }) => {
@@ -18,11 +19,24 @@ const httpLink = new HttpLink({
   credentials: 'same-origin',
 })
 
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token')
+
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  }
+})
+
 const client = new ApolloClient({
   uri,
   cache: new InMemoryCache(),
   credentials: 'same-origin',
-  link: from([errorLink, httpLink]),
+  link: from([errorLink, httpLink, authLink]),
 })
 
 export default client
