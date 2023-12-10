@@ -1,4 +1,4 @@
-import type { Document, InputDocument } from './type'
+import type { Document, InputDocument, InputPartialDocument } from './type'
 
 import { MongoDataSource } from 'apollo-datasource-mongodb'
 
@@ -9,7 +9,7 @@ const errorMessage = (err: unknown) => (err as Error).message
 export default class DataSource extends MongoDataSource<Document> {
   async getAll() {
     try {
-      return await Model.find()
+      return await Model.find().where('active').equals(true)
     } catch (error) {
       throw new Error(`Collection ${collectionName}: Failed to fetch all`)
     }
@@ -35,11 +35,15 @@ export default class DataSource extends MongoDataSource<Document> {
     }
   }
 
-  async updateItem({ input }: InputDocument) {
+  async updateItem(_id: Document['_id'], { input }: InputPartialDocument) {
     try {
-      const updated = await Model.findByIdAndUpdate(
-        input._id,
-        { ...input },
+      const updated = await Model.findByIdAndUpdate<Document>(
+        _id,
+        {
+          ...input,
+          updatedAt: new Date(),
+          updatedBy: 'admin',
+        },
         {
           new: true,
         },
@@ -51,11 +55,23 @@ export default class DataSource extends MongoDataSource<Document> {
     }
   }
 
-  async deleteItem({ _id }: Partial<Document>): Promise<string> {
+  async deleteItem({ _id }: Partial<Document>) {
+    try {
+      await Model.findByIdAndUpdate<Document>(_id, {
+        active: false,
+        deletedAt: new Date(),
+        deletedBy: 'admin',
+      })
+    } catch (err) {
+      throw new Error(`Collection ${collectionName}: Failed to update item [${errorMessage(err)}]`)
+    }
+  }
+
+  async deletePermanentlyItem({ _id }: Partial<Document>): Promise<string> {
     try {
       await Model.findByIdAndDelete(_id)
 
-      return 'Item deleted successfully'
+      return 'Item permanently deleted successfully'
     } catch (err) {
       throw new Error(`Collection ${collectionName}: Failed to delete item [${errorMessage(err)}]`)
     }
