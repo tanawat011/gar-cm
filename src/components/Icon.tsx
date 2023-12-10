@@ -20,6 +20,11 @@ import {
   FaChevronDown,
   FaShop,
   FaChevronRight,
+  FaEye,
+  FaEyeSlash,
+  FaFacebook,
+  FaGoogle,
+  FaGithub,
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
@@ -42,6 +47,11 @@ export const ICON_ALLOWED = {
   FaChevronDown,
   FaShop,
   FaChevronRight,
+  FaEye,
+  FaEyeSlash,
+  FaFacebook,
+  FaGoogle,
+  FaGithub,
 }
 
 export type IconType = keyof typeof ICON_ALLOWED
