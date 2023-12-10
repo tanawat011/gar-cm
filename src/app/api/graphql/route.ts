@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server'
 
-import { handlerApolloServer } from './apolloServer'
-import { initMongoDB } from './mongoDB'
+import { handlerApolloServer } from '@/libs/apolloServer'
+import { initMongoDB } from '@/libs/mongoDB'
 
 initMongoDB()
 

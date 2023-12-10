@@ -11,13 +11,17 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
   }
 })
 
+const uri = process.env.NEXT_PUBLIC_URL_SERVER_GRAPHQL ?? 'http://localhost:3000/api/graphql'
+
 const httpLink = new HttpLink({
-  uri: '/api/graphql',
+  uri,
+  credentials: 'same-origin',
 })
 
 const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_URL_SERVER_GRAPHQL,
+  uri,
   cache: new InMemoryCache(),
+  credentials: 'same-origin',
   link: from([errorLink, httpLink]),
 })
 

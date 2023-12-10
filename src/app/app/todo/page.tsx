@@ -51,7 +51,9 @@ export default function ToDo() {
       <p>Tax Calculation Application</p>
       <p>I18N</p>
       <p>Storybook</p>
-      <p>Login Page</p>
+      <p className='line-through text-slate-500'>Apollo Server</p>
+      <p className='line-through text-slate-500'>GraphQL</p>
+      <p className='line-through text-slate-500'>MongoDB</p>
       <p>Register Page</p>
       <p>Remember Password Page</p>
     </div>
