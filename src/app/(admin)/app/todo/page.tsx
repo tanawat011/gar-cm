@@ -55,7 +55,8 @@ export default function ToDo() {
       <p className='line-through text-slate-500'>GraphQL</p>
       <p className='line-through text-slate-500'>MongoDB</p>
       <p>Register Page</p>
-      <p>Remember Password Page</p>
+      <p>Forgot Password Page</p>
+      <p>Form.io</p>
     </div>
   )
 }
