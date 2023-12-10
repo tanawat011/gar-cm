@@ -11,15 +11,15 @@ export const schema = gql`
 
   input NewTodoInput {
     title: String!
-    detail: String!
-    status: String!
+    detail: String
+    status: String
   }
 
   input UpdateTodoInput {
     _id: String!
     title: String!
-    detail: String!
-    status: String!
+    detail: String
+    status: String
   }
 
   type Query {
@@ -31,5 +31,6 @@ export const schema = gql`
     createTodo(input: NewTodoInput!): Todo
     updateTodo(input: UpdateTodoInput!): Todo
     deleteTodo(_id: ID!): String
+    # deletePermanentlyUser(_id: ID!): String
   }
 `

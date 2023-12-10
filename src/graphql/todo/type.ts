@@ -9,3 +9,4 @@ export type Document = {
 } & DefaultType
 
 export type InputDocument = { input: Document }
+export type InputPartialDocument = { input: Partial<Omit<Document, '_id'>> & { _id: Document['_id'] } }
