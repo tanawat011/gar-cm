@@ -2,61 +2,37 @@ import type { Document } from './type'
 
 import mongoose from 'mongoose'
 
+import { defaultModel } from '../allDefault'
+
 const { Schema } = mongoose
 
 const schema = new Schema<Omit<Document, '_id'>>({
   email: {
     type: String,
+    index: true,
     unique: true,
-    lowercase: true,
-    trim: true,
     required: [true, 'All fields are required'],
     validate: {
-      validator: (v: any) => {
-        console.log('v', v)
-
-        return true
+      validator: (v: string) => {
+        return v.match(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm)
       },
       message: (props) => `${props.value} is not a valid email address`,
     },
-    // validate: {
-    //   as
-    //   isAsync: true,
-    //   validator: (v, cb) => cb(validator.isEmail(v), `${v} is not a valid email address`),
-    // },
   },
   username: {
     type: String,
+    index: true,
     unique: true,
-    trim: true,
     required: [true, 'All fields are required'],
   },
   password: {
     type: String,
     required: [true, 'All fields are required'],
   },
-  firstName: { type: String, required: [true, 'All fields are required'] },
-  lastName: {
-    type: String,
-    required: [true, 'All fields are required'],
-  },
+  firstName: String,
+  lastName: String,
   age: Number,
-  active: {
-    type: Boolean,
-    default: true,
-  },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-  createdBy: String,
-  updatedAt: {
-    type: Date,
-    default: new Date(),
-  },
-  updatedBy: String,
-  deletedAt: Date,
-  deletedBy: String,
+  ...defaultModel,
 })
 
 export const collectionName = 'users'

@@ -2,6 +2,8 @@ import type { Document } from './type'
 
 import mongoose from 'mongoose'
 
+import { defaultModel } from '../allDefault'
+
 const { Schema } = mongoose
 
 const schema = new Schema<Omit<Document, '_id'>>({
@@ -11,22 +13,7 @@ const schema = new Schema<Omit<Document, '_id'>>({
   },
   detail: String,
   status: { type: String, required: [true, 'All fields are required'] },
-  active: {
-    type: Boolean,
-    default: true,
-  },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-  createdBy: String,
-  updatedAt: {
-    type: Date,
-    default: new Date(),
-  },
-  updatedBy: String,
-  deletedAt: Date,
-  deletedBy: String,
+  ...defaultModel,
 })
 
 export const collectionName = 'todos'

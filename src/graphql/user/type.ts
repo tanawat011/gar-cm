@@ -1,3 +1,4 @@
+import type { DefaultType } from '../allDefault'
 import type { ObjectId } from 'mongoose'
 
 export type Document = {
@@ -5,16 +6,9 @@ export type Document = {
   username: string
   password: string
   email: string
-  firstName: string
-  lastName: string
-  age?: number
-  active: boolean
-  createdAt: Date
-  createdBy: string
-  updatedAt: Date
-  updatedBy: string
-  deletedAt?: Date
-  deletedBy?: string
-}
+  firstName?: string
+  lastName?: string
+  age?: SVGAnimatedNumber
+} & DefaultType
 
 export type InputDocument = { input: Document }
