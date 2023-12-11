@@ -1,5 +1,16 @@
 import { gql } from '@apollo/client'
 
+const a = gql`
+  input NewUserInput {
+    username: String!
+    password: String!
+    email: String!
+    firstName: String
+    lastName: String
+    age: Int
+  }
+`
+
 export const schema = gql`
   type User {
     _id: ID!
@@ -11,14 +22,7 @@ export const schema = gql`
     active: Boolean
   }
 
-  input NewUserInput {
-    username: String!
-    password: String!
-    email: String!
-    firstName: String
-    lastName: String
-    age: Int
-  }
+  ${a}
 
   input UpdateUserInput {
     _id: String!
