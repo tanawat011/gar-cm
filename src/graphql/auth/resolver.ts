@@ -12,6 +12,8 @@ const getContext = (ctx: Context) => ctx.dataSources.auth
 export const resolvers = {
   Mutation: {
     signIn: async (_: NextRequest, { email, password }: { email: string; password: string }, ctx: Context) => {
+      console.log('signIn', email, password)
+
       const res = await getContext(ctx).signIn(email, password)
 
       return {
