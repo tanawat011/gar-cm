@@ -13,6 +13,6 @@ export const schema = gql`
   }
 
   type Mutation {
-    auth(email: String!, password: String!): AuthInfo
+    signIn(email: String!, password: String!): AuthInfo
   }
 `
