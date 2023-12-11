@@ -2,7 +2,8 @@ import type { Document, InputDocument, InputPartialDocument } from './type'
 
 import { MongoDataSource } from 'apollo-datasource-mongodb'
 
-import { Model, collectionName } from './model'
+import { COLLECTION_NAME } from './constant'
+import { Model } from './model'
 
 const errorMessage = (err: unknown) => (err as Error).message
 
@@ -11,7 +12,7 @@ export default class DataSource extends MongoDataSource<Document> {
     try {
       return await Model.find().where('active').equals(true)
     } catch (err) {
-      throw new Error(`Collection ${collectionName}: Failed to fetch all [${errorMessage(err)}]`)
+      throw new Error(`Collection ${COLLECTION_NAME}: Failed to fetch all [${errorMessage(err)}]`)
     }
   }
 
@@ -19,7 +20,7 @@ export default class DataSource extends MongoDataSource<Document> {
     try {
       return await Model.findById(_id)
     } catch (err) {
-      throw new Error(`Collection ${collectionName}: Failed to fetch by id [${errorMessage(err)}]`)
+      throw new Error(`Collection ${COLLECTION_NAME}: Failed to fetch by id [${errorMessage(err)}]`)
     }
   }
 
@@ -31,7 +32,7 @@ export default class DataSource extends MongoDataSource<Document> {
         updatedBy: 'admin',
       })
     } catch (err) {
-      throw new Error(`Collection ${collectionName}: Failed to create item [${errorMessage(err)}]`)
+      throw new Error(`Collection ${COLLECTION_NAME}: Failed to create item [${errorMessage(err)}]`)
     }
   }
 
@@ -51,7 +52,7 @@ export default class DataSource extends MongoDataSource<Document> {
 
       return updated
     } catch (err) {
-      throw new Error(`Collection ${collectionName}: Failed to update item [${errorMessage(err)}]`)
+      throw new Error(`Collection ${COLLECTION_NAME}: Failed to update item [${errorMessage(err)}]`)
     }
   }
 
@@ -63,7 +64,7 @@ export default class DataSource extends MongoDataSource<Document> {
         deletedBy: 'admin',
       })
     } catch (err) {
-      throw new Error(`Collection ${collectionName}: Failed to update item [${errorMessage(err)}]`)
+      throw new Error(`Collection ${COLLECTION_NAME}: Failed to update item [${errorMessage(err)}]`)
     }
   }
 
@@ -73,7 +74,7 @@ export default class DataSource extends MongoDataSource<Document> {
 
       return 'Item permanently deleted successfully'
     } catch (err) {
-      throw new Error(`Collection ${collectionName}: Failed to delete item [${errorMessage(err)}]`)
+      throw new Error(`Collection ${COLLECTION_NAME}: Failed to delete item [${errorMessage(err)}]`)
     }
   }
 }
