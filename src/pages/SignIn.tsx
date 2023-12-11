@@ -6,15 +6,15 @@ import Link from 'next/link'
 
 import { Icon } from '@/components/Icon'
 
-const Login = () => {
+const SignIn = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const [onLogin] = useMutation(
+  const [onSignIn] = useMutation(
     gql`
-      mutation LoginMutation($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
+      mutation SignInMutation($email: String!, $password: String!) {
+        signIn(email: $email, password: $password) {
           token
         }
       }
@@ -24,19 +24,22 @@ const Login = () => {
         email,
         password,
       },
-      onCompleted: ({ login }) => {
-        localStorage.setItem('token', login.token)
+      onCompleted: ({ signIn }) => {
+        localStorage.setItem('token', signIn.token)
 
-        console.log('login', login)
+        console.log('signIn', signIn.token)
+      },
+      onError(error, clientOptions) {
+        console.log('error', error)
       },
     },
   )
 
   const toggleVisibility = () => setIsVisible(!isVisible)
 
-  const submitLogin = () => {
-    console.log('submit login', email, password)
-    onLogin()
+  const submitSignIn = () => {
+    console.log('submit sign in', email, password)
+    onSignIn()
   }
 
   return (
@@ -55,34 +58,36 @@ const Login = () => {
           </CardHeader>
 
           <CardBody className='gap-4'>
-            <Input
-              type='email'
-              label='Email'
-              value={email}
-              onChange={(e) => setEmail(e?.target.value)}
-              autoComplete='off'
-            />
-
-            <div className='flex flex-col items-end gap-1 mb-3'>
+            <form autoComplete='off'>
               <Input
-                type={isVisible ? 'text' : 'password'}
-                label='Password'
-                value={password}
-                onChange={(e) => setPassword(e?.target.value)}
+                type='email'
+                label='Email'
+                value={email}
+                onChange={(e) => setEmail(e?.target.value)}
                 autoComplete='off'
-                endContent={
-                  <button className='focus:outline-none' type='button' onClick={toggleVisibility}>
-                    {isVisible ? <Icon name='FaEyeSlash' /> : <Icon name='FaEye' />}
-                  </button>
-                }
               />
 
-              <Link href='/forgot-password' className='text-primary text-sm'>
-                Forgot password?
-              </Link>
-            </div>
+              <div className='flex flex-col items-end gap-1 mb-3'>
+                <Input
+                  type={isVisible ? 'text' : 'password'}
+                  label='Password'
+                  value={password}
+                  onChange={(e) => setPassword(e?.target.value)}
+                  autoComplete='off'
+                  endContent={
+                    <button className='focus:outline-none' type='button' onClick={toggleVisibility}>
+                      {isVisible ? <Icon name='FaEyeSlash' /> : <Icon name='FaEye' />}
+                    </button>
+                  }
+                />
 
-            <Button color='primary' onClick={submitLogin}>
+                <Link href='/forgot-password' className='text-primary text-sm'>
+                  Forgot password?
+                </Link>
+              </div>
+            </form>
+
+            <Button color='primary' onClick={submitSignIn}>
               SIGN IN
             </Button>
 
@@ -119,4 +124,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignIn
