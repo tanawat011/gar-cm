@@ -8,8 +8,6 @@ const errorMessage = (err: unknown) => (err as Error).message
 
 export default class DataSource extends MongoDataSource<Document> {
   async signIn(email: string, password: string) {
-    console.log('DataSource.signIn', { email, password })
-
     try {
       return await Model.findOne().and([{ email }, { password }])
     } catch (err) {
