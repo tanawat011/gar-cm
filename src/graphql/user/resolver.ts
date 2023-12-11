@@ -2,38 +2,49 @@ import type { DataSource } from '.'
 import type { Document, InputDocument, InputPartialDocument } from './type'
 import type { NextRequest, NextResponse } from 'next/server'
 
-import { collectionName } from '.'
+import bcrypt from 'bcryptjs'
+
+import { COLLECTION_NAME, RESOLVER } from './constant'
 
 type Context = {
   dataSources: {
-    [collectionName]: DataSource
+    [COLLECTION_NAME]: DataSource
   }
 }
 
-const nameSlice = collectionName.slice(0, -1)
-const postfix = nameSlice.slice(0, 1).toUpperCase() + nameSlice.slice(1)
-const getContext = (ctx: Context) => ctx.dataSources[collectionName]
+const getContext = (ctx: Context) => ctx.dataSources[COLLECTION_NAME]
 
 export const resolvers = {
   Query: {
-    [collectionName]: async (_: NextRequest, __: NextResponse, ctx: Context) => {
+    [RESOLVER.GET_ALL]: async (_: NextRequest, __: NextResponse, ctx: Context) => {
       return getContext(ctx).getAll()
     },
-    [nameSlice]: async (_: NextRequest, { _id }: { _id: string }, ctx: Context) => {
+    [RESOLVER.GET_BY_ID]: async (_: NextRequest, { _id }: { _id: string }, ctx: Context) => {
       return getContext(ctx).getById(_id)
     },
   },
   Mutation: {
-    [`create${postfix}`]: async (_: NextRequest, { input }: InputDocument, ctx: Context) => {
-      return getContext(ctx).createItem({ input })
+    [RESOLVER.CREATE]: async (_: NextRequest, { input }: InputDocument, ctx: Context) => {
+      const salt = bcrypt.genSaltSync(12)
+      const hash = bcrypt.hashSync(input.password, salt)
+
+      console.log('input.password', input.password)
+      console.log('hash', hash)
+
+      const payload = {
+        ...input,
+        password: hash,
+      }
+
+      return getContext(ctx).createItem({ input: payload })
     },
-    [`update${postfix}`]: async (_: NextRequest, { input }: InputPartialDocument, ctx: Context) => {
+    [RESOLVER.UPDATE]: async (_: NextRequest, { input }: InputPartialDocument, ctx: Context) => {
       return getContext(ctx).updateItem(input._id, { input })
     },
-    [`delete${postfix}`]: async (_: NextRequest, { _id }: Pick<Document, '_id'>, ctx: Context) => {
+    [RESOLVER.DELETE]: async (_: NextRequest, { _id }: Pick<Document, '_id'>, ctx: Context) => {
       return getContext(ctx).deleteItem({ _id })
     },
-    // [`deletePermanently${postfix}`]: async (_: NextRequest, { _id }: Pick<Document, '_id'>, ctx: Context) => {
+    // [RESOLVER.DELETE_PERMANENTLY]: async (_: NextRequest, { _id }: Pick<Document, '_id'>, ctx: Context) => {
     //   return getContext(ctx).deletePermanentlyItem({ _id })
     // },
   },
