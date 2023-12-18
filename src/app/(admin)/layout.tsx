@@ -24,6 +24,4 @@ function RootLayout({ children }: AppProps) {
   )
 }
 
-export default withPageAuthRequired(RootLayout as never as AppRouterPageRoute, {
-  returnTo: '/sign-in',
-})
+export default withPageAuthRequired(RootLayout as never as AppRouterPageRoute)
