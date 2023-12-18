@@ -1,4 +1,3 @@
-import type { AppRouterPageRoute } from '@auth0/nextjs-auth0'
 import type { Metadata } from 'next'
 
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
@@ -24,4 +23,4 @@ function RootLayout({ children }: AppProps) {
   )
 }
 
-export default withPageAuthRequired(RootLayout as never as AppRouterPageRoute)
+export default withPageAuthRequired(RootLayout as never)
