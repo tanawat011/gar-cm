@@ -5,12 +5,6 @@ import { createYoga } from 'graphql-yoga'
 import { createContext } from '@/graphql/context'
 import { schema } from '@/graphql/schema'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
-
 const { handleRequest } = createYoga<{
   req: NextApiRequest
   res: NextApiResponse
