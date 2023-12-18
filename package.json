@@ -21,10 +21,10 @@
     "test:cv:msg:w": "yarn test:cv:w --verbose",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prisma:gen": "prisma generate",
-    "prisma:push": "prisma db push",
-    "prisma:pull": "prisma db pull",
-    "prisma:seed": "prisma db seed"
+    "db:gen": "prisma generate",
+    "db:push": "prisma db push",
+    "db:pull": "prisma db pull",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
