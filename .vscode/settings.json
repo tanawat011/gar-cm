@@ -107,5 +107,8 @@
       "bold": true,
       "italic": false
     }
-  ]
+  ],
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  }
 }

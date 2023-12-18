@@ -1,14 +1,24 @@
-import type { NextRequest } from 'next/server'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { handlerApolloServer } from '@/libs/apolloServer'
-import { initMongoDB } from '@/libs/mongoDB'
+import { createYoga } from 'graphql-yoga'
 
-initMongoDB()
+import { createContext } from '@/graphql/context'
+import { schema } from '@/graphql/schema'
 
-export async function GET(request: NextRequest) {
-  return handlerApolloServer(request)
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 }
 
-export async function POST(request: NextRequest) {
-  return handlerApolloServer(request)
-}
+const { handleRequest } = createYoga<{
+  req: NextApiRequest
+  res: NextApiResponse
+}>({
+  schema,
+  context: createContext,
+  graphqlEndpoint: '/api/graphql',
+  fetchAPI: { Response },
+})
+
+export { handleRequest as GET, handleRequest as POST, handleRequest as OPTIONS }
