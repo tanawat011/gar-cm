@@ -1,4 +1,11 @@
+import { Role } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+
 import { builder } from '../builder'
+
+const RoleEnum = builder.enumType('Role', {
+  values: Object.values(Role),
+})
 
 builder.prismaObject('users', {
   fields: (t) => ({
@@ -10,17 +17,11 @@ builder.prismaObject('users', {
     deletedAt: t.expose('deletedAt', { type: 'Date', nullable: true }),
     deletedBy: t.exposeString('deletedBy', { nullable: true }),
     email: t.exposeString('email', {}),
-    username: t.exposeString('username', {}),
-    password: t.exposeString('password', { nullable: true }),
     nickname: t.exposeString('nickname', { nullable: true }),
     age: t.exposeInt('age', { nullable: true }),
     image: t.exposeString('image', { nullable: true }),
-    role: t.expose('role', { type: Role, nullable: true }),
+    role: t.expose('role', { type: RoleEnum, nullable: true }),
   }),
-})
-
-const Role = builder.enumType('Role', {
-  values: ['USER', 'ADMIN'] as const,
 })
 
 builder.queryField('users', (t) =>
@@ -29,20 +30,6 @@ builder.queryField('users', (t) =>
     resolve: async (query) =>
       prisma.users.findMany({
         ...query,
-        // where: {
-        //   OR: [
-        //     {
-        //       NOT: {
-        //         deletedAt: undefined,
-        //       },
-        //     },
-        //     {
-        //       NOT: {
-        //         deletedAt: null,
-        //       },
-        //     },
-        //   ],
-        // },
       }),
   }),
 )
@@ -52,32 +39,33 @@ builder.mutationField('createUser', (t) =>
     type: 'users',
     args: {
       email: t.arg.string({ required: true }),
-      username: t.arg.string({ required: true }),
       password: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, ctx) => {
-      const { email, password, username } = args
+      const { email, password } = args
 
-      if (!(await ctx).username) {
+      if (!(await ctx).email) {
         throw new Error('You have to be logged in to perform this action')
       }
 
       const user = await prisma.users.findUnique({
         where: {
-          email: (await ctx).username,
+          email: (await ctx).email,
         },
       })
 
       if (!user || user.role !== 'ADMIN') {
-        throw new Error('You don have permission ot perform this action')
+        throw new Error('You don`t have permission to perform this action')
       }
+
+      const salt = bcrypt.genSaltSync(10)
+      const hash = bcrypt.hashSync(password, salt)
 
       return prisma.users.create({
         ...query,
         data: {
           email,
-          password,
-          username,
+          password: hash,
         },
       })
     },
