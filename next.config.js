@@ -8,6 +8,9 @@ const nextConfig = withTwin({
   images: {
     domains: ['tailwind-elements.com'],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["@whatwg-node"],
+  },
 })
 
 module.exports = nextConfig
