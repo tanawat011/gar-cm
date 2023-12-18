@@ -2,12 +2,7 @@ import type { MenuItemProps, SelectionMode } from '@nextui-org/react'
 
 import React from 'react'
 
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from '@nextui-org/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
 type DropdownInputProps = {
   selectedKeys?: string[]
@@ -21,6 +16,7 @@ type DropdownInputProps = {
     label: string
     startContent?: React.ReactNode
     children?: React.ReactNode
+    onClick?: () => void
   }[]
   onSelected?: (key: string | number) => void
 }
@@ -49,9 +45,9 @@ export const DropdownInput: React.FC<DropdownInputProps> = (props) => {
         selectedKeys={selectedKeys}
         onAction={onSelected}
       >
-        {items.map(({ key, label, startContent, children: itemChildren }) => {
+        {items.map(({ key, label, startContent, onClick, children: itemChildren }) => {
           return (
-            <DropdownItem key={key} startContent={startContent}>
+            <DropdownItem key={key} startContent={startContent} onClick={onClick}>
               {itemChildren || label}
             </DropdownItem>
           )

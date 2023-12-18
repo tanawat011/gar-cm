@@ -32,6 +32,9 @@ export const Profile = () => {
         {
           key: 'logout',
           label: 'Log Out',
+          onClick: () => {
+            window.location.href = '/api/auth/logout'
+          },
         },
       ]}
     >
