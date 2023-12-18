@@ -1,22 +1,23 @@
 'use client'
 
-import { useQuery, gql } from '@apollo/client'
+// import { useQuery, gql } from '@apollo/client'
+// import { useUser } from '@auth0/nextjs-auth0/client'
 
 const Dashboard = () => {
-  const { data } = useQuery(gql`
-    query Query {
-      users {
-        _id
-        firstName
-        lastName
-        email
-        age
-        active
-      }
-    }
-  `)
+  // const { user, error, isLoading } = useUser()
 
-  console.log('data', data)
+  // const { data } = useQuery(gql`
+  //   query Query {
+  //     users {
+  //       _id
+  //       firstName
+  //       lastName
+  //       email
+  //       age
+  //       active
+  //     }
+  //   }
+  // `)
 
   return (
     <div>

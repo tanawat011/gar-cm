@@ -1,4 +1,4 @@
-import type { createContext } from './context'
+import type { Context } from './context'
 import type PrismaTypes from '@pothos/plugin-prisma/generated'
 
 import SchemaBuilder from '@pothos/core'
@@ -10,7 +10,7 @@ import prisma from '@/libs/prisma'
 
 export const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes
-  Context: ReturnType<typeof createContext>
+  Context: Context
   Scalars: {
     Date: {
       Input: Date

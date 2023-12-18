@@ -1,4 +1,7 @@
+import type { AppRouterPageRoute } from '@auth0/nextjs-auth0'
 import type { Metadata } from 'next'
+
+import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 
 import { AppContainer } from '@/components/AppContainer'
 import CoreLayout from '@/components/CoreLayout'
@@ -13,10 +16,14 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1',
 }
 
-export default function RootLayout({ children }: AppProps) {
+function RootLayout({ children }: AppProps) {
   return (
     <AppContainer>
       <CoreLayout>{children}</CoreLayout>
     </AppContainer>
   )
 }
+
+export default withPageAuthRequired(RootLayout as never as AppRouterPageRoute, {
+  returnTo: '/sign-in',
+})
