@@ -1,7 +1,7 @@
-export async function GET(request: Request) {
+export async function GET() {
   return new Response('Hello world! GET', { status: 200 })
 }
 
-export async function POST(request: Request) {
+export async function POST() {
   return new Response('Hello world! POST', { status: 200 })
 }
