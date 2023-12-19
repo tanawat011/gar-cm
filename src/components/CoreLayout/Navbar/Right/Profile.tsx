@@ -1,12 +1,16 @@
 import type { AvatarProps } from '@nextui-org/react'
 
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Avatar, User } from '@nextui-org/react'
 
 import { DropdownInput } from '@/components/Input'
 
+import { CoreLayoutContext } from '../../Provider'
+
 export const Profile = () => {
+  const { onLoading } = useContext(CoreLayoutContext)
+
   const profileInfo: Partial<AvatarProps> = {
     isBordered: true,
     as: 'button',
@@ -33,6 +37,7 @@ export const Profile = () => {
           key: 'logout',
           label: 'Log Out',
           onClick: () => {
+            onLoading(true)
             window.location.href = '/api/auth/logout'
           },
         },

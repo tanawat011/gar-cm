@@ -90,7 +90,7 @@ export const Menu = () => {
       <li key={idx}>
         {item.isGroupLabel && (
           <>
-            <Divider />
+            <Divider gradient />
 
             <IconAndLabel
               {...item}
