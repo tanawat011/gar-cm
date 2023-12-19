@@ -12,7 +12,7 @@ type IconAndLabelProps = {
 
 export const IconAndLabel: React.FC<IconAndLabelProps> = ({ icon, label, isGroupLabel, isExpand, isExpandOnHover }) => {
   const getClassNameWrapper = () => {
-    return ['flex items-center gap-3', isGroupLabel ? 'h-8 pl-3' : ''].join(' ')
+    return ['flex items-center gap-3', isGroupLabel ? 'h-9 pl-3' : ''].join(' ')
   }
 
   const getClassNameLabel = () => {
