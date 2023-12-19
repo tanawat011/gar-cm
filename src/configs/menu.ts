@@ -5,6 +5,7 @@ export type MenuProps = {
   icon?: IconType
   id: string
   link?: string
+  isGroupLabel?: boolean
   items?: MenuProps[]
 }
 
@@ -24,15 +25,18 @@ export const menu: MenuProps[] = [
         label: 'Link Remember',
         icon: 'FaShop',
         id: 'link-remember',
-        link: '/app/link-remember',
       },
       {
         label: 'TODO',
         icon: 'FaShop',
         id: 'todo',
-        link: '/app/todo',
       },
     ],
+  },
+  {
+    label: 'Component',
+    id: 'componenta',
+    isGroupLabel: true,
   },
   {
     label: 'Component',
@@ -45,10 +49,14 @@ export const menu: MenuProps[] = [
         id: 'common',
         items: [
           {
+            label: 'Typography',
+            icon: 'FaShop',
+            id: 'typography',
+          },
+          {
             label: 'Divider',
             icon: 'FaShop',
             id: 'divider',
-            link: '/component/common/divider',
           },
         ],
       },
@@ -61,11 +69,15 @@ export const menu: MenuProps[] = [
             label: 'Text Input',
             icon: 'FaShop',
             id: 'text-input',
-            link: '/component/input/text-input',
           },
         ],
       },
     ],
+  },
+  {
+    label: 'Example',
+    id: 'example',
+    isGroupLabel: true,
   },
   {
     label: 'Level 1',

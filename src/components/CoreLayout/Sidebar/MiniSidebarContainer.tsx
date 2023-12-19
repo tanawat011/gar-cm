@@ -40,6 +40,10 @@ const StyledChildrenContainer = styled.div(() => {
         #full-sidebar {
           ${tw`hidden`}
         }
+
+        #wrap-item-label-group-label {
+          ${tw`hidden`}
+        }
       }
 
       &:hover > div {
@@ -71,6 +75,10 @@ const StyledChildrenContainer = styled.div(() => {
 
         #arrow-down {
           ${tw`block`}
+        }
+
+        #wrap-item-label-group-label {
+          ${tw`flex`}
         }
       }
     `,
