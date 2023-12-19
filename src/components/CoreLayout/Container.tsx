@@ -12,6 +12,7 @@ import { FullScreenFirstLoading } from '../FullScreenFirstLoading'
 import { Content } from './Content'
 import { ContentContainer } from './ContentContainer'
 import { DrawerSetting, DrawerTriggerButton } from './DrawerSetting'
+import { Loading } from './Loading'
 import { Navbar } from './Navbar'
 import { CoreLayoutProvider } from './Provider'
 import { Sidebar } from './Sidebar'
@@ -52,6 +53,8 @@ export default function Container({ children }: SidebarContainerProps) {
   return (
     <CoreLayoutProvider>
       <StyledCoreLayoutContainer>
+        <Loading />
+
         <Sidebar />
 
         <ContentContainer>
