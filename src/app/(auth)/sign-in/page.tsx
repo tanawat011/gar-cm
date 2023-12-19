@@ -1,7 +1,11 @@
 'use client'
 
-import PageSignIn from '@/pages/SignIn'
+import { useEffect } from 'react'
 
 export default function SignIn() {
-  return <PageSignIn />
+  useEffect(() => {
+    window.location.href = '/api/auth/login'
+  })
+
+  return null
 }
