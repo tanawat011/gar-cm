@@ -5,6 +5,7 @@ import { useRef, useState } from 'react'
 
 import { useSelector } from 'react-redux'
 
+import { Divider } from '@/components/Common'
 import { menu as items } from '@/configs'
 import { appSettingSelector } from '@/store/selector'
 
@@ -57,12 +58,18 @@ export const Menu = () => {
     })
   }
 
-  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3, isJustIcon?: boolean) => {
-    const itemId = item.id
-    const hasItems = 'items' in item
-    const hasLink = 'link' in item
+  const getLink = (itemId: string, parentId?: string, link?: string) => {
+    if (link) return link
 
-    if (activeItem === '' && item?.link && activeLink.includes(item?.link)) {
+    return parentId ? `/${parentId.replaceAll('.', '/')}/${itemId}` : `/${itemId}`
+  }
+
+  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3, isJustIcon?: boolean, parentId?: string) => {
+    const itemId = parentId ? `${parentId}.${item.id}` : item.id
+    const itemLink = getLink(item.id, parentId, item?.link)
+    const hasItems = 'items' in item
+
+    if (activeItem === '' && activeLink === itemLink) {
       setActiveItem(itemId)
     }
 
@@ -70,59 +77,74 @@ export const Menu = () => {
     const onClick = () => {
       if (hasItems) return handleToggleItem(itemId)
 
-      if (hasLink) return handleNavigate(itemId)
+      handleNavigate(itemId)
     }
 
     const onKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
       const { code } = e
 
-      if (code === 'Space') {
-        if (hasItems) return handleToggleItem(itemId)
-
-        if (hasLink) return handleNavigate(itemId)
-      }
+      if (code === 'Space') onClick()
     }
 
     return (
       <li key={idx}>
-        <StyledItem
-          role='button'
-          tabIndex={0}
-          onClick={onClick}
-          onKeyDown={onKeyDown}
-          id={itemId}
-          lvl={lvl}
-          $activeItem={activeItem}
-          className={classesActive}
-          href='#'
-          {...(!hasItems && { href: item?.link || '/' })}
-        >
-          <IconAndLabel
-            {...item}
-            {...(lvl > 1 && { icon: undefined })}
-            isExpand={isExpand}
-            isExpandOnHover={isExpandOnHover}
-          />
+        {item.isGroupLabel && (
+          <>
+            <Divider />
 
-          {!isJustIcon && hasItems && (
-            <BadgeAndArrow
-              isOpen={!!openedMenu?.[itemId]?.open}
+            <IconAndLabel
+              {...item}
+              {...(lvl > 1 && { icon: undefined })}
               isExpand={isExpand}
               isExpandOnHover={isExpandOnHover}
             />
-          )}
-        </StyledItem>
+          </>
+        )}
 
-        {!isJustIcon && hasItems && (
-          <SubItemContainer
-            handleRef={(el) => (listRef.current[itemId] = el)}
-            id={itemId}
-            height={openedMenu?.[itemId]?.height}
-            isExpand={isExpand}
-            isExpandOnHover={isExpandOnHover}
-          >
-            {item.items?.map((cldItem, cldIdx) => generateMenuItem(cldItem, cldIdx, (lvl + 1) as never))}
-          </SubItemContainer>
+        {!item.isGroupLabel && (
+          <>
+            <StyledItem
+              role='button'
+              tabIndex={0}
+              onClick={onClick}
+              onKeyDown={onKeyDown}
+              id={itemId}
+              lvl={lvl}
+              $activeItem={activeItem}
+              className={classesActive}
+              href='#'
+              {...(!hasItems && { href: itemLink })}
+            >
+              <IconAndLabel
+                {...item}
+                {...(lvl > 1 && { icon: undefined })}
+                isExpand={isExpand}
+                isExpandOnHover={isExpandOnHover}
+              />
+
+              {!isJustIcon && hasItems && (
+                <BadgeAndArrow
+                  isOpen={!!openedMenu?.[itemId]?.open}
+                  isExpand={isExpand}
+                  isExpandOnHover={isExpandOnHover}
+                />
+              )}
+            </StyledItem>
+
+            {!isJustIcon && hasItems && (
+              <SubItemContainer
+                handleRef={(el) => (listRef.current[itemId] = el)}
+                id={itemId}
+                height={openedMenu?.[itemId]?.height}
+                isExpand={isExpand}
+                isExpandOnHover={isExpandOnHover}
+              >
+                {item.items?.map((cldItem, cldIdx) =>
+                  generateMenuItem(cldItem, cldIdx, (lvl + 1) as never, false, itemId),
+                )}
+              </SubItemContainer>
+            )}
+          </>
         )}
       </li>
     )
