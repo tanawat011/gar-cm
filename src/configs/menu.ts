@@ -35,6 +35,39 @@ export const menu: MenuProps[] = [
     ],
   },
   {
+    label: 'Component',
+    icon: 'FaShop',
+    id: 'component',
+    items: [
+      {
+        label: 'Common',
+        icon: 'FaShop',
+        id: 'common',
+        items: [
+          {
+            label: 'Divider',
+            icon: 'FaShop',
+            id: 'divider',
+            link: '/component/common/divider',
+          },
+        ],
+      },
+      {
+        label: 'Input',
+        icon: 'FaShop',
+        id: 'input',
+        items: [
+          {
+            label: 'Text Input',
+            icon: 'FaShop',
+            id: 'text-input',
+            link: '/component/input/text-input',
+          },
+        ],
+      },
+    ],
+  },
+  {
     label: 'Level 1',
     icon: 'FaRegSun',
     id: 'level1',

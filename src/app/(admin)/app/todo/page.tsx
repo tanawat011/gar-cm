@@ -56,8 +56,6 @@ export default function ToDo() {
       <p className='line-through text-slate-500'>MongoDB</p>
       <p className='line-through text-slate-500'>Prisma</p>
       <p className='line-through text-slate-500'>Auth0</p>
-      <p>Register Page</p>
-      <p>Forgot Password Page</p>
       <p>Form.io</p>
     </div>
   )
