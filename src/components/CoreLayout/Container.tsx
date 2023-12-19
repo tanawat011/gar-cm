@@ -7,7 +7,7 @@ import tw from 'twin.macro'
 
 import { useInitAppSetting, useResize } from '@/hooks'
 
-import { FullScreenLoading } from '../FullScreenLoading'
+import { FullScreenFirstLoading } from '../FullScreenFirstLoading'
 
 import { Content } from './Content'
 import { ContentContainer } from './ContentContainer'
@@ -47,7 +47,7 @@ export default function Container({ children }: SidebarContainerProps) {
     }, 1000)
   }, [isMobile])
 
-  if (isLoading) return <FullScreenLoading />
+  if (isLoading) return <FullScreenFirstLoading />
 
   return (
     <CoreLayoutProvider>

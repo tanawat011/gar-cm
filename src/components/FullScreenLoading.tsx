@@ -1,13 +1,9 @@
-import Lottie from 'lottie-react'
-
-import lottieCat from '@/assets/json/lottieCat.json'
+import { Spinner } from '@nextui-org/react'
 
 export const FullScreenLoading = () => {
   return (
-    <Lottie
-      animationData={lottieCat}
-      loop={true}
-      className='bg-black w-screen h-screen'
-    />
+    <div className='fixed top-0 left-0 w-screen h-screen flex flex-col items-center justify-center text-center bg-opacity-70 bg-black'>
+      <Spinner size='lg' />
+    </div>
   )
 }
