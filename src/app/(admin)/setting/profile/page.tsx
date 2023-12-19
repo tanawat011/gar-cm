@@ -1,5 +1,9 @@
-import BeginPage from '@/pages/BeginPage'
+'use client'
+
+import { usePathname } from 'next/navigation'
 
 export default function Profile() {
-  return <BeginPage />
+  const pathname = usePathname()
+
+  return <div>App {pathname}</div>
 }

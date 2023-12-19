@@ -1,5 +1,9 @@
-import BeginPage from '@/pages/BeginPage'
+'use client'
 
-export default function Page() {
-  return <BeginPage />
+import { usePathname } from 'next/navigation'
+
+export default function Theme() {
+  const pathname = usePathname()
+
+  return <div>App {pathname}</div>
 }
