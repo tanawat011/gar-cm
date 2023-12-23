@@ -11,6 +11,7 @@ import { appSettingSelector } from '@/store/selector'
 import { ToggleCoreColors } from './ToggleCoreColors'
 import { ToggleDrawerPosition } from './ToggleDrawerPosition'
 import { ToggleLang } from './ToggleLang'
+import { ToggleNavbarFix } from './ToggleNavbarFix'
 import { ToggleSidebarType } from './ToggleSidebarType'
 import { ToggleTheme } from './ToggleTheme'
 
@@ -45,6 +46,8 @@ export const Content = () => {
       <ToggleCoreColors />
 
       <ToggleTheme />
+
+      <ToggleNavbarFix />
 
       <ToggleLang />
 

@@ -1,7 +1,12 @@
+import type { NavbarType } from '@/types'
+
 import React from 'react'
 
-import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
+import { useSelector } from 'react-redux'
+import tw, { styled } from 'twin.macro'
+
+import { appSettingSelector } from '@/store/selector'
 
 import { LeftContainer } from './Left'
 import { RightContainer } from './Right'
@@ -11,17 +16,21 @@ type NavbarContainerProps = {
 }
 
 export const Container: React.FC<NavbarContainerProps> = ({ id }) => {
+  const { navbarType } = useSelector(appSettingSelector)
+
   return (
-    <div
-      id={id}
-      className={clsx(
-        'dark:border-gunmetal border-solid border-b flex justify-between w-full top-0 bg-background',
-        isMobile ? 'fixed' : 'sticky',
-      )}
-    >
+    <StyledContainer id={id} $navbarType={navbarType} $isMobile={isMobile}>
       <LeftContainer />
 
       <RightContainer />
-    </div>
+    </StyledContainer>
   )
 }
+
+const StyledContainer = styled.div<{ $navbarType: NavbarType; $isMobile: boolean }>(({ $navbarType, $isMobile }) => {
+  return [
+    tw`flex justify-between w-full`,
+    !$isMobile && $navbarType === 'sticky' && tw`sticky top-0 bg-background`,
+    $isMobile && tw`fixed`,
+  ]
+})
