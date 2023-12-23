@@ -22,12 +22,12 @@ export const ToggleTheme = () => {
       <Switch
         defaultSelected
         size='lg'
-        startContent={<Icon name='FaRegSun' />}
-        endContent={<Icon name='FaRegMoon' />}
+        startContent={<Icon name='FaRegMoon' />}
+        endContent={<Icon name='FaRegSun' />}
         value={theme}
-        isSelected={theme === THEME.LIGHT}
-        onValueChange={(isLight) => {
-          toggleTheme(isLight ? THEME.LIGHT : THEME.DARK)
+        isSelected={theme === THEME.DARK}
+        onValueChange={(isDark) => {
+          toggleTheme(isDark ? THEME.DARK : THEME.LIGHT)
         }}
       />
 
