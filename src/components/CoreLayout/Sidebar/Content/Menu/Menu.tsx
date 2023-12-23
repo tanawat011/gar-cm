@@ -3,11 +3,8 @@ import type { MenuProps as ItemProps } from '@/configs'
 import type { KeyboardEvent } from 'react'
 import { useRef, useState } from 'react'
 
-import { useSelector } from 'react-redux'
-
 import { Divider } from '@/components/Common'
 import { menu as items } from '@/configs'
-import { appSettingSelector } from '@/store/selector'
 
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
@@ -18,8 +15,6 @@ type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 
 export const Menu = () => {
   const activeLink = window.location.pathname
-
-  const { sidebarType } = useSelector(appSettingSelector)
 
   const listRef = useRef<Record<string, HTMLUListElement | null>>({})
 
@@ -64,7 +59,7 @@ export const Menu = () => {
     return parentId ? `/${parentId.replaceAll('.', '/')}/${itemId}` : `/${itemId}`
   }
 
-  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3, isJustIcon?: boolean, parentId?: string) => {
+  const generateMenuItem = (item: ItemProps, idx: number, lvl: 1 | 2 | 3, parentId?: string) => {
     const itemId = parentId ? `${parentId}.${item.id}` : item.id
     const itemLink = getLink(item.id, parentId, item?.link)
     const hasItems = 'items' in item
@@ -95,6 +90,7 @@ export const Menu = () => {
             <IconAndLabel
               {...item}
               {...(lvl > 1 && { icon: undefined })}
+              id='wrap-item-group-label'
               isExpand={isExpand}
               isExpandOnHover={isExpandOnHover}
             />
@@ -122,7 +118,7 @@ export const Menu = () => {
                 isExpandOnHover={isExpandOnHover}
               />
 
-              {!isJustIcon && hasItems && (
+              {hasItems && (
                 <BadgeAndArrow
                   isOpen={!!openedMenu?.[itemId]?.open}
                   isExpand={isExpand}
@@ -131,18 +127,18 @@ export const Menu = () => {
               )}
             </StyledItem>
 
-            {!isJustIcon && hasItems && (
-              <SubItemContainer
-                handleRef={(el) => (listRef.current[itemId] = el)}
-                id={itemId}
-                height={openedMenu?.[itemId]?.height}
-                isExpand={isExpand}
-                isExpandOnHover={isExpandOnHover}
-              >
-                {item.items?.map((cldItem, cldIdx) =>
-                  generateMenuItem(cldItem, cldIdx, (lvl + 1) as never, false, itemId),
-                )}
-              </SubItemContainer>
+            {hasItems && (
+              <div id='sub-item-container'>
+                <SubItemContainer
+                  handleRef={(el) => (listRef.current[itemId] = el)}
+                  id={itemId}
+                  height={openedMenu?.[itemId]?.height}
+                  isExpand={isExpand}
+                  isExpandOnHover={isExpandOnHover}
+                >
+                  {item.items?.map((cldItem, cldIdx) => generateMenuItem(cldItem, cldIdx, (lvl + 1) as never, itemId))}
+                </SubItemContainer>
+              </div>
             )}
           </>
         )}
@@ -152,15 +148,7 @@ export const Menu = () => {
 
   return (
     <StyledContainer>
-      {sidebarType === 'mini' && (
-        <StyledUlContainer id='mini-sidebar'>
-          {items.map((item, idx) => generateMenuItem(item, idx, 1, true))}
-        </StyledUlContainer>
-      )}
-
-      <StyledUlContainer id='full-sidebar'>
-        {items.map((item, idx) => generateMenuItem(item, idx, 1))}
-      </StyledUlContainer>
+      <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
     </StyledContainer>
   )
 }

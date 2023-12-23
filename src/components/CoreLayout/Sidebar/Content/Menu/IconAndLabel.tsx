@@ -3,6 +3,7 @@ import type { IconType } from '@/components/Icon'
 import { Icon } from '@/components/Icon'
 
 type IconAndLabelProps = {
+  id?: string
   icon?: IconType
   label: string
   isGroupLabel?: boolean
@@ -10,7 +11,14 @@ type IconAndLabelProps = {
   isExpandOnHover?: boolean
 }
 
-export const IconAndLabel: React.FC<IconAndLabelProps> = ({ icon, label, isGroupLabel, isExpand, isExpandOnHover }) => {
+export const IconAndLabel: React.FC<IconAndLabelProps> = ({
+  id,
+  icon,
+  label,
+  isGroupLabel,
+  isExpand,
+  isExpandOnHover,
+}) => {
   const getClassNameWrapper = () => {
     return ['flex items-center gap-3', isGroupLabel ? 'h-9 pl-3' : ''].join(' ')
   }
@@ -24,7 +32,7 @@ export const IconAndLabel: React.FC<IconAndLabelProps> = ({ icon, label, isGroup
   }
 
   return (
-    <div id={`wrap-item-label${isGroupLabel ? '-group-label' : ''}`} className={getClassNameWrapper()}>
+    <div id={id || `wrap-item-label${isGroupLabel ? '-group-label' : ''}`} className={getClassNameWrapper()}>
       {icon && <Icon name={icon} className='mr-2 w-5 h-5' />}
 
       <div id='item-label' className={getClassNameLabel()}>
