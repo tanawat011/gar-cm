@@ -9,7 +9,6 @@ import { CoreLayoutContext } from '../Provider'
 
 import { Content } from './Content'
 import { FullSidebarContainer } from './FullSidebarContainer'
-import { MiniSidebarContainer } from './MiniSidebarContainer'
 
 const sidebarId = 'sidebar-container'
 
@@ -36,7 +35,7 @@ export const Container = () => {
   }, [sidebarType])
 
   return (
-    <div id={sidebarId} className='transition-width'>
+    <div className='transition-width'>
       {sidebarType === 'drawer' && (
         <Drawer
           id='sidebar-drawer'
@@ -49,13 +48,7 @@ export const Container = () => {
         </Drawer>
       )}
 
-      {sidebarType === 'mini' && (
-        <MiniSidebarContainer>
-          <Content />
-        </MiniSidebarContainer>
-      )}
-
-      {sidebarType === 'full' && (
+      {sidebarType !== 'drawer' && (
         <FullSidebarContainer>
           <Content />
         </FullSidebarContainer>

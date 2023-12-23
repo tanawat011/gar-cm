@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "yarn husky && yarn db:gen && next dev",
     "build": "next build",
+    "build:prd": "prisma generate && yarn build",
     "start": "next start",
     "lint": "next lint",
     "husky": "npx husky install",
