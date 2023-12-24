@@ -147,7 +147,7 @@ export const Menu = () => {
   }
 
   return (
-    <StyledContainer>
+    <StyledContainer className='overflow-x-hidden'>
       <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
     </StyledContainer>
   )

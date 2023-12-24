@@ -48,6 +48,10 @@ const StyledContainer = styled(Card)<{ $sidebarType: SidebarType }>(({ $sidebarT
           #sub-item-container {
             ${tw`hidden`}
           }
+
+          #powered-by {
+            ${tw`hidden`}
+          }
         }
 
         &:hover > * {
@@ -65,6 +69,10 @@ const StyledContainer = styled(Card)<{ $sidebarType: SidebarType }>(({ $sidebarT
 
           #sub-item-container {
             ${tw`block`}
+          }
+
+          #powered-by {
+            ${tw`inline`}
           }
         }
       `,

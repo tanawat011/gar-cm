@@ -25,6 +25,7 @@ const navbarId = 'navbar'
 
 export default function Container({ children }: SidebarContainerProps) {
   const [isLoading, setIsLoading] = useState(true)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const setupChildContainer = () => {
     const elNavbar = document.getElementById(navbarId)
@@ -57,8 +58,8 @@ export default function Container({ children }: SidebarContainerProps) {
 
         <Sidebar />
 
-        <ContentContainer>
-          <Navbar id={navbarId} />
+        <ContentContainer setIsScrolled={setIsScrolled}>
+          <Navbar id={navbarId} isScrolled={isScrolled} />
 
           <Content>{children}</Content>
         </ContentContainer>
