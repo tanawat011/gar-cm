@@ -14,6 +14,7 @@ import { ToggleLang } from './ToggleLang'
 import { ToggleNavbarFix } from './ToggleNavbarFix'
 import { ToggleSidebarType } from './ToggleSidebarType'
 import { ToggleTheme } from './ToggleTheme'
+import { ToggleThemeStyle } from './ToggleThemeStyle'
 
 export const coreDrawerId = 'drawer'
 
@@ -46,6 +47,8 @@ export const Content = () => {
       <ToggleCoreColors />
 
       <ToggleTheme />
+
+      <ToggleThemeStyle />
 
       <ToggleNavbarFix />
 
