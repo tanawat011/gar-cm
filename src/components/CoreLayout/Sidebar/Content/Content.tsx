@@ -2,16 +2,18 @@ import React from 'react'
 
 import tw, { styled } from 'twin.macro'
 
+import { Menu } from '@/components/Common'
+import { menu } from '@/configs'
+
 import { Footer } from './Footer'
 import { Logo } from './Logo'
-import { Menu } from './Menu'
 
 export const Content = () => {
   return (
     <StyledContent>
       <Logo />
 
-      <Menu />
+      <Menu items={menu} />
 
       <Footer />
     </StyledContent>
