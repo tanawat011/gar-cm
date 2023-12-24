@@ -20,3 +20,19 @@ export const SIDEBAR_TYPE_LABEL: readonly CommonOption[] = [
     label: 'Mini',
   },
 ] as const
+
+export const SIDEBAR_STYLE = {
+  CLASSIC: 'classic',
+  MODERN: 'modern',
+} as const
+
+export const SIDEBAR_STYLE_LABEL: readonly CommonOption[] = [
+  {
+    key: SIDEBAR_STYLE.CLASSIC,
+    label: 'Classic',
+  },
+  {
+    key: SIDEBAR_STYLE.MODERN,
+    label: 'Modern',
+  },
+] as const

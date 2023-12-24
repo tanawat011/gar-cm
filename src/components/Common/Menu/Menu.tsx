@@ -7,7 +7,7 @@ import { Divider } from '@/components/Common'
 
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
-import { StyledContainer, StyledItem, StyledUlContainer } from './Menu.styled'
+import { StyledItem, StyledUlContainer } from './Menu.styled'
 import { SubItemContainer } from './SubItemContainer'
 
 type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
@@ -149,9 +149,5 @@ export const Menu: React.FC<MenuProps> = ({ items }) => {
     )
   }
 
-  return (
-    <StyledContainer className='overflow-x-hidden'>
-      <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
-    </StyledContainer>
-  )
+  return <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
 }

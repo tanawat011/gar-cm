@@ -11,20 +11,22 @@ export const Footer = () => {
 
   return (
     <StyledFooterWrap>
-      <p>
-        <StyledPoweredBy id='powered-by' $sidebarType={sidebarType}>
-          Powered by
-        </StyledPoweredBy>{' '}
-        <span>tDev</span>
-      </p>
-      <p>v{pkg?.version}</p>
+      <div className='flex flex-col items-center justify-center mt-4'>
+        <p>
+          <StyledPoweredBy id='powered-by' $sidebarType={sidebarType}>
+            Powered by
+          </StyledPoweredBy>{' '}
+          <span>tDev</span>
+        </p>
+        <p>v{pkg?.version}</p>
+      </div>
     </StyledFooterWrap>
   )
 }
 
 const StyledFooterWrap = styled.div(() => {
   return [
-    tw`h-[--navbar-h] flex flex-col items-center justify-center text-sm border-solid border-t`,
+    tw`h-[var(--navbar-h)] flex flex-col items-center justify-center text-sm border-solid border-t`,
     tw`dark:border-gunmetal`,
   ]
 })
