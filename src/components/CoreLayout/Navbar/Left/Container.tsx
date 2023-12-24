@@ -15,7 +15,7 @@ export const Container = () => {
   const { sidebarType } = useSelector(appSettingSelector)
 
   return (
-    <div className='ml-6 py-4 flex items-center'>
+    <div className='py-4 flex items-center'>
       {sidebarType === 'full' && (
         <Icon name='FaOutdent' className='cursor-pointer mx-3' onClick={() => toggleSidebarType('mini')} />
       )}
