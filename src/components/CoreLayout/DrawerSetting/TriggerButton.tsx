@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 
+import { isMobile } from 'react-device-detect'
 import tw, { styled } from 'twin.macro'
 
 import { Icon } from '@/components/Icon'
@@ -18,10 +19,11 @@ export const TriggerButton = () => {
 
 const StyledContainer = styled.div(() => {
   return [
-    tw`absolute right-0 top-36 rounded-l-full w-12 h-9 items-center justify-center pr-4 cursor-pointer`,
+    tw`right-0 top-36 rounded-l-full w-12 h-9 items-center justify-center pr-4 cursor-pointer`,
+    isMobile ? tw`fixed` : tw`absolute`, // NOTE: This is for mobile only
     tw`hidden`,
     tw`lg:flex`,
-    tw`bg-red-300`,
-    tw`dark:bg-red-300`,
+    tw`bg-primary`,
+    tw`dark:bg-primary`,
   ]
 })
