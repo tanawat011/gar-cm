@@ -15,3 +15,19 @@ export const THEME_LABEL: readonly CommonOption[] = [
     label: 'Light',
   },
 ] as const
+
+export const THEME_STYLE = {
+  CLASSIC: 'classic',
+  MODERN: 'modern',
+} as const
+
+export const THEME_STYLE_LABEL: readonly CommonOption[] = [
+  {
+    key: THEME_STYLE.CLASSIC,
+    label: 'Classic',
+  },
+  {
+    key: THEME_STYLE.MODERN,
+    label: 'Modern',
+  },
+] as const
