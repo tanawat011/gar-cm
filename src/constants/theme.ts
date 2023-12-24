@@ -1,17 +1,19 @@
-import type { CommonOption } from '@/types'
+import type { CommonOption, Theme } from '@/types'
 
 export const THEME = {
-  DARK: 'dark',
   LIGHT: 'light',
+  DARK: 'dark',
 } as const
 
-export const THEME_LABEL: readonly CommonOption[] = [
-  {
-    key: THEME.DARK,
-    label: 'Dark',
-  },
+export const THEME_LABEL: readonly CommonOption<Theme>[] = [
   {
     key: THEME.LIGHT,
     label: 'Light',
+    icon: 'FaRegSun',
+  },
+  {
+    key: THEME.DARK,
+    label: 'Dark',
+    icon: 'FaRegMoon',
   },
 ] as const

@@ -1,36 +1,23 @@
-import { Switch } from '@nextui-org/react'
 import { useSelector } from 'react-redux'
 
-import { SIDEBAR_STYLE } from '@/constants'
-import { useSidebarStyle } from '@/hooks'
+import { DEFAULT_APP_SETTING } from '@/configs'
+import { LS_SIDEBAR_STYLE, SIDEBAR_STYLE_LABEL } from '@/constants'
 import { appSettingSelector } from '@/store/selector'
-import { toCapitalCase } from '@/utils'
+import { setSidebarStyle } from '@/store/slice'
 
-import { Item } from './Item'
+import { ToggleAppSetting } from './ToggleAppSetting'
 
 export const ToggleSidebarStyle = () => {
   const { sidebarStyle } = useSelector(appSettingSelector)
-  const { toggleSetting } = useSidebarStyle()
 
   return (
-    <Item label='Sidebar Style' center>
-      <p className='cursor-pointer' onClick={() => toggleSetting(SIDEBAR_STYLE.CLASSIC)}>
-        {toCapitalCase(SIDEBAR_STYLE.CLASSIC)}
-      </p>
-
-      <Switch
-        defaultSelected
-        size='lg'
-        value={sidebarStyle}
-        isSelected={sidebarStyle === SIDEBAR_STYLE.MODERN}
-        onValueChange={(isModern) => {
-          toggleSetting(isModern ? SIDEBAR_STYLE.MODERN : SIDEBAR_STYLE.CLASSIC)
-        }}
-      />
-
-      <p className='cursor-pointer' onClick={() => toggleSetting(SIDEBAR_STYLE.MODERN)}>
-        {toCapitalCase(SIDEBAR_STYLE.MODERN)}
-      </p>
-    </Item>
+    <ToggleAppSetting
+      title='Sidebar Style'
+      value={sidebarStyle}
+      defaultValue={DEFAULT_APP_SETTING.sidebarStyle}
+      storageName={LS_SIDEBAR_STYLE}
+      dispatchSetting={setSidebarStyle}
+      items={[...SIDEBAR_STYLE_LABEL]}
+    />
   )
 }

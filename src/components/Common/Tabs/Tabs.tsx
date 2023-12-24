@@ -5,17 +5,17 @@ import React from 'react'
 
 import { Tabs as NextTabs, Tab } from '@nextui-org/react'
 
-export type TabsProps = {
-  items: CommonOption[]
+export type TabsProps<T> = {
+  items: CommonOption<T>[]
   selectedKey: string
   onSelectionChange: (key: React.Key) => void
   size?: NextTabsProps['size']
   radius?: NextTabsProps['radius']
   fullWidth?: NextTabsProps['fullWidth']
-  renderTab?: (item: CommonOption) => React.ReactNode
+  renderTab?: (item: CommonOption<T>) => React.ReactNode
 }
 
-export const Tabs: React.FC<TabsProps> = ({
+export const Tabs = <T,>({
   selectedKey,
   items,
   onSelectionChange,
@@ -23,7 +23,7 @@ export const Tabs: React.FC<TabsProps> = ({
   radius,
   fullWidth,
   renderTab,
-}) => {
+}: TabsProps<T>) => {
   return (
     <NextTabs
       size={size}
@@ -35,7 +35,7 @@ export const Tabs: React.FC<TabsProps> = ({
       {items.map((item) => {
         return (
           <Tab
-            key={item.key}
+            key={item.key as string}
             className='font-bold'
             title={
               renderTab ? (

@@ -1,28 +1,24 @@
-import type { SidebarType } from '@/types'
-
 import { useSelector } from 'react-redux'
 
-import { Tabs } from '@/components/Common'
-import { SIDEBAR_TYPE_LABEL } from '@/constants'
-import { useSidebar } from '@/hooks'
+import { DEFAULT_APP_SETTING } from '@/configs'
+import { LS_SIDEBAR_TYPE, SIDEBAR_TYPE_LABEL } from '@/constants'
 import { appSettingSelector } from '@/store/selector'
+import { setSidebarType } from '@/store/slice'
 
-import { Item } from './Item'
+import { ToggleAppSetting } from './ToggleAppSetting'
 
 export const ToggleSidebarType = () => {
   const { sidebarType } = useSelector(appSettingSelector)
-  const { toggleSidebarType } = useSidebar()
 
   return (
-    <Item label='Sidebar Type' center>
-      <Tabs
-        items={[...SIDEBAR_TYPE_LABEL]}
-        selectedKey={sidebarType}
-        onSelectionChange={(key) => toggleSidebarType(key as SidebarType)}
-        fullWidth
-        size='sm'
-        radius='full'
-      />
-    </Item>
+    <ToggleAppSetting
+      toggleStyle='tab'
+      title='Sidebar Type'
+      value={sidebarType}
+      defaultValue={DEFAULT_APP_SETTING.sidebarType}
+      storageName={LS_SIDEBAR_TYPE}
+      dispatchSetting={setSidebarType}
+      items={[...SIDEBAR_TYPE_LABEL]}
+    />
   )
 }

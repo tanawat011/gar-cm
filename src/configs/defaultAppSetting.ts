@@ -1,6 +1,6 @@
 import { isMobile } from 'react-device-detect'
 
-import { DRAWER_POSITION, LANG, NAVBAR_TYPE, SIDEBAR_TYPE, THEME, SIDEBAR_STYLE } from '@/constants'
+import { DRAWER_POSITION, LANG, NAVBAR_TYPE, SIDEBAR_TYPE, THEME, SIDEBAR_STYLE, NAVBAR_STYLE } from '@/constants'
 
 export const DEFAULT_APP_SETTING = {
   theme: THEME.DARK,
@@ -9,4 +9,5 @@ export const DEFAULT_APP_SETTING = {
   sidebarStyle: SIDEBAR_STYLE.MODERN,
   drawerPosition: DRAWER_POSITION.RIGHT,
   navbarType: NAVBAR_TYPE.STICKY,
+  navbarStyle: NAVBAR_STYLE.MODERN,
 }

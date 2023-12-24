@@ -1,4 +1,4 @@
-import type { DrawerPosition, Lang, NavbarType, SidebarStyle, SidebarType, Theme } from '@/types'
+import type { DrawerPosition, Lang, NavbarStyle, NavbarType, SidebarStyle, SidebarType, Theme } from '@/types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -12,6 +12,7 @@ export type AppSettingState = {
   sidebarStyle: SidebarStyle
   drawerPosition: DrawerPosition
   navbarType: NavbarType
+  navbarStyle: NavbarStyle
 }
 
 // NOTE: this is the initial state of the appSetting, not the default setting
@@ -40,10 +41,13 @@ export const appSettingSlice = createSlice({
     setNavbarType: (state, action: PayloadAction<AppSettingState['navbarType']>) => {
       state.navbarType = action.payload
     },
+    setNavbarStyle: (state, action: PayloadAction<AppSettingState['navbarStyle']>) => {
+      state.navbarStyle = action.payload
+    },
   },
 })
 
-export const { setTheme, setLang, setSidebarType, setSidebarStyle, setDrawerPosition, setNavbarType } =
+export const { setTheme, setLang, setSidebarType, setSidebarStyle, setDrawerPosition, setNavbarType, setNavbarStyle } =
   appSettingSlice.actions
 
 export default appSettingSlice.reducer

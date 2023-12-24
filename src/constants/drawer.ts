@@ -1,4 +1,4 @@
-import type { CommonOption } from '@/types'
+import type { CommonOption, DrawerPosition } from '@/types'
 
 export const DRAWER_POSITION = {
   TOP: 'top',
@@ -12,7 +12,7 @@ export const DRAWER_STATUS = {
   COLLAPSED: 'collapsed',
 } as const
 
-export const DRAWER_POSITION_LABEL: readonly CommonOption[] = [
+export const DRAWER_POSITION_LABEL: readonly CommonOption<DrawerPosition>[] = [
   {
     key: DRAWER_POSITION.TOP,
     label: 'Top',
