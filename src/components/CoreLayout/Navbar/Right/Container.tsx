@@ -11,7 +11,7 @@ import { ToggleTheme } from './ToggleTheme'
 
 export const Container = () => {
   return (
-    <div className='mr-6 flex items-center'>
+    <div className='flex items-center'>
       <Input
         size='sm'
         placeholder='Quick Search...'
