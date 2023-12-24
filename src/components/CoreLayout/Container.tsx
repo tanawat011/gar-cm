@@ -12,6 +12,7 @@ import { FullScreenFirstLoading } from '../FullScreenFirstLoading'
 import { Content } from './Content'
 import { ContentContainer } from './ContentContainer'
 import { DrawerSetting, DrawerTriggerButton } from './DrawerSetting'
+import { Footer } from './Footer'
 import { Loading } from './Loading'
 import { Navbar } from './Navbar'
 import { CoreLayoutProvider } from './Provider'
@@ -62,6 +63,8 @@ export default function Container({ children }: SidebarContainerProps) {
           <Navbar id={navbarId} isScrolled={isScrolled} />
 
           <Content>{children}</Content>
+
+          <Footer />
         </ContentContainer>
 
         <DrawerTriggerButton />
