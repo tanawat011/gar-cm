@@ -13,68 +13,80 @@ type FullSidebarContainerProps = {
 }
 
 export const FullSidebarContainer: React.FC<FullSidebarContainerProps> = ({ children }) => {
-  const { sidebarType } = useSelector(appSettingSelector)
+  const { sidebarType, sidebarStyle } = useSelector(appSettingSelector)
 
-  return (
-    <StyledContainer $sidebarType={sidebarType}>
-      <CardBody>{children}</CardBody>
-    </StyledContainer>
-  )
+  const isModern = sidebarStyle === 'modern'
+
+  if (isModern) {
+    return (
+      <StyledCardContainer $sidebarType={sidebarType}>
+        <CardBody>{children}</CardBody>
+      </StyledCardContainer>
+    )
+  }
+
+  return <StyledContainer $sidebarType={sidebarType}>{children}</StyledContainer>
 }
 
-const StyledContainer = styled(Card)<{ $sidebarType: SidebarType }>(({ $sidebarType }) => {
-  return [
-    tw`m-4 transition-width`,
-    $sidebarType === 'mini' ? tw`w-20` : tw`w-64`,
-    $sidebarType === 'mini' &&
-      css`
-        &:hover {
-          ${tw`w-64`}
+const twStyle = ({ $sidebarType }: { $sidebarType: SidebarType }) => [
+  tw`transition-width`,
+  $sidebarType === 'mini' ? tw`w-20` : tw`w-64`,
+  $sidebarType === 'mini' &&
+    css`
+      &:hover {
+        ${tw`w-64`}
+      }
+
+      & > * {
+        #logo {
+          ${tw`hidden`}
         }
 
-        & > * {
-          #logo {
-            ${tw`hidden`}
-          }
-
-          #logo-mini {
-            ${tw`flex`}
-          }
-
-          #wrap-item-group-label {
-            ${tw`hidden`}
-          }
-
-          #sub-item-container {
-            ${tw`hidden`}
-          }
-
-          #powered-by {
-            ${tw`hidden`}
-          }
+        #logo-mini {
+          ${tw`flex`}
         }
 
-        &:hover > * {
-          #logo {
-            ${tw`flex`}
-          }
-
-          #logo-mini {
-            ${tw`hidden`}
-          }
-
-          #wrap-item-group-label {
-            ${tw`flex`}
-          }
-
-          #sub-item-container {
-            ${tw`block`}
-          }
-
-          #powered-by {
-            ${tw`inline`}
-          }
+        #wrap-item-group-label {
+          ${tw`hidden`}
         }
-      `,
-  ]
+
+        #sub-item-container {
+          ${tw`hidden`}
+        }
+
+        #powered-by {
+          ${tw`hidden`}
+        }
+      }
+
+      &:hover > * {
+        #logo {
+          ${tw`flex`}
+        }
+
+        #logo-mini {
+          ${tw`hidden`}
+        }
+
+        #wrap-item-group-label {
+          ${tw`flex`}
+        }
+
+        #sub-item-container {
+          ${tw`block`}
+        }
+
+        #powered-by {
+          ${tw`inline`}
+        }
+      }
+    `,
+]
+
+const StyledContainer = styled.div<{ $sidebarType: SidebarType }>(({ $sidebarType }) => {
+  return [twStyle({ $sidebarType }), tw`bg-content1 p-4`]
+})
+
+const StyledCardContainer = styled(Card)<{ $sidebarType: SidebarType }>(({ $sidebarType }) => {
+  return [twStyle({ $sidebarType }), tw`m-4`]
 })

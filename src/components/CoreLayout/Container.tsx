@@ -32,7 +32,7 @@ export default function Container({ children }: SidebarContainerProps) {
     const elNavbar = document.getElementById(navbarId)
     const navbarHeight = elNavbar?.clientHeight || 0
 
-    document.getElementsByTagName('html')[0].style.setProperty('--navbar-h', `${navbarHeight + 1}px`)
+    document.getElementsByTagName('html')[0].style.setProperty('--navbar-h', `${navbarHeight}px`)
   }
 
   useInitAppSetting()

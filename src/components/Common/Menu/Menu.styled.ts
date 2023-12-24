@@ -1,12 +1,5 @@
-import { ScrollShadow } from '@nextui-org/react'
 import Link from 'next/link'
 import tw, { styled } from 'twin.macro'
-
-export const StyledContainer = styled(ScrollShadow)(() => {
-  const menuHeignt = tw`h-[calc(100vh-(var(--navbar-h)*2)-(theme(spacing.4)*2)-(theme(spacing.3)*2))]`
-
-  return [menuHeignt, tw`text-sm select-none`]
-})
 
 export const StyledUlContainer = styled.ul(() => {
   return [tw`list-none scroll-smooth`]
