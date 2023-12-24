@@ -1,10 +1,9 @@
 import type { MenuProps as ItemProps } from '@/configs'
 
 import type { KeyboardEvent } from 'react'
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { Divider } from '@/components/Common'
-import { menu as items } from '@/configs'
 
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
@@ -13,7 +12,11 @@ import { SubItemContainer } from './SubItemContainer'
 
 type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 
-export const Menu = () => {
+type MenuProps = {
+  items: ItemProps[]
+}
+
+export const Menu: React.FC<MenuProps> = ({ items }) => {
   const activeLink = window.location.pathname
 
   const listRef = useRef<Record<string, HTMLUListElement | null>>({})
