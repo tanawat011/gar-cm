@@ -1,39 +1,23 @@
-import { Switch } from '@nextui-org/react'
 import { useSelector } from 'react-redux'
 
-import { Icon } from '@/components/Icon'
-import { THEME } from '@/constants'
-import { useTheme } from '@/hooks'
+import { DEFAULT_APP_SETTING } from '@/configs'
+import { LS_THEME, THEME_LABEL } from '@/constants'
 import { appSettingSelector } from '@/store/selector'
-import { toCapitalCase } from '@/utils'
+import { setTheme } from '@/store/slice'
 
-import { Item } from './Item'
+import { ToggleAppSetting } from './ToggleAppSetting'
 
 export const ToggleTheme = () => {
   const { theme } = useSelector(appSettingSelector)
-  const { toggleTheme } = useTheme()
 
   return (
-    <Item label='Theme' center>
-      <p className='cursor-pointer' onClick={() => toggleTheme(THEME.LIGHT)}>
-        {toCapitalCase(THEME.LIGHT)}
-      </p>
-
-      <Switch
-        defaultSelected
-        size='lg'
-        startContent={<Icon name='FaRegMoon' />}
-        endContent={<Icon name='FaRegSun' />}
-        value={theme}
-        isSelected={theme === THEME.DARK}
-        onValueChange={(isDark) => {
-          toggleTheme(isDark ? THEME.DARK : THEME.LIGHT)
-        }}
-      />
-
-      <p className='cursor-pointer' onClick={() => toggleTheme(THEME.DARK)}>
-        {toCapitalCase(THEME.DARK)}
-      </p>
-    </Item>
+    <ToggleAppSetting
+      title='Theme'
+      value={theme}
+      defaultValue={DEFAULT_APP_SETTING.theme}
+      storageName={LS_THEME}
+      dispatchSetting={setTheme}
+      items={[...THEME_LABEL]}
+    />
   )
 }

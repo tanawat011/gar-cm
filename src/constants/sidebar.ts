@@ -1,4 +1,4 @@
-import type { CommonOption } from '@/types'
+import type { CommonOption, SidebarStyle, SidebarType } from '@/types'
 
 export const SIDEBAR_TYPE = {
   FULL: 'full',
@@ -6,7 +6,7 @@ export const SIDEBAR_TYPE = {
   DRAWER: 'drawer',
 } as const
 
-export const SIDEBAR_TYPE_LABEL: readonly CommonOption[] = [
+export const SIDEBAR_TYPE_LABEL: readonly CommonOption<SidebarType>[] = [
   {
     key: SIDEBAR_TYPE.DRAWER,
     label: 'Drawer',
@@ -26,7 +26,7 @@ export const SIDEBAR_STYLE = {
   MODERN: 'modern',
 } as const
 
-export const SIDEBAR_STYLE_LABEL: readonly CommonOption[] = [
+export const SIDEBAR_STYLE_LABEL: readonly CommonOption<SidebarStyle>[] = [
   {
     key: SIDEBAR_STYLE.CLASSIC,
     label: 'Classic',

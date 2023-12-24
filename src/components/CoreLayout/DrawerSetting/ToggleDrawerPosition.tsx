@@ -1,28 +1,24 @@
-import type { DrawerPosition } from '@/types'
-
 import { useSelector } from 'react-redux'
 
-import { Tabs } from '@/components/Common'
-import { DRAWER_POSITION_LABEL } from '@/constants'
-import { useDrawerPosition } from '@/hooks'
+import { DEFAULT_APP_SETTING } from '@/configs'
+import { DRAWER_POSITION_LABEL, LS_DRAWER_POS } from '@/constants'
 import { appSettingSelector } from '@/store/selector'
+import { setDrawerPosition } from '@/store/slice'
 
-import { Item } from './Item'
+import { ToggleAppSetting } from './ToggleAppSetting'
 
 export const ToggleDrawerPosition = () => {
   const { drawerPosition } = useSelector(appSettingSelector)
-  const { togglePosition } = useDrawerPosition()
 
   return (
-    <Item label='Drawer Position' center hideDivider>
-      <Tabs
-        items={[...DRAWER_POSITION_LABEL]}
-        selectedKey={drawerPosition}
-        onSelectionChange={(key) => togglePosition(key as DrawerPosition)}
-        fullWidth
-        size='sm'
-        radius='full'
-      />
-    </Item>
+    <ToggleAppSetting
+      toggleStyle='tab'
+      title='Drawer Position'
+      value={drawerPosition}
+      defaultValue={DEFAULT_APP_SETTING.drawerPosition}
+      storageName={LS_DRAWER_POS}
+      dispatchSetting={setDrawerPosition}
+      items={[...DRAWER_POSITION_LABEL]}
+    />
   )
 }
