@@ -16,6 +16,9 @@ export default function ToDo() {
       <p className='line-through text-slate-500'>Drawer Sidebar</p>
       <p className='line-through text-slate-500'>Setting drawer position</p>
       <p className='line-through text-slate-500'>Setting sidebar type</p>
+      <p className='line-through text-slate-500'>Setting sidebar style</p>
+      <p className='line-through text-slate-500'>Setting navbar fixed</p>
+      <p className='line-through text-slate-500'>Setting navbar style</p>
       <p>Setting font family</p>
       <p>Setting Core Color</p>
       <p className='line-through text-slate-500'>Mobile Device Option Setting</p>
@@ -28,6 +31,8 @@ export default function ToDo() {
       <p className='line-through text-slate-500'>Sidebar Logo</p>
       <p className='line-through text-slate-500'>Sidebar Menu</p>
       <p className='line-through text-slate-500'>Sidebar Footer</p>
+      <p className='line-through text-slate-500'>Footer</p>
+      <p>Navbar Modern Style</p>
       <p>Favicon</p>
       <p className='line-through text-slate-500'>DrawerSetting Decoration</p>
       <p className='line-through text-slate-500'>Sidebar Decoration</p>
