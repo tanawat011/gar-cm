@@ -10,7 +10,7 @@ builder.prismaObject('review_me', {
     deletedAt: t.expose('deletedAt', { type: 'Date', nullable: true }),
     deletedBy: t.exposeString('deletedBy', { nullable: true }),
     review: t.exposeString('review', {}),
-    name: t.exposeString('name', { nullable: true }),
+    name: t.exposeString('name', {}),
   }),
 })
 
@@ -23,14 +23,19 @@ builder.mutationField('review_me', (t) =>
     },
     resolve: async (query, _parent, args) => {
       const { review, name } = args
+      console.log('xxxxxxxxxx', review, name)
 
-      return prisma.review_me.create({
+      const a = await prisma.review_me.create({
         ...query,
         data: {
           review,
           name,
         },
       })
+
+      console.log('cccccccccc', a)
+
+      return a
     },
   }),
 )

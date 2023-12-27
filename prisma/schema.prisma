@@ -35,7 +35,7 @@ model review_me {
   updatedBy String?
   deletedAt DateTime?
   deletedBy String?
-  review    String    @unique
+  review    String
   name      String
 }
 
