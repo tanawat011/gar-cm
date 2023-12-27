@@ -25,19 +25,14 @@ builder.mutationField('review_me', (t) =>
     },
     resolve: async (query, _parent, args) => {
       const { review, name } = args
-      console.log('xxxxxxxxxx', review, name)
 
-      const a = await prisma.review_me.create({
+      return prisma.review_me.create({
         ...query,
         data: {
           review,
           name,
         },
       })
-
-      console.log('cccccccccc', a)
-
-      return a
     },
   }),
 )
