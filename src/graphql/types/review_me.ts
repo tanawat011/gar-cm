@@ -14,7 +14,7 @@ builder.prismaObject('review_me', {
   }),
 })
 
-builder.mutationField('reviewMe', (t) =>
+builder.mutationField('review_me', (t) =>
   t.prismaField({
     type: 'review_me',
     args: {

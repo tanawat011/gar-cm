@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   const [addReview] = useMutation(gql`
     mutation ($review: String!, $name: String!) {
-      reviewMe(review: $review, name: $name) {
+      review_me(review: $review, name: $name) {
         id
       }
     }
