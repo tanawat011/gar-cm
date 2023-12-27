@@ -6,7 +6,7 @@ const withTwin = require('./withTwin')
 const nextConfig = withTwin({
   reactStrictMode: true,
   images: {
-    domains: ['tailwind-elements.com'],
+    domains: ['tailwind-elements.com', 'favim.com'],
   },
   experimental: {
     serverComponentsExternalPackages: ["@whatwg-node"],

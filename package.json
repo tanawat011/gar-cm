@@ -28,6 +28,7 @@
     "db:seed": "dotenv -e .env.local -- prisma db seed"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.8",
     "@auth0/nextjs-auth0": "^3.5.0",
     "@nextui-org/react": "^2.2.9",
     "@pothos/core": "^3.40.1",
