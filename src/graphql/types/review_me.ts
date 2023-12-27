@@ -1,3 +1,5 @@
+import prisma from '@/libs/prisma'
+
 import { builder } from '../builder'
 
 builder.prismaObject('review_me', {
