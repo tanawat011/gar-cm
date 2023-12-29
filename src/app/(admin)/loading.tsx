@@ -1,5 +1,5 @@
 import { FullScreenLoading } from '@/components/FullScreenLoading'
 
-export default function Loading() {
+export default function RootAdminLoading() {
   return <FullScreenLoading />
 }

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1',
 }
 
-function RootLayout({ children }: AppProps) {
+function RootAdminLayout({ children }: AppProps) {
   return (
     <AppContainer>
       <CoreLayout>{children}</CoreLayout>
@@ -23,4 +23,4 @@ function RootLayout({ children }: AppProps) {
   )
 }
 
-export default withPageAuthRequired(RootLayout as never)
+export default withPageAuthRequired(RootAdminLayout as never)
