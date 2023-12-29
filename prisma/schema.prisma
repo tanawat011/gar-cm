@@ -11,23 +11,29 @@ generator pothos {
   provider = "prisma-pothos-types"
 }
 
-model users {
+model todo {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  active    Boolean   @default(true)
   createdAt DateTime  @default(now())
   createdBy String?
   updatedAt DateTime  @updatedAt
   updatedBy String?
   deletedAt DateTime?
   deletedBy String?
-  email     String    @unique
-  password  String
-  nickname  String?
-  age       Int?
-  image     String?
-  role      Role      @default(USER)
+  name      String
+  done      Boolean   @default(false)
+  category  String?
 }
 
-enum Role {
-  USER
-  ADMIN
+model review_me {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  createdBy String?
+  updatedAt DateTime  @updatedAt
+  updatedBy String?
+  deletedAt DateTime?
+  deletedBy String?
+  review    String
+  name      String
 }
