@@ -54,5 +54,5 @@ export const Container: React.FC<NavbarContainerProps> = ({ id, isScrolled }) =>
 const StyledContainer = styled.div<{ $navbarType: NavbarType }>(({ $navbarType }) => {
   const isSticky = $navbarType === 'sticky'
 
-  return [tw`flex justify-between w-full`, isSticky && [tw`top-0`, isMobile ? tw`fixed` : tw`sticky`]]
+  return [tw`flex justify-between w-full`, isSticky && [tw`top-0 z-10`, isMobile ? tw`fixed` : tw`sticky`]]
 })

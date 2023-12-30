@@ -11,7 +11,35 @@ generator pothos {
   provider = "prisma-pothos-types"
 }
 
+model tag {
+  name     String  @unique
+  color    String?
+  icon     String?
+  type     String?
+  category String?
+
+  // Audit record fields
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  createdBy String?
+  updatedAt DateTime  @updatedAt
+  updatedBy String?
+  deletedAt DateTime? @db.Date
+  deletedBy String?
+}
+
 model todo {
+  name   String
+  detail String?
+  tags   String[] @default([])
+
+  // for filtering
+  done      Boolean   @default(false)
+  important Boolean   @default(false)
+  duedate   DateTime?
+
+  // Audit record fields
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   active    Boolean   @default(true)
   createdAt DateTime  @default(now())
@@ -20,12 +48,13 @@ model todo {
   updatedBy String?
   deletedAt DateTime?
   deletedBy String?
-  name      String
-  done      Boolean   @default(false)
-  category  String?
 }
 
 model review_me {
+  review String
+  name   String
+
+  // Audit record fields
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   active    Boolean   @default(true)
   createdAt DateTime  @default(now())
@@ -34,6 +63,4 @@ model review_me {
   updatedBy String?
   deletedAt DateTime?
   deletedBy String?
-  review    String
-  name      String
 }
