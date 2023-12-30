@@ -40,14 +40,37 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
               </Button>
             </DropdownTrigger>
             <DropdownMenu
-              disallowEmptySelection
               aria-label='Table Columns'
               closeOnSelect={false}
+              variant='faded'
               // selectedKeys={statusFilter}
               selectionMode='multiple'
               // onSelectionChange={setStatusFilter}
             >
-              <DropdownItem className='capitalize'>xxx</DropdownItem>
+              <DropdownItem className='capitalize text-success' color='success' startContent={<Icon name='FaCheck' />}>
+                done
+              </DropdownItem>
+              <DropdownItem className='capitalize text-warning' color='warning' startContent={<Icon name='FaStar' />}>
+                important
+              </DropdownItem>
+              <DropdownItem
+                className='capitalize text-danger'
+                color='danger'
+                startContent={<Icon name='FaTrash' />}
+                showDivider
+              >
+                deleted
+              </DropdownItem>
+
+              <DropdownItem className='capitalize' startContent={<Icon name='FaX' />}>
+                undone
+              </DropdownItem>
+              <DropdownItem className='capitalize' startContent={<Icon name='FaX' />}>
+                unimportant
+              </DropdownItem>
+              <DropdownItem className='capitalize' startContent={<Icon name='FaX' />}>
+                undeleted
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
 
