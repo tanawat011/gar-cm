@@ -1,30 +1,224 @@
 'use client'
 
-import type { todo as Todo } from '.prisma/client'
+import type { todo as Todo } from '@prisma/client'
 
-import { useQuery } from '@apollo/client'
+import { useContext, useEffect, useState } from 'react'
 
-import { todos } from '@/graphql/client/todo'
+import { useMutation, useQuery } from '@apollo/client'
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
+import { useForm } from 'react-hook-form'
+
+import { CoreLayoutContext } from '@/components/CoreLayout/Provider'
+import {
+  mutationCreateTodo,
+  mutationDeleteTodo,
+  mutationForceDeleteTodo,
+  mutationUpdateTodo,
+  queryTodos,
+} from '@/graphql/client/todo'
+import { toCapitalCase } from '@/utils'
+
+import { TodoForm } from './TodoForm'
+import { TodoTable } from './TodoTable'
+
+export type ModalType = 'add' | 'edit' | 'copy' | 'delete' | 'f-delete' | 'clone'
 
 export default function ToDo() {
-  const { data } = useQuery<{ todos: Todo[] }>(todos)
-  console.log('🚀 ~ file: page.tsx:6 ~ ToDo ~ data:', data)
+  const { onLoading } = useContext(CoreLayoutContext)
+
+  const { data, refetch, loading } = useQuery<{ todos: Todo[] }>(queryTodos, {
+    variables: {
+      where: {
+        deletedAt: null,
+      },
+    },
+  })
+  const [createTodo] = useMutation(mutationCreateTodo)
+  const [updateTodo] = useMutation(mutationUpdateTodo)
+  const [deleteTodo] = useMutation(mutationDeleteTodo)
+  const [forceDeleteTodo] = useMutation(mutationForceDeleteTodo)
+
+  const modalForm = useDisclosure()
+  const modalConfirm = useDisclosure()
+
+  const [modalType, setModalType] = useState<ModalType>()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    control,
+    reset,
+    setValue,
+  } = useForm<Todo>({
+    defaultValues: {
+      name: '',
+      detail: '',
+      done: false,
+      important: false,
+    },
+  })
+
+  useEffect(() => {
+    onLoading(loading)
+  }, [loading])
+
+  const onSetItem = (item: Todo, _modalType: ModalType) => {
+    setModalType(_modalType)
+
+    if (_modalType === 'delete' || _modalType === 'f-delete') {
+      return setValue('id', item.id)
+    }
+
+    if (_modalType === 'edit') setValue('id', item.id)
+
+    setValue('name', item.name)
+    setValue('detail', item.detail)
+    setValue('done', item.done)
+    setValue('important', item.important)
+  }
+
+  const onResetForm = () => {
+    onLoading(false)
+    clearErrors()
+    reset()
+  }
+
+  const onCloseForm = () => {
+    modalForm.onClose()
+    onResetForm()
+  }
+
+  const onCloseConfirm = () => {
+    modalConfirm.onClose()
+    onResetForm()
+  }
+
+  const onSubmit = async (variables: Todo) => {
+    onLoading(true)
+
+    if (variables.id) {
+      await updateTodo({
+        variables,
+      })
+    } else {
+      await createTodo({
+        variables,
+      })
+    }
+
+    await refetch({
+      variables: {
+        where: {
+          deletedAt: null,
+        },
+      },
+    })
+    onCloseForm()
+  }
+
+  const onSubmitConfirm = async (variables: Todo) => {
+    onLoading(true)
+
+    let action: (opt?: { variables: Todo }) => Promise<unknown> = () => Promise.resolve()
+
+    switch (modalType) {
+      case 'delete':
+        action = deleteTodo
+        break
+      case 'f-delete':
+        action = forceDeleteTodo
+        break
+      case 'clone':
+        action = createTodo
+        break
+    }
+
+    await action({
+      variables,
+    })
+
+    await refetch({
+      variables: {
+        where: {
+          deletedAt: null,
+        },
+      },
+    })
+    onCloseConfirm()
+  }
 
   return (
     <>
-      <div>
-        {data?.todos.map((todo: any) => (
-          <div key={todo.id}>
-            <p>{todo.title}</p>
-            <p>{todo.description}</p>
+      <Modal
+        isOpen={modalForm.isOpen}
+        placement='top-center'
+        onOpenChange={modalForm.onOpenChange}
+        onClose={onCloseForm}
+      >
+        <ModalContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ModalHeader>{toCapitalCase(`${modalType}`)}</ModalHeader>
 
-            <p>{todo.createdAt}</p>
-            <p>{todo.updatedAt}</p>
-          </div>
-        ))}
-      </div>
+            <ModalBody>
+              <TodoForm register={register} errors={errors} control={control} />
+            </ModalBody>
 
-      <div>
+            <ModalFooter>
+              <Button color='danger' variant='light' onPress={onCloseForm}>
+                Close
+              </Button>
+              <Button color='primary' type='submit'>
+                Submit
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={modalConfirm.isOpen}
+        placement='top-center'
+        onOpenChange={modalConfirm.onOpenChange}
+        onClose={onCloseConfirm}
+      >
+        <ModalContent>
+          <form onSubmit={handleSubmit(onSubmitConfirm)}>
+            <ModalHeader>Confirm Delete Item</ModalHeader>
+
+            <ModalBody>
+              <p>
+                Are you sure you want to {toCapitalCase(`${modalType === 'f-delete' ? 'delete' : modalType}`)} this
+                item?
+              </p>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button color='danger' variant='light' onPress={onCloseConfirm}>
+                Close
+              </Button>
+              <Button color='primary' type='submit'>
+                Confirm
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+
+      <TodoTable
+        data={data}
+        refetch={refetch}
+        onOpenModalForm={modalForm.onOpen}
+        onOpenModalConfirm={modalConfirm.onOpen}
+        onSetItem={onSetItem}
+        setModalType={setModalType}
+        updateTodo={updateTodo}
+        deleteTodo={deleteTodo}
+        forceDeleteTodo={forceDeleteTodo}
+      />
+
+      {/* <div>
         <p className='line-through text-slate-500'>NextUI</p>
         <p className='line-through text-slate-500'>Core Layout</p>
         <p className='line-through text-slate-500'>Dark Theme</p>
@@ -86,7 +280,7 @@ export default function ToDo() {
         <p className='line-through text-slate-500'>Prisma</p>
         <p className='line-through text-slate-500'>Auth0</p>
         <p>Form.io</p>
-      </div>
+      </div> */}
     </>
   )
 }

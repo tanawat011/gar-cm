@@ -19,7 +19,7 @@ export const TriggerButton = () => {
 
 const StyledContainer = styled.div(() => {
   return [
-    tw`right-0 top-36 rounded-l-full w-12 h-9 items-center justify-center pr-4 cursor-pointer`,
+    tw`right-0 bottom-20 rounded-l-full w-12 h-9 items-center justify-center pr-4 cursor-pointer`,
     isMobile ? tw`fixed` : tw`absolute`, // NOTE: This is for mobile only
     tw`hidden`,
     tw`lg:flex`,
