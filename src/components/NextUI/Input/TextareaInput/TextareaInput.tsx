@@ -34,6 +34,6 @@ export const TextareaInput: React.FC<TextareaInputProps> = (props) => {
           />
         )
       }}
-    ></Controller>
+    />
   )
 }

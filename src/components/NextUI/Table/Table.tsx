@@ -1,3 +1,4 @@
+import type { DropdownInputProps } from '../Input'
 import type { SelectionMode, TableColumnProps } from '@nextui-org/table'
 
 import React, { useCallback, useMemo } from 'react'
@@ -32,10 +33,23 @@ export type TableProps<T> = {
   selected?: string[]
   onSelected?: (selected: string[]) => void
   onAddNew?: () => void
+  statusSelected?: string[]
+  onStatusSelected?: (selected: string[]) => void
+  statusItems?: DropdownInputProps['items']
 }
 
 export const Table = <T,>(props: TableProps<T>) => {
-  const { columns, rows, selectedMode = 'none', selected = [], onSelected, onAddNew } = props
+  const {
+    columns,
+    rows,
+    selectedMode = 'none',
+    selected = [],
+    onSelected,
+    onAddNew,
+    statusSelected,
+    onStatusSelected,
+    statusItems,
+  } = props
 
   const renderCell = useCallback((row: T, colKey: React.Key) => {
     const col = columns.find((c) => c.key === colKey)
@@ -48,8 +62,16 @@ export const Table = <T,>(props: TableProps<T>) => {
   }, [])
 
   const topContent = React.useMemo(() => {
-    return <TopContent rows={rows} onAddNew={onAddNew} />
-  }, [rows.length])
+    return (
+      <TopContent
+        rows={rows}
+        onAddNew={onAddNew}
+        statusSelected={statusSelected}
+        onStatusSelected={onStatusSelected}
+        statusItems={statusItems}
+      />
+    )
+  }, [rows.length, statusSelected])
 
   const bottomContent = useMemo(() => {
     if (selectedMode === 'none') return null
