@@ -3,7 +3,7 @@ import type { DropdownInputProps } from '../Input'
 
 import React from 'react'
 
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react'
+import { Button as ButtonNextUI, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
 
@@ -51,13 +51,15 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
               onStatusSelected?.(Array.from(keys) as string[])
             }}
             items={statusItems}
-          >
-            <Button icon='FaChevronDown' label='Status' variant='flat' placement='right' />
-          </DropdownInput>
+            label='Status'
+          />
 
           <Dropdown>
             <DropdownTrigger className='hidden sm:flex'>
-              <Button icon='FaChevronDown' label='Columns' variant='flat' placement='right' />
+              {/* <Button icon='FaChevronDown' label='Columns' variant='flat' placement='right' /> */}
+              <ButtonNextUI variant='flat' endContent={<Icon name='FaChevronDown' />}>
+                Columns
+              </ButtonNextUI>
             </DropdownTrigger>
             <DropdownMenu
               disallowEmptySelection
@@ -71,7 +73,10 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
             </DropdownMenu>
           </Dropdown>
 
-          <Button icon='FaPlus' label='Add New' color='primary' onClick={onAddNew} placement='right' />
+          {/* <Button icon='FaPlus' label='Add New' color='primary' onClick={onAddNew} placement='right' /> */}
+          <ButtonNextUI color='primary' endContent={<Icon name='FaPlus' />} onClick={onAddNew}>
+            Add New
+          </ButtonNextUI>
         </div>
       </div>
 

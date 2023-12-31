@@ -13,19 +13,23 @@ type ButtonProps = {
   placement?: 'left' | 'right' | 'two-side'
 } & ButtonPropsNextUI
 
-export const Button: React.FC<ButtonProps> = ({ label, icon, placement = 'left', iconR, ...leftProps }) => {
+export const Button: React.FC<ButtonProps> = ({ label, icon, placement = 'left', iconR, children, ...leftProps }) => {
+  const isLeft = icon && placement === 'left'
+  const isRight = icon && placement === 'right'
+  const isTwoSide = icon && placement === 'two-side'
+
   return (
     <ButtonNextUI
       {...leftProps}
-      {...(icon && placement === 'left' && { startContent: <Icon name={icon} /> })}
-      {...(icon && placement === 'right' && { endContent: <Icon name={icon} /> })}
-      {...(icon &&
-        placement === 'two-side' && {
-          startContent: <Icon name={icon} />,
-          endContent: <Icon name={iconR || icon} />,
-        })}
+      {...(isLeft && { startContent: <Icon name={icon} /> })}
+      {...(isRight && { endContent: <Icon name={icon} /> })}
+      {...(isTwoSide && {
+        startContent: <Icon name={icon} />,
+        endContent: <Icon name={iconR || icon} />,
+      })}
     >
       {label}
+      {children}
     </ButtonNextUI>
   )
 }

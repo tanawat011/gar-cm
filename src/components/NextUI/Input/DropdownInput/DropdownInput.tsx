@@ -1,10 +1,13 @@
-import type { DropdownItemProps, DropdownMenuProps } from '@nextui-org/react'
+import type { IconType } from '@/components/Icon'
+import type { ButtonProps, DropdownItemProps, DropdownMenuProps } from '@nextui-org/react'
 import type { Control } from 'react-hook-form'
 
 import React, { useCallback } from 'react'
 
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import { Controller } from 'react-hook-form'
+
+import { Icon } from '@/components/Icon'
 
 export type DropdownInputProps = {
   uncontrolled?: boolean
@@ -16,29 +19,55 @@ export type DropdownInputProps = {
   items: (DropdownItemProps & {
     label?: string
   })[]
+  label?: string
+  buttonOptions?: {
+    icon?: IconType
+    iconR?: IconType
+    placement?: 'left' | 'right' | 'two-side'
+  } & ButtonProps
 } & Omit<DropdownMenuProps, 'children'>
 
 export const DropdownInput: React.FC<DropdownInputProps> = (props) => {
-  const { uncontrolled, control, children, items, ...leftProps } = props
+  const { uncontrolled, control, children, items, label, buttonOptions: btnOpt, ...leftProps } = props
 
-  const renderInput = useCallback(
-    () => (
+  const renderInput = useCallback(() => {
+    const { icon, iconR, placement } = btnOpt || {}
+    const isLeft = icon && placement === 'left'
+    const isRight = icon && placement === 'right'
+    const isTwoSide = icon && placement === 'two-side'
+
+    return (
       <Dropdown placement='bottom-end'>
-        <DropdownTrigger>{children}</DropdownTrigger>
+        <DropdownTrigger>
+          {children || (
+            <Button
+              variant='flat'
+              endContent={<Icon name='FaChevronDown' />}
+              {...btnOpt}
+              {...(isLeft && { startContent: <Icon name={icon} /> })}
+              {...(isRight && { endContent: <Icon name={icon} /> })}
+              {...(isTwoSide && {
+                startContent: <Icon name={icon} />,
+                endContent: <Icon name={iconR || icon} />,
+              })}
+            >
+              {label}
+            </Button>
+          )}
+        </DropdownTrigger>
 
         <DropdownMenu selectionMode={'single'} variant={'flat'} {...leftProps}>
-          {items.map(({ key, label, ...leftItem }) => {
+          {items.map(({ key, label: itemLabel, ...leftItem }) => {
             return (
               <DropdownItem key={key} {...leftItem}>
-                {leftItem.children || label}
+                {leftItem.children || itemLabel}
               </DropdownItem>
             )
           })}
         </DropdownMenu>
       </Dropdown>
-    ),
-    [leftProps.selectedKeys, items],
-  )
+    )
+  }, [leftProps.selectedKeys, items])
 
   if (uncontrolled) {
     return renderInput()
