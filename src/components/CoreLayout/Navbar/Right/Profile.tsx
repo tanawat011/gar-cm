@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 
 import { Avatar, User } from '@nextui-org/react'
 
-import { DropdownInput } from '@/components/Input'
+import { DropdownInput } from '@/components/NextUI'
 
 import { CoreLayoutContext } from '../../Provider'
 
@@ -22,15 +22,16 @@ export const Profile = () => {
 
   return (
     <DropdownInput
-      ariaLabel='Profile Actions'
-      mode='none'
+      uncontrolled
+      name='profile-actions'
+      selectionMode='none'
       items={[
         {
           key: 'settings',
           label: 'My Settings',
         },
         {
-          key: 'help_and_feedback',
+          key: 'help-and-feedback',
           label: 'Help & Feedback',
         },
         {

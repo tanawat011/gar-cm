@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { IconCountryFlag } from '@/components/IconCountryFlag'
-import { DropdownInput } from '@/components/Input'
+import { DropdownInput } from '@/components/NextUI'
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { LANG_LABEL, LS_LANG } from '@/constants'
 import { useToggleAppSetting } from '@/hooks'
@@ -27,11 +27,12 @@ export const ToggleLang = () => {
 
   return (
     <DropdownInput
-      ariaLabel='Lang Actions'
-      mode='single'
+      uncontrolled
+      name='lang-actions'
+      selectionMode='single'
       disallowEmptySelection
       selectedKeys={[lang]}
-      onSelected={(key) => toggleSetting(key as Lang)}
+      onAction={(key) => toggleSetting(key as Lang)}
       items={[...LANG_LABEL].map((allLang) => ({
         ...allLang,
         startContent: <IconCountryFlag lang={allLang.key as Lang} className='mx-3' />,

@@ -31,6 +31,6 @@ export const SwitchInput: React.FC<SwitchInputProps> = (props) => {
           />
         )
       }}
-    ></Controller>
+    />
   )
 }

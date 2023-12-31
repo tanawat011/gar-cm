@@ -42,6 +42,7 @@ export default function ToDo() {
   const modalConfirm = useDisclosure()
 
   const [modalType, setModalType] = useState<ModalType>()
+  const [statusSelected, setStatusSelected] = useState<string[]>([])
 
   const {
     register,
@@ -63,6 +64,17 @@ export default function ToDo() {
   useEffect(() => {
     onLoading(loading)
   }, [loading])
+
+  useEffect(() => {
+    refetch({
+      done: statusSelected.includes('done') || undefined,
+      important: statusSelected.includes('important') || undefined,
+      deleted: statusSelected.includes('deleted') || undefined,
+      undone: statusSelected.includes('undone') || undefined,
+      unimportant: statusSelected.includes('unimportant') || undefined,
+      undeleted: statusSelected.includes('undeleted') || undefined,
+    })
+  }, [statusSelected])
 
   const onSetItem = (item: Todo, _modalType: ModalType) => {
     setModalType(_modalType)
@@ -216,6 +228,8 @@ export default function ToDo() {
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
         forceDeleteTodo={forceDeleteTodo}
+        statusSelected={statusSelected}
+        onStatusSelected={setStatusSelected}
       />
 
       {/* <div>

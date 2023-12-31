@@ -1,8 +1,28 @@
 import { gql } from '@apollo/client'
 
 export const queryTodos = gql`
-  query {
-    todos {
+  query (
+    $search: String
+    $done: Boolean
+    $important: Boolean
+    $deleted: Boolean
+    $undone: Boolean
+    $unimportant: Boolean
+    $undeleted: Boolean
+    $skip: Int
+    $take: Int
+  ) {
+    todos(
+      search: $search
+      done: $done
+      important: $important
+      deleted: $deleted
+      undone: $undone
+      unimportant: $unimportant
+      undeleted: $undeleted
+      skip: $skip
+      take: $take
+    ) {
       id
       name
       detail

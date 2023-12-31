@@ -34,6 +34,6 @@ export const TextInput: React.FC<TextInputProps> = (props) => {
           />
         )
       }}
-    ></Controller>
+    />
   )
 }

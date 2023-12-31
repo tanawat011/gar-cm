@@ -27,19 +27,18 @@ builder.queryField('todos', (t) =>
   t.prismaField({
     type: ['todo'],
     args: {
+      search: t.arg.string(),
       done: t.arg.boolean(),
       important: t.arg.boolean(),
       deleted: t.arg.boolean(),
       undone: t.arg.boolean(),
       unimportant: t.arg.boolean(),
       undeleted: t.arg.boolean(),
-      orderBy: t.arg.string(),
-      cursor: t.arg.string(),
       skip: t.arg.int(),
       take: t.arg.int(),
     },
     resolve: async (_query, _parent, _args, ctx) => {
-      const { take, skip, done, important, deleted = true, undone, unimportant, undeleted } = _args
+      const { take, skip, done, important, deleted, undone, unimportant, undeleted } = _args
 
       return prisma.todo.findMany({
         take: take ?? 10,
@@ -49,17 +48,26 @@ builder.queryField('todos', (t) =>
             {
               createdBy: ctx.user?.email,
             },
-            ...(done ? [{ done: true }] : []),
-            ...(important ? [{ important: true }] : []),
-            ...(deleted ? [{ deletedAt: null }] : []),
-            ...(undone ? [{ done: false }] : []),
-            ...(unimportant ? [{ important: false }] : []),
-            ...(undeleted ? [{ deletedAt: { not: null } }] : []),
+            ...(typeof deleted === 'undefined' ? [{ deletedAt: null }] : []),
+            {
+              OR: [
+                ...(typeof done === 'undefined' ? [] : [{ done: !!done }]),
+                ...(typeof undone === 'undefined' ? [] : [{ done: { not: !!undone } }]),
+              ],
+            },
+            {
+              OR: [
+                ...(typeof important === 'undefined' ? [] : [{ important: !!important }]),
+                ...(typeof unimportant === 'undefined' ? [] : [{ important: { not: !!unimportant } }]),
+              ],
+            },
+            {
+              OR: [
+                ...(typeof deleted === 'undefined' ? [] : [{ deletedAt: { not: null } }]),
+                ...(typeof undeleted === 'undefined' ? [] : [{ deletedAt: null }]),
+              ],
+            },
           ],
-          // done: !!_args.done,
-          // important: !!_args.important,
-          // deletedAt: _args.deleted ? { not: null } : null,
-          // createdBy: ctx.user?.email,
         },
       })
     },

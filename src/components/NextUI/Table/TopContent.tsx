@@ -1,10 +1,14 @@
 import type { TableProps } from './Table'
+import type { DropdownInputProps } from '../Input'
 
 import React from 'react'
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
+
+import { Button } from '../Button'
+import { DropdownInput } from '../Input'
 
 type TopContentProps<T> = {
   rows: TableProps<T>['rows']
@@ -13,10 +17,13 @@ type TopContentProps<T> = {
   hideColumnSelecter?: TableProps<T>['hideColumnSelecter']
   hideAddNew?: TableProps<T>['hideAddNew']
   onAddNew?: TableProps<T>['onAddNew']
+  statusSelected?: TableProps<T>['statusSelected']
+  onStatusSelected?: TableProps<T>['onStatusSelected']
+  statusItems?: DropdownInputProps['items']
 }
 
 export const TopContent = <T,>(props: TopContentProps<T>) => {
-  const { rows, onAddNew } = props
+  const { rows, onAddNew, statusSelected = [], onStatusSelected, statusItems = [] } = props
 
   return (
     <div className='flex flex-col gap-4'>
@@ -33,52 +40,24 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
         />
 
         <div className='flex gap-3'>
-          <Dropdown>
-            <DropdownTrigger className='hidden sm:flex'>
-              <Button endContent={<Icon name='FaChevronDown' />} variant='flat'>
-                Status
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label='Table Columns'
-              closeOnSelect={false}
-              variant='faded'
-              // selectedKeys={statusFilter}
-              selectionMode='multiple'
-              // onSelectionChange={setStatusFilter}
-            >
-              <DropdownItem className='capitalize text-success' color='success' startContent={<Icon name='FaCheck' />}>
-                done
-              </DropdownItem>
-              <DropdownItem className='capitalize text-warning' color='warning' startContent={<Icon name='FaStar' />}>
-                important
-              </DropdownItem>
-              <DropdownItem
-                className='capitalize text-danger'
-                color='danger'
-                startContent={<Icon name='FaTrash' />}
-                showDivider
-              >
-                deleted
-              </DropdownItem>
-
-              <DropdownItem className='capitalize' startContent={<Icon name='FaX' />}>
-                undone
-              </DropdownItem>
-              <DropdownItem className='capitalize' startContent={<Icon name='FaX' />}>
-                unimportant
-              </DropdownItem>
-              <DropdownItem className='capitalize' startContent={<Icon name='FaX' />}>
-                undeleted
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <DropdownInput
+            uncontrolled
+            name='profile-actions'
+            selectionMode='multiple'
+            variant='faded'
+            closeOnSelect={false}
+            selectedKeys={new Set(statusSelected)}
+            onSelectionChange={(keys) => {
+              onStatusSelected?.(Array.from(keys) as string[])
+            }}
+            items={statusItems}
+          >
+            <Button icon='FaChevronDown' label='Status' variant='flat' placement='right' />
+          </DropdownInput>
 
           <Dropdown>
             <DropdownTrigger className='hidden sm:flex'>
-              <Button endContent={<Icon name='FaChevronDown' />} variant='flat'>
-                Columns
-              </Button>
+              <Button icon='FaChevronDown' label='Columns' variant='flat' placement='right' />
             </DropdownTrigger>
             <DropdownMenu
               disallowEmptySelection
@@ -92,9 +71,7 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
             </DropdownMenu>
           </Dropdown>
 
-          <Button color='primary' endContent={<Icon name='FaPlus' />} onClick={onAddNew}>
-            Add New
-          </Button>
+          <Button icon='FaPlus' label='Add New' color='primary' onClick={onAddNew} placement='right' />
         </div>
       </div>
 
