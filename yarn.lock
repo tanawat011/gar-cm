@@ -2815,6 +2815,11 @@
   resolved "https://registry.yarnpkg.com/@pothos/core/-/core-3.41.0.tgz#992bf91665f9aabf328f7cbbf12f1819c1888b07"
   integrity sha512-Nb7uPDTXVjdrWqHs5aoD1r6JEdQ9FnJYlf7gv47o1b/bb8rVDAZQaviVvaChal7YQcyFGgCFb0/YNNHLNBEjNw==
 
+"@pothos/plugin-add-graphql@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@pothos/plugin-add-graphql/-/plugin-add-graphql-3.2.0.tgz#6e8aea7f08c4d87bebf9eacfe887bc47eaa3925d"
+  integrity sha512-fawn1oV8BwzO9gXcs5pwQ7jgZ75RSR6Bz1yvwezQa+zkgADEJGNqGutD7e25LrSh6T1JNlZ95e49ud5IXjOVHw==
+
 "@pothos/plugin-prisma@^3.63.0":
   version "3.63.0"
   resolved "https://registry.yarnpkg.com/@pothos/plugin-prisma/-/plugin-prisma-3.63.0.tgz#75431c46035a1552ce151081becae77b0eb262bd"
@@ -13621,6 +13626,7 @@ string-length@^4.0.1:
     strip-ansi "^6.0.0"
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -13695,6 +13701,7 @@ string_decoder@~1.1.1:
     safe-buffer "~5.1.0"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -14970,6 +14977,7 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

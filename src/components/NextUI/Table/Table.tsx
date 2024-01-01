@@ -25,6 +25,10 @@ export type TableColumn<T> = {
 export type TableProps<T> = {
   columns: TableColumn<T>[]
   rows: ({ key?: string; id?: string } & T)[]
+  page?: number
+  total?: number
+  limit?: number
+  onChangePage?: (page: number) => void
   hideSearch?: boolean
   hideFilter?: boolean
   hideColumnSelecter?: boolean
@@ -42,6 +46,10 @@ export const Table = <T,>(props: TableProps<T>) => {
   const {
     columns,
     rows,
+    page,
+    total,
+    limit,
+    onChangePage,
     selectedMode = 'none',
     selected = [],
     onSelected,
@@ -76,7 +84,16 @@ export const Table = <T,>(props: TableProps<T>) => {
   const bottomContent = useMemo(() => {
     if (selectedMode === 'none') return null
 
-    return <BottomContent rows={rows} selected={selected} />
+    return (
+      <BottomContent
+        rows={rows}
+        page={page}
+        total={total}
+        limit={limit}
+        selected={selected}
+        onChangePage={onChangePage}
+      />
+    )
   }, [selected, rows.length])
 
   return (

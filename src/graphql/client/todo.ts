@@ -9,8 +9,8 @@ export const queryTodos = gql`
     $undone: Boolean
     $unimportant: Boolean
     $undeleted: Boolean
-    $skip: Int
-    $take: Int
+    $page: Int
+    $limit: Int
   ) {
     todos(
       search: $search
@@ -20,19 +20,22 @@ export const queryTodos = gql`
       undone: $undone
       unimportant: $unimportant
       undeleted: $undeleted
-      skip: $skip
-      take: $take
+      page: $page
+      limit: $limit
     ) {
-      id
-      name
-      detail
-      tags
-      done
-      important
-      duedate
-      createdAt
-      updatedAt
-      deletedAt
+      count
+      data {
+        id
+        name
+        detail
+        tags
+        done
+        important
+        duedate
+        createdAt
+        updatedAt
+        deletedAt
+      }
     }
   }
 `

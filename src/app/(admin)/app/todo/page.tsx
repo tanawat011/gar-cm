@@ -26,7 +26,7 @@ export type ModalType = 'add' | 'edit' | 'copy' | 'delete' | 'f-delete' | 'clone
 export default function ToDo() {
   const { onLoading } = useContext(CoreLayoutContext)
 
-  const { data, refetch, loading } = useQuery<{ todos: Todo[] }>(queryTodos, {
+  const { data, refetch, loading } = useQuery<{ todos: { data: Todo[]; count: number } }>(queryTodos, {
     variables: {
       where: {
         deletedAt: null,
@@ -42,10 +42,10 @@ export default function ToDo() {
   const modalConfirm = useDisclosure()
 
   const [modalType, setModalType] = useState<ModalType>()
+  const [page, setPage] = useState(1)
   const [statusSelected, setStatusSelected] = useState<string[]>([])
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     clearErrors,
@@ -67,6 +67,7 @@ export default function ToDo() {
 
   useEffect(() => {
     refetch({
+      page,
       done: statusSelected.includes('done') || undefined,
       important: statusSelected.includes('important') || undefined,
       deleted: statusSelected.includes('deleted') || undefined,
@@ -74,7 +75,7 @@ export default function ToDo() {
       unimportant: statusSelected.includes('unimportant') || undefined,
       undeleted: statusSelected.includes('undeleted') || undefined,
     })
-  }, [statusSelected])
+  }, [statusSelected, page])
 
   const onSetItem = (item: Todo, _modalType: ModalType) => {
     setModalType(_modalType)
@@ -163,18 +164,13 @@ export default function ToDo() {
 
   return (
     <>
-      <Modal
-        isOpen={modalForm.isOpen}
-        placement='top-center'
-        onOpenChange={modalForm.onOpenChange}
-        onClose={onCloseForm}
-      >
+      <Modal isOpen={modalForm.isOpen} placement='center' onOpenChange={modalForm.onOpenChange} onClose={onCloseForm}>
         <ModalContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader>{toCapitalCase(`${modalType}`)}</ModalHeader>
 
             <ModalBody>
-              <TodoForm register={register} errors={errors} control={control} />
+              <TodoForm errors={errors} control={control} />
             </ModalBody>
 
             <ModalFooter>
@@ -191,7 +187,7 @@ export default function ToDo() {
 
       <Modal
         isOpen={modalConfirm.isOpen}
-        placement='top-center'
+        placement='center'
         onOpenChange={modalConfirm.onOpenChange}
         onClose={onCloseConfirm}
       >
@@ -219,7 +215,9 @@ export default function ToDo() {
       </Modal>
 
       <TodoTable
-        data={data}
+        data={data?.todos.data || []}
+        total={data?.todos.count || 0}
+        page={page}
         refetch={refetch}
         onOpenModalForm={modalForm.onOpen}
         onOpenModalConfirm={modalConfirm.onOpen}
@@ -230,6 +228,7 @@ export default function ToDo() {
         forceDeleteTodo={forceDeleteTodo}
         statusSelected={statusSelected}
         onStatusSelected={setStatusSelected}
+        onChangePage={setPage}
       />
 
       {/* <div>
