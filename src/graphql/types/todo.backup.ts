@@ -1,31 +1,8 @@
-import type { FieldRef } from '@pothos/core'
 import type { todo as Todo } from '@prisma/client'
 
 import prisma from '@/libs/prisma'
 
 import { builder } from '../builder'
-
-type TodoFieldObj = Record<keyof Todo, FieldRef>
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const todoFieldObj: (t: any) => TodoFieldObj = (t) => ({
-  name: t.exposeString('name'),
-  detail: t.exposeString('detail', { nullable: true }),
-  tags: t.exposeStringList('tags', { nullable: true }),
-  done: t.exposeBoolean('done', { nullable: true }),
-  important: t.exposeBoolean('important', { nullable: true }),
-  duedate: t.expose('duedate', { type: 'Date', nullable: true }),
-
-  // Audit record fields
-  id: t.exposeID('id'),
-  active: t.expose('active', { type: 'Boolean' }),
-  createdAt: t.expose('createdAt', { type: 'Date' }),
-  createdBy: t.exposeString('createdBy', { nullable: true }),
-  updatedAt: t.expose('updatedAt', { type: 'Date' }),
-  updatedBy: t.exposeString('createdBy', { nullable: true }),
-  deletedAt: t.expose('deletedAt', { type: 'Date', nullable: true }),
-  deletedBy: t.exposeString('deletedBy', { nullable: true }),
-})
 
 export class TodoList {
   count: number
@@ -37,11 +14,25 @@ export class TodoList {
   }
 }
 
-// All Object Type
-const TodoObj = builder.objectRef<Todo>('todoo')
+builder.objectType('Todo', {
+  fields: (t) => ({
+    name: t.exposeString('name'),
+    detail: t.exposeString('detail', { nullable: true }),
+    tags: t.exposeStringList('tags', { nullable: true }),
+    done: t.exposeBoolean('done', { nullable: true }),
+    important: t.exposeBoolean('important', { nullable: true }),
+    duedate: t.expose('duedate', { type: 'Date', nullable: true }),
 
-TodoObj.implement({
-  fields: todoFieldObj,
+    // Audit record fields
+    id: t.exposeID('id'),
+    active: t.expose('active', { type: 'Boolean' }),
+    createdAt: t.expose('createdAt', { type: 'Date' }),
+    createdBy: t.exposeString('createdBy', { nullable: true }),
+    updatedAt: t.expose('updatedAt', { type: 'Date' }),
+    updatedBy: t.exposeString('createdBy', { nullable: true }),
+    deletedAt: t.expose('deletedAt', { type: 'Date', nullable: true }),
+    deletedBy: t.exposeString('deletedBy', { nullable: true }),
+  }),
 })
 
 builder.objectType(TodoList, {
@@ -50,17 +41,12 @@ builder.objectType(TodoList, {
   fields: (t) => ({
     count: t.exposeInt('count', {}),
     data: t.field({
-      type: [TodoObj],
+      type: ['Todo'],
       resolve: (parent) => parent.data,
     }),
   }),
 })
 
-builder.prismaObject('todo', {
-  fields: todoFieldObj,
-})
-
-// Query
 builder.queryField('todos', (t) => {
   return t.field({
     type: TodoList,
@@ -72,13 +58,11 @@ builder.queryField('todos', (t) => {
       undone: t.arg.boolean(),
       unimportant: t.arg.boolean(),
       undeleted: t.arg.boolean(),
-      page: t.arg.int(),
-      limit: t.arg.int(),
+      skip: t.arg.int(),
+      take: t.arg.int(),
     },
     resolve: async (_parent, _args, ctx) => {
-      const { limit, page, done, important, deleted, undone, unimportant, undeleted } = _args
-      const _page = page ?? 0
-      const _limit = limit ?? 10
+      const { take, skip, done, important, deleted, undone, unimportant, undeleted } = _args
 
       const query = {
         where: {
@@ -112,8 +96,8 @@ builder.queryField('todos', (t) => {
       const [count, data] = await prisma.$transaction([
         prisma.todo.count(query),
         prisma.todo.findMany({
-          take: _limit,
-          skip: (_page - 1) * _limit,
+          take: take ?? 10,
+          skip: skip ?? 0,
           ...query,
         }),
       ])
@@ -126,7 +110,82 @@ builder.queryField('todos', (t) => {
   })
 })
 
-// Mutation
+builder.prismaObject('todo', {
+  fields: (t) => ({
+    name: t.exposeString('name'),
+    detail: t.exposeString('detail', { nullable: true }),
+    tags: t.exposeStringList('tags', { nullable: true }),
+    done: t.exposeBoolean('done', { nullable: true }),
+    important: t.exposeBoolean('important', { nullable: true }),
+    duedate: t.expose('duedate', { type: 'Date', nullable: true }),
+
+    // Audit record fields
+    id: t.exposeID('id'),
+    active: t.expose('active', { type: 'Boolean' }),
+    createdAt: t.expose('createdAt', { type: 'Date' }),
+    createdBy: t.exposeString('createdBy', { nullable: true }),
+    updatedAt: t.expose('updatedAt', { type: 'Date' }),
+    updatedBy: t.exposeString('createdBy', { nullable: true }),
+    deletedAt: t.expose('deletedAt', { type: 'Date', nullable: true }),
+    deletedBy: t.exposeString('deletedBy', { nullable: true }),
+  }),
+})
+
+// builder.queryField('todos', (t) =>
+//   t.prismaField({
+//     type: ['todo'],
+//     args: {
+//       search: t.arg.string(),
+//       done: t.arg.boolean(),
+//       important: t.arg.boolean(),
+//       deleted: t.arg.boolean(),
+//       undone: t.arg.boolean(),
+//       unimportant: t.arg.boolean(),
+//       undeleted: t.arg.boolean(),
+//       skip: t.arg.int(),
+//       take: t.arg.int(),
+//     },
+//     resolve: async (_query, _parent, _args, ctx) => {
+//       const { take, skip, done, important, deleted, undone, unimportant, undeleted } = _args
+
+//       const query = {
+//         where: {
+//           AND: [
+//             {
+//               createdBy: ctx.user?.email,
+//             },
+//             ...(typeof deleted === 'undefined' ? [{ deletedAt: null }] : []),
+//             {
+//               OR: [
+//                 ...(typeof done === 'undefined' ? [] : [{ done: !!done }]),
+//                 ...(typeof undone === 'undefined' ? [] : [{ done: { not: !!undone } }]),
+//               ],
+//             },
+//             {
+//               OR: [
+//                 ...(typeof important === 'undefined' ? [] : [{ important: !!important }]),
+//                 ...(typeof unimportant === 'undefined' ? [] : [{ important: { not: !!unimportant } }]),
+//               ],
+//             },
+//             {
+//               OR: [
+//                 ...(typeof deleted === 'undefined' ? [] : [{ deletedAt: { not: null } }]),
+//                 ...(typeof undeleted === 'undefined' ? [] : [{ deletedAt: null }]),
+//               ],
+//             },
+//           ],
+//         },
+//       }
+
+//       return prisma.todo.findMany({
+//         take: take ?? 10,
+//         skip: skip ?? 0,
+//         ...query,
+//       })
+//     },
+//   }),
+// )
+
 builder.mutationField('createTodo', (t) =>
   t.prismaField({
     type: 'todo',

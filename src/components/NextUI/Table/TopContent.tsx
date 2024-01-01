@@ -7,7 +7,6 @@ import { Button as ButtonNextUI, Dropdown, DropdownItem, DropdownMenu, DropdownT
 
 import { Icon } from '@/components/Icon'
 
-import { Button } from '../Button'
 import { DropdownInput } from '../Input'
 
 type TopContentProps<T> = {

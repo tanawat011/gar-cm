@@ -16,7 +16,9 @@ export type TodoTableProps = {
   refetch: (v?: Partial<OperationVariables>) => Promise<unknown>
   onOpenModalForm: () => void
   onOpenModalConfirm: (force?: boolean) => void
-  data: { todos: Todo[] } | undefined
+  data: Todo[]
+  total?: number
+  page?: number
   onSetItem: (item: Todo, modalType: ModalType) => void
   setModalType: (modalType: ModalType) => void
   updateTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
@@ -24,6 +26,7 @@ export type TodoTableProps = {
   forceDeleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   statusSelected?: TableProps<unknown>['statusSelected']
   onStatusSelected?: TableProps<unknown>['onStatusSelected']
+  onChangePage?: TableProps<unknown>['onChangePage']
 }
 
 export type QuickAction = {
@@ -33,6 +36,8 @@ export type QuickAction = {
 
 export const TodoTable: React.FC<TodoTableProps> = ({
   data,
+  total,
+  page,
   refetch,
   onOpenModalForm,
   onOpenModalConfirm,
@@ -41,6 +46,7 @@ export const TodoTable: React.FC<TodoTableProps> = ({
   updateTodo,
   statusSelected,
   onStatusSelected,
+  onChangePage,
 }) => {
   const { onLoading } = useContext(CoreLayoutContext)
 
@@ -84,7 +90,11 @@ export const TodoTable: React.FC<TodoTableProps> = ({
           ),
         },
       ]}
-      rows={data?.todos || []}
+      rows={data}
+      total={total}
+      page={page}
+      limit={10}
+      onChangePage={onChangePage}
       selectedMode='multiple'
       selected={selected}
       onSelected={setSelected}

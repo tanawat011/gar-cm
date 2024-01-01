@@ -32,6 +32,7 @@
     "@auth0/nextjs-auth0": "^3.5.0",
     "@nextui-org/react": "^2.2.9",
     "@pothos/core": "^3.40.1",
+    "@pothos/plugin-add-graphql": "^3.2.0",
     "@pothos/plugin-prisma": "^3.63.0",
     "@pothos/plugin-relay": "^3.45.1",
     "@prisma/client": "^5.7.0",
