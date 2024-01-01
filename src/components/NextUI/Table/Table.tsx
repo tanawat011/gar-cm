@@ -82,9 +82,6 @@ export const Table = <T,>(props: TableProps<T>) => {
   return (
     <NextUITable
       fullWidth
-      classNames={{
-        base: 'h-screen',
-      }}
       aria-label='Example table with dynamic content'
       selectionMode={selectedMode}
       selectedKeys={new Set(selected)}
@@ -109,7 +106,10 @@ export const Table = <T,>(props: TableProps<T>) => {
         )}
       </TableHeader>
 
-      <TableBody items={rows} emptyContent={'No rows to display.'}>
+      <TableBody
+        items={rows}
+        emptyContent={<div className='flex items-center justify-center'>No rows to display.</div>}
+      >
         {(item) => (
           <TableRow key={item.key as React.Key}>
             {(colKey) => <TableCell>{renderCell(item, colKey)}</TableCell>}

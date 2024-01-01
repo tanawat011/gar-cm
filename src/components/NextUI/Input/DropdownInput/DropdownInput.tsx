@@ -56,7 +56,7 @@ export const DropdownInput: React.FC<DropdownInputProps> = (props) => {
           )}
         </DropdownTrigger>
 
-        <DropdownMenu selectionMode={'single'} variant={'flat'} {...leftProps}>
+        <DropdownMenu aria-label={label} selectionMode={'single'} variant={'flat'} {...leftProps}>
           {items.map(({ key, label: itemLabel, ...leftItem }) => {
             return (
               <DropdownItem key={key} {...leftItem}>

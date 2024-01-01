@@ -79,6 +79,7 @@ const config: Config = {
       //   },
       // },
     }),
+    require('tw-elements/dist/plugin.cjs'),
     plugin(({ addUtilities }) => {
       addUtilities({
         '.bg-base-gradient-sidebar': {
