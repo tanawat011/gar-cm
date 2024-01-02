@@ -13,8 +13,12 @@ import {
   getKeyValue,
 } from '@nextui-org/table'
 
+import { LoadingSpinner } from '../Loading'
+
 import { BottomContent } from './BottomContent'
 import { TopContent } from './TopContent'
+
+export type TableLimitList = number | undefined
 
 export type TableColumn<T> = {
   key: keyof T | 'action'
@@ -23,40 +27,60 @@ export type TableColumn<T> = {
 } & Omit<TableColumnProps<T>, 'children'>
 
 export type TableProps<T> = {
+  // NOTE: Table configs
   columns: TableColumn<T>[]
   rows: ({ key?: string; id?: string } & T)[]
   page?: number
   total?: number
   limit?: number
-  onChangePage?: (page: number) => void
-  hideSearch?: boolean
-  hideFilter?: boolean
-  hideColumnSelecter?: boolean
-  hideAddNew?: boolean
+  loading?: boolean
   selectedMode?: SelectionMode
+
+  // NOTE: Items selected or Input value
+  search?: string
   selected?: string[]
+  filterSelected?: string[]
+  columnSelected?: string[]
+
+  // NOTE: Table Events
+  onSearch?: (value: string) => void
   onSelected?: (selected: string[]) => void
+  onChangePage?: (page: number) => void
+  onFilterSelected?: (selected: string[]) => void
+  onColumnSelected?: (selected: string[]) => void
   onAddNew?: () => void
-  statusSelected?: string[]
-  onStatusSelected?: (selected: string[]) => void
-  statusItems?: DropdownInputProps['items']
+  onChangeLimit?: (limit: TableLimitList) => void
+
+  // NOTE: All items
+  filterItems?: DropdownInputProps['items']
+  columnItems?: DropdownInputProps['items']
+  pageLimitItems?: DropdownInputProps['items']
+
+  // NOTE: Show/Hide TOP and BOTTOM content
+  showSearchInput?: boolean
+  showFilterButton?: boolean
+  showColumnButton?: boolean
+  showAddButton?: boolean
+  showTotal?: boolean
+  showPageLimit?: boolean
+  showTotalSelected?: boolean
+  showPagination?: boolean
+  showNavigation?: boolean
 }
 
 export const Table = <T,>(props: TableProps<T>) => {
   const {
+    search,
     columns,
     rows,
     page,
     total,
     limit,
-    onChangePage,
+    loading,
     selectedMode = 'none',
     selected = [],
     onSelected,
-    onAddNew,
-    statusSelected,
-    onStatusSelected,
-    statusItems,
+    filterSelected,
   } = props
 
   const renderCell = useCallback((row: T, colKey: React.Key) => {
@@ -69,17 +93,30 @@ export const Table = <T,>(props: TableProps<T>) => {
     return getKeyValue(row, colKey)
   }, [])
 
-  const topContent = React.useMemo(() => {
+  const topContent = useMemo(() => {
     return (
       <TopContent
-        rows={rows}
-        onAddNew={onAddNew}
-        statusSelected={statusSelected}
-        onStatusSelected={onStatusSelected}
-        statusItems={statusItems}
+        total={total}
+        search={search}
+        filterSelected={filterSelected}
+        columnSelected={props.columnSelected}
+        onSearch={props.onSearch}
+        onFilterSelected={props.onFilterSelected}
+        onColumnSelected={props.onColumnSelected}
+        onAddNew={props.onAddNew}
+        onChangeLimit={props.onChangeLimit}
+        filterItems={props.filterItems}
+        columnItems={props.columnItems}
+        pageLimitItems={props.pageLimitItems}
+        showSearchInput={props.showSearchInput}
+        showFilterButton={props.showFilterButton}
+        showColumnButton={props.showColumnButton}
+        showAddButton={props.showAddButton}
+        showTotal={props.showTotal}
+        showPageLimit={props.showPageLimit}
       />
     )
-  }, [rows.length, statusSelected])
+  }, [search, rows.length, filterSelected, total])
 
   const bottomContent = useMemo(() => {
     if (selectedMode === 'none') return null
@@ -91,10 +128,13 @@ export const Table = <T,>(props: TableProps<T>) => {
         total={total}
         limit={limit}
         selected={selected}
-        onChangePage={onChangePage}
+        onChangePage={props.onChangePage}
+        showTotalSelected={props.showTotalSelected}
+        showPagination={props.showPagination}
+        showNavigation={props.showNavigation}
       />
     )
-  }, [selected, rows.length])
+  }, [selected, rows.length, total, page, limit])
 
   return (
     <NextUITable
@@ -114,6 +154,10 @@ export const Table = <T,>(props: TableProps<T>) => {
       bottomContent={bottomContent}
       topContentPlacement='outside'
       bottomContentPlacement='outside'
+      isHeaderSticky
+      classNames={{
+        wrapper: 'min-h-[557px] max-h-[557px]',
+      }}
     >
       <TableHeader columns={columns}>
         {(col) => (
@@ -126,6 +170,12 @@ export const Table = <T,>(props: TableProps<T>) => {
       <TableBody
         items={rows}
         emptyContent={<div className='flex items-center justify-center'>No rows to display.</div>}
+        isLoading={loading}
+        loadingContent={
+          <div className='flex items-center justify-center w-full h-full z-20 backdrop-blur-sm'>
+            <LoadingSpinner />
+          </div>
+        }
       >
         {(item) => (
           <TableRow key={item.key as React.Key}>

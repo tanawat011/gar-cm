@@ -3,9 +3,8 @@ import type { TableProps } from '@/components/NextUI'
 import type { MutationFunctionOptions, OperationVariables } from '@apollo/client'
 import type { todo as Todo } from '@prisma/client'
 
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
-import { CoreLayoutContext } from '@/components/CoreLayout/Provider'
 import { Icon } from '@/components/Icon'
 import { Table } from '@/components/NextUI'
 
@@ -17,55 +16,47 @@ export type TodoTableProps = {
   onOpenModalForm: () => void
   onOpenModalConfirm: (force?: boolean) => void
   data: Todo[]
-  total?: number
-  page?: number
   onSetItem: (item: Todo, modalType: ModalType) => void
   setModalType: (modalType: ModalType) => void
   updateTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   deleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   forceDeleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
-  statusSelected?: TableProps<unknown>['statusSelected']
-  onStatusSelected?: TableProps<unknown>['onStatusSelected']
-  onChangePage?: TableProps<unknown>['onChangePage']
-}
+} & Pick<
+  TableProps<unknown>,
+  | 'search'
+  | 'total'
+  | 'page'
+  | 'limit'
+  | 'loading'
+  | 'filterSelected'
+  | 'onSearch'
+  | 'onFilterSelected'
+  | 'onChangeLimit'
+  | 'onChangePage'
+>
 
 export type QuickAction = {
   done?: boolean
   important?: boolean
 }
 
-export const TodoTable: React.FC<TodoTableProps> = ({
-  data,
-  total,
-  page,
-  refetch,
-  onOpenModalForm,
-  onOpenModalConfirm,
-  onSetItem,
-  setModalType,
-  updateTodo,
-  statusSelected,
-  onStatusSelected,
-  onChangePage,
-}) => {
-  const { onLoading } = useContext(CoreLayoutContext)
-
+export const TodoTable: React.FC<TodoTableProps> = (props) => {
   const [selected, setSelected] = useState<string[]>([])
 
-  const onQuickAction = async (id: string, { done, important }: QuickAction) => {
-    onLoading(true)
+  const onQuickAction = useCallback(
+    async (id: string, { done, important }: QuickAction) => {
+      await props.updateTodo({
+        variables: {
+          id,
+          done,
+          important,
+        },
+      })
 
-    await updateTodo({
-      variables: {
-        id,
-        done,
-        important,
-      },
-    })
-
-    await refetch()
-    onLoading(false)
-  }
+      await props.refetch()
+    },
+    [props.page],
+  )
 
   return (
     <Table
@@ -83,28 +74,24 @@ export const TodoTable: React.FC<TodoTableProps> = ({
             <TodoTableColAction
               item={item}
               onQuickAction={onQuickAction}
-              onOpenModalForm={onOpenModalForm}
-              onOpenModalConfirm={onOpenModalConfirm}
-              onSetItem={onSetItem}
+              onOpenModalForm={props.onOpenModalForm}
+              onOpenModalConfirm={props.onOpenModalConfirm}
+              onSetItem={props.onSetItem}
             />
           ),
         },
       ]}
-      rows={data}
-      total={total}
-      page={page}
-      limit={10}
-      onChangePage={onChangePage}
+      // NOTE: Configs & Data
       selectedMode='multiple'
+      search={props.search}
+      rows={props.data}
+      total={props.total}
+      page={props.page}
+      limit={props.limit}
+      loading={props.loading}
       selected={selected}
-      onSelected={setSelected}
-      onAddNew={() => {
-        onOpenModalForm()
-        setModalType('add')
-      }}
-      statusSelected={statusSelected}
-      onStatusSelected={onStatusSelected}
-      statusItems={[
+      filterSelected={props.filterSelected}
+      filterItems={[
         {
           key: 'done',
           label: 'done',
@@ -146,6 +133,16 @@ export const TodoTable: React.FC<TodoTableProps> = ({
           startContent: <Icon name='FaX' />,
         },
       ]}
+      // NOTE: Events
+      onSearch={props.onSearch}
+      onChangePage={props.onChangePage}
+      onChangeLimit={props.onChangeLimit}
+      onSelected={setSelected}
+      onFilterSelected={props.onFilterSelected}
+      onAddNew={() => {
+        props.onOpenModalForm()
+        props.setModalType('add')
+      }}
     />
   )
 }

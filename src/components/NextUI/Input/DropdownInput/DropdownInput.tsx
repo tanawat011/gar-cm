@@ -31,7 +31,7 @@ export const DropdownInput: React.FC<DropdownInputProps> = (props) => {
   const { uncontrolled, control, children, items, label, buttonOptions: btnOpt, ...leftProps } = props
 
   const renderInput = useCallback(() => {
-    const { icon, iconR, placement } = btnOpt || {}
+    const { icon = 'FaChevronDown', iconR, placement = 'right' } = btnOpt || {}
     const isLeft = icon && placement === 'left'
     const isRight = icon && placement === 'right'
     const isTwoSide = icon && placement === 'two-side'
@@ -42,7 +42,6 @@ export const DropdownInput: React.FC<DropdownInputProps> = (props) => {
           {children || (
             <Button
               variant='flat'
-              endContent={<Icon name='FaChevronDown' />}
               {...btnOpt}
               {...(isLeft && { startContent: <Icon name={icon} /> })}
               {...(isRight && { endContent: <Icon name={icon} /> })}

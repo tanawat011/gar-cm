@@ -20,6 +20,7 @@ import {
   FaChevronDown,
   FaShop,
   FaChevronRight,
+  FaChevronLeft,
   FaEye,
   FaEyeSlash,
   FaFacebook,
@@ -34,6 +35,8 @@ import {
   FaRegCopy,
   FaPlus,
   FaX,
+  FaFilter,
+  FaTableColumns,
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
@@ -56,6 +59,7 @@ export const ICON_ALLOWED = {
   FaChevronDown,
   FaShop,
   FaChevronRight,
+  FaChevronLeft,
   FaEye,
   FaEyeSlash,
   FaFacebook,
@@ -70,6 +74,8 @@ export const ICON_ALLOWED = {
   FaRegCopy,
   FaPlus,
   FaX,
+  FaFilter,
+  FaTableColumns,
 }
 
 export type IconType = keyof typeof ICON_ALLOWED
