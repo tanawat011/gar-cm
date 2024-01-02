@@ -2,14 +2,15 @@
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 
 const client = new ApolloClient({
   uri: '/api/graphql',
   cache: new InMemoryCache(),
 })
 
-export default function RootAdminTemplate({ children }: { children: React.ReactNode }) {
-  if (true) {
+function RootAdminTemplate({ children }: { children: React.ReactNode }) {
+  if (process.env.NODE_ENV === 'development') {
     // Adds messages only in a dev environment
     loadDevMessages()
     loadErrorMessages()
@@ -17,3 +18,5 @@ export default function RootAdminTemplate({ children }: { children: React.ReactN
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
+
+export default withPageAuthRequired(RootAdminTemplate as never)

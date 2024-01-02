@@ -25,8 +25,10 @@ export const TextareaInput: React.FC<TextareaInputProps> = (props) => {
 
         return (
           <Textarea
+            defaultValue=''
             {...leftProps}
             {...field}
+            value={field.value || ''}
             isInvalid={!!errorField}
             errorMessage={errorField && leftProps?.errorMessage}
             color={errorField ? 'danger' : leftProps.color || 'default'}

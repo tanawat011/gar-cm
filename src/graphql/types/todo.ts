@@ -76,14 +76,15 @@ builder.queryField('todos', (t) => {
       limit: t.arg.int(),
     },
     resolve: async (_parent, _args, ctx) => {
-      const { limit, page, done, important, deleted, undone, unimportant, undeleted } = _args
-      const _page = page ?? 0
+      const { search, limit, page, done, important, deleted, undone, unimportant, undeleted } = _args
+      const _page = page || 1
       const _limit = limit ?? 10
 
       const query = {
         where: {
           AND: [
             {
+              ...(!!search && { name: { contains: search } }),
               createdBy: ctx.user?.email,
             },
             ...(typeof deleted === 'undefined' ? [{ deletedAt: null }] : []),
@@ -114,6 +115,7 @@ builder.queryField('todos', (t) => {
         prisma.todo.findMany({
           take: _limit,
           skip: (_page - 1) * _limit,
+          ...(_limit === 0 && { take: undefined, skip: undefined }), // _limit = 0 will return all
           ...query,
         }),
       ])
