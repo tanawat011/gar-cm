@@ -5,6 +5,7 @@ import React from 'react'
 
 import { Icon } from '@/components/Icon'
 import { SwitchInput, TextInput, TextareaInput } from '@/components/NextUI'
+import { DatePickerInput } from '@/components/NextUI/Input/DatePickerInput'
 
 type TodoFormProps = {
   errors?: FieldErrors<Todo>
@@ -17,6 +18,8 @@ export const TodoForm: React.FC<TodoFormProps> = ({ control }) => {
       <TextInput name='name' control={control} label='Todo name' />
 
       <TextareaInput name='detail' control={control} label='Detail' />
+
+      <DatePickerInput name='duedate' control={control} label='Duedate' />
 
       <div className='flex justify-evenly'>
         <SwitchInput name='done' control={control} color='success' startContent={<Icon name='FaCheck' />}>
