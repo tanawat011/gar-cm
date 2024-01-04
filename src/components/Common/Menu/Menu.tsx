@@ -103,6 +103,7 @@ export const Menu: React.FC<MenuProps> = ({ items }) => {
         {!item.isGroupLabel && (
           <>
             <StyledItem
+              scroll={false}
               role='button'
               tabIndex={0}
               onClick={onClick}
