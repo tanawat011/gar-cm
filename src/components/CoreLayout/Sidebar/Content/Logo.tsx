@@ -6,8 +6,8 @@ import LogoFull from '@/assets/images/logo/logo-crop.png'
 import LogoMini from '@/assets/images/logo/logo-mini-crop.png'
 import { appSettingSelector } from '@/store/selector'
 
-const FullLogo = () => <Image src={LogoFull} height={59} alt='Full Logo' />
-const MiniLogo = () => <Image src={LogoMini} height={59} alt='Mini Logo' />
+const FullLogo = () => <Image src={LogoFull} height={59} alt='Full Logo' priority />
+const MiniLogo = () => <Image src={LogoMini} height={59} alt='Mini Logo' priority />
 
 export const Logo = () => {
   const { sidebarType } = useSelector(appSettingSelector)
