@@ -19,7 +19,12 @@ export const TodoForm: React.FC<TodoFormProps> = ({ control }) => {
 
       <TextareaInput name='detail' control={control} label='Detail' />
 
-      <DatePickerInput name='duedate' control={control} label='Duedate' />
+      <DatePickerInput
+        name='duedate'
+        control={control}
+        label='Duedate'
+        description="We'll never share your email with anyone else."
+      />
 
       <div className='flex justify-evenly'>
         <SwitchInput name='done' control={control} color='success' startContent={<Icon name='FaCheck' />}>
