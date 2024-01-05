@@ -9,20 +9,20 @@ import { Icon } from '@/components/Icon'
 
 type ColumnActionProps<T, U = never> = {
   item: T
-  quickActionItems?: TableProps<T, U>['quickActionItems']
-  onQuickAction?: TableProps<T, U>['onQuickAction']
-  onOpenForm: TableProps<T, U>['onOpenForm']
-  onOpenModalConfirm: TableProps<T, U>['onOpenModalConfirm']
-  onSetItem: TableProps<T, U>['onSetItem']
-}
+} & Pick<
+  TableProps<T, U>,
+  'onEdit' | 'onCopy' | 'onClone' | 'onDelete' | 'onForceDelete' | 'quickActionItems' | 'onQuickAction'
+>
 
 export const ColumnAction = <T, U>({
   item,
+  onEdit,
+  onCopy,
+  onClone,
+  onDelete,
+  onForceDelete,
   quickActionItems,
   onQuickAction,
-  onOpenForm,
-  onOpenModalConfirm,
-  onSetItem,
 }: ColumnActionProps<T, U>) => {
   const actions: MenuItemProps[] = useMemo(() => {
     return [
@@ -30,29 +30,20 @@ export const ColumnAction = <T, U>({
         key: 'edit',
         startContent: <Icon name='FaPencil' />,
         children: 'Edit',
-        onClick: () => {
-          onSetItem?.(item, 'edit')
-          onOpenForm?.()
-        },
+        onClick: () => onEdit?.(item),
       },
       {
         key: 'copy',
         startContent: <Icon name='FaCopy' />,
         children: 'Copy',
-        onClick: () => {
-          onSetItem?.(item, 'copy')
-          onOpenForm?.()
-        },
+        onClick: () => onCopy?.(item),
       },
       {
         key: 'clone',
         startContent: <Icon name='FaRegCopy' />,
         children: 'Clone',
         showDivider: true,
-        onClick: () => {
-          onSetItem?.(item, 'clone')
-          onOpenModalConfirm?.()
-        },
+        onClick: () => onClone?.(item),
       },
       {
         key: 'delete',
@@ -60,10 +51,7 @@ export const ColumnAction = <T, U>({
         color: 'danger',
         className: 'text-danger',
         children: 'Delete',
-        onClick: () => {
-          onSetItem?.(item, 'delete')
-          onOpenModalConfirm?.()
-        },
+        onClick: () => onDelete?.(item),
       },
       {
         key: 'force-delete',
@@ -71,10 +59,7 @@ export const ColumnAction = <T, U>({
         color: 'danger',
         className: 'text-danger',
         children: 'Force Delete',
-        onClick: () => {
-          onSetItem?.(item, 'force-delete')
-          onOpenModalConfirm?.()
-        },
+        onClick: () => onForceDelete?.(item),
       },
     ]
   }, [item])

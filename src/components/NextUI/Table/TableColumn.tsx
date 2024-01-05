@@ -25,7 +25,7 @@ export const TableColumn = <T,>(props: TableColumnProps<T>) => {
 
   return (
     <NextUITableColumn {...props} key={props.key as React.Key} className={[props.className, getAlign()].join(' ')}>
-      {props.label}
+      {props.key === 'action' ? <div className='pr-2'>{props.label}</div> : props.label}
     </NextUITableColumn>
   )
 }

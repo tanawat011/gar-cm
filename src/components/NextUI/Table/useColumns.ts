@@ -3,7 +3,14 @@ import type { DropdownInputProps } from '../Input'
 
 import { useEffect, useMemo, useState } from 'react'
 
-export const useColumns = <T>(baseColumns: TableColumnProps<T>[]) => {
+export type UseColumnsPropsReturn<T> = {
+  columns: TableColumnProps<T>[]
+  columnItems: DropdownInputProps['items']
+  columnSelected: string[]
+  setColumnSelected: (columnSelected: string[]) => void
+}
+
+export const useColumns = <T>(baseColumns: TableColumnProps<T>[]): UseColumnsPropsReturn<T> => {
   const [columnItems, setColumnItems] = useState<DropdownInputProps['items']>([])
   const [columnSelected, setColumnSelected] = useState<string[]>([])
 
