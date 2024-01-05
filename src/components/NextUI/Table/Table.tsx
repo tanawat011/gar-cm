@@ -133,13 +133,16 @@ export const Table = <T,>(props: TableProps<T>) => {
     )
   }, [selected, rows.length, total, page, limit])
 
-  const onSelectionChange = useCallback((keys: Selection) => {
-    if (keys === 'all') {
-      return onSelected?.(rows.map((row) => row?.key || row?.id) as string[])
-    }
+  const onSelectionChange = useCallback(
+    (keys: Selection) => {
+      if (keys === 'all') {
+        return onSelected?.(rows.map((row) => row?.key || row?.id) as string[])
+      }
 
-    onSelected?.(Array.from(keys) as string[])
-  }, [])
+      onSelected?.(Array.from(keys) as string[])
+    },
+    [rows],
+  )
 
   return (
     <NextUITable
