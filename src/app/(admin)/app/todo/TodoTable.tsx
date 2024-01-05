@@ -29,8 +29,10 @@ export type TodoTableProps = {
   | 'limit'
   | 'loading'
   | 'filterSelected'
+  | 'columnSelected'
   | 'onSearch'
   | 'onFilterSelected'
+  | 'onColumnSelected'
   | 'onChangeLimit'
   | 'onChangePage'
 >
@@ -58,18 +60,30 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
     [props.page],
   )
 
+  const onAddNew = useCallback(() => {
+    props.onOpenModalForm()
+    props.setModalType('add')
+  }, [])
+
   return (
     <Table
       columns={[
         {
           key: 'name',
-          width: '80%',
+          label: 'Name',
+          show: true,
           render: (item) => <TodoTableColData item={item} />,
         },
         {
+          key: 'detail',
+          label: 'Detail',
+        },
+        {
           key: 'action',
-          align: 'start',
-          width: '10%',
+          label: 'Action',
+          align: 'end',
+          width: 120,
+          show: true,
           render: (item) => (
             <TodoTableColAction
               item={item}
@@ -133,16 +147,57 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
           startContent: <Icon name='FaX' />,
         },
       ]}
+      columnSelected={props.columnSelected}
+      columnItems={[
+        {
+          key: 'done',
+          label: 'done',
+          color: 'success',
+          className: 'capitalize text-success',
+          startContent: <Icon name='FaCheck' />,
+        },
+        {
+          key: 'important',
+          label: 'important',
+          color: 'warning',
+          className: 'capitalize text-warning',
+          startContent: <Icon name='FaStar' />,
+        },
+        {
+          key: 'deleted',
+          label: 'deleted',
+          color: 'danger',
+          className: 'capitalize text-danger',
+          startContent: <Icon name='FaTrash' />,
+          showDivider: true,
+        },
+        {
+          key: 'undone',
+          label: 'undone',
+          className: 'capitalize',
+          startContent: <Icon name='FaX' />,
+        },
+        {
+          key: 'unimportant',
+          label: 'unimportant',
+          className: 'capitalize',
+          startContent: <Icon name='FaX' />,
+        },
+        {
+          key: 'undeleted',
+          label: 'undeleted',
+          className: 'capitalize',
+          startContent: <Icon name='FaX' />,
+        },
+      ]}
       // NOTE: Events
       onSearch={props.onSearch}
-      onChangePage={props.onChangePage}
+      onFilterSelected={props.onFilterSelected}
+      onColumnSelected={props.onColumnSelected}
       onChangeLimit={props.onChangeLimit}
       onSelected={setSelected}
-      onFilterSelected={props.onFilterSelected}
-      onAddNew={() => {
-        props.onOpenModalForm()
-        props.setModalType('add')
-      }}
+      onAddNew={onAddNew}
+      onChangePage={props.onChangePage}
     />
   )
 }

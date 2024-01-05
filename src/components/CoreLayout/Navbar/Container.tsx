@@ -32,7 +32,7 @@ export const Container: React.FC<NavbarContainerProps> = ({ id, isScrolled }) =>
 
   return (
     <>
-      <StyledContainer $navbarType={navbarType}>
+      <StyledContainer $navbarType={navbarType} id={`${id}-container`}>
         {isStickyScrolled && (
           <Card id={id} className='w-full m-4'>
             <CardBody className='flex flex-row items-center justify-between'>{renderNavbar()}</CardBody>

@@ -1,34 +1,25 @@
+import type { TableColumnProps } from './TableColumn'
 import type { DropdownInputProps } from '../Input'
-import type { SelectionMode, TableColumnProps } from '@nextui-org/table'
+import type { Selection } from '@nextui-org/react'
+import type { SelectionMode } from '@nextui-org/table'
 
 import React, { useCallback, useMemo } from 'react'
 
-import {
-  Table as NextUITable,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-  getKeyValue,
-} from '@nextui-org/table'
+import { Table as NextUITable, TableHeader, TableBody, TableRow } from '@nextui-org/table'
 
 import { LoadingSpinner } from '../Loading'
 
 import { BottomContent } from './BottomContent'
+import { TableCell } from './TableCell'
+import { TableColumn } from './TableColumn'
 import { TopContent } from './TopContent'
+import { useColumns } from './useColumns'
 
 export type TableLimitList = number | undefined
 
-export type TableColumn<T> = {
-  key: keyof T | 'action'
-  label?: string
-  render?: (row: T) => React.ReactNode
-} & Omit<TableColumnProps<T>, 'children'>
-
 export type TableProps<T> = {
   // NOTE: Table configs
-  columns: TableColumn<T>[]
+  columns: TableColumnProps<T>[]
   rows: ({ key?: string; id?: string } & T)[]
   page?: number
   total?: number
@@ -69,9 +60,12 @@ export type TableProps<T> = {
 }
 
 export const Table = <T,>(props: TableProps<T>) => {
+  const tableBodyHeight =
+    'max-h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*3)-52px-(40px*2))]'
+  const tableBodyEmptyStateHeight =
+    'h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*5)-52px-(40px*3)-5px)]'
   const {
     search,
-    columns,
     rows,
     page,
     total,
@@ -83,14 +77,16 @@ export const Table = <T,>(props: TableProps<T>) => {
     filterSelected,
   } = props
 
-  const renderCell = useCallback((row: T, colKey: React.Key) => {
-    const col = columns.find((c) => c.key === colKey)
+  const { columns, columnItems, columnSelected, setColumnSelected } = useColumns(props.columns)
 
-    if (col?.render) {
-      return col.render(row)
-    }
+  const renderColumn = useCallback((column: TableColumnProps<T>) => {
+    return TableColumn(column)
+  }, [])
 
-    return getKeyValue(row, colKey)
+  const renderCell = useCallback((key: React.Key, item: T) => {
+    const column = columns.find((c) => c.key === key) as TableColumnProps<T>
+
+    return TableCell({ column, item, key, columnAlign: column?.align })
   }, [])
 
   const topContent = useMemo(() => {
@@ -99,14 +95,14 @@ export const Table = <T,>(props: TableProps<T>) => {
         total={total}
         search={search}
         filterSelected={filterSelected}
-        columnSelected={props.columnSelected}
+        columnSelected={columnSelected}
         onSearch={props.onSearch}
         onFilterSelected={props.onFilterSelected}
-        onColumnSelected={props.onColumnSelected}
+        onColumnSelected={setColumnSelected}
         onAddNew={props.onAddNew}
         onChangeLimit={props.onChangeLimit}
         filterItems={props.filterItems}
-        columnItems={props.columnItems}
+        columnItems={columnItems}
         pageLimitItems={props.pageLimitItems}
         showSearchInput={props.showSearchInput}
         showFilterButton={props.showFilterButton}
@@ -116,7 +112,7 @@ export const Table = <T,>(props: TableProps<T>) => {
         showPageLimit={props.showPageLimit}
       />
     )
-  }, [search, rows.length, filterSelected, total])
+  }, [search, rows.length, filterSelected, columnSelected, total])
 
   const bottomContent = useMemo(() => {
     if (selectedMode === 'none') return null
@@ -129,6 +125,7 @@ export const Table = <T,>(props: TableProps<T>) => {
         limit={limit}
         selected={selected}
         onChangePage={props.onChangePage}
+        onSelected={props.onSelected}
         showTotalSelected={props.showTotalSelected}
         showPagination={props.showPagination}
         showNavigation={props.showNavigation}
@@ -136,40 +133,44 @@ export const Table = <T,>(props: TableProps<T>) => {
     )
   }, [selected, rows.length, total, page, limit])
 
+  const onSelectionChange = useCallback((keys: Selection) => {
+    if (keys === 'all') {
+      return onSelected?.(rows.map((row) => row?.key || row?.id) as string[])
+    }
+
+    onSelected?.(Array.from(keys) as string[])
+  }, [])
+
   return (
     <NextUITable
       fullWidth
       aria-label='Example table with dynamic content'
       selectionMode={selectedMode}
       selectedKeys={new Set(selected)}
-      onSelectionChange={(keys) => {
-        if (keys === 'all') {
-          return onSelected?.(rows.map((row) => row?.key || row?.id) as string[])
-        }
-
-        onSelected?.(Array.from(keys) as string[])
-      }}
+      onSelectionChange={onSelectionChange}
       onRowAction={() => {}}
       topContent={topContent}
       bottomContent={bottomContent}
       topContentPlacement='outside'
       bottomContentPlacement='outside'
       isHeaderSticky
+      checkboxesProps={{
+        className: 'max-w-[44px]',
+      }}
       classNames={{
-        wrapper: 'min-h-[557px] max-h-[557px]',
+        wrapper: tableBodyHeight,
+        th: ['first:w-[44px]'],
       }}
     >
-      <TableHeader columns={columns}>
-        {(col) => (
-          <TableColumn {...col} key={col.key as React.Key}>
-            {col.label}
-          </TableColumn>
-        )}
-      </TableHeader>
+      <TableHeader columns={columns}>{(col) => renderColumn(col)}</TableHeader>
 
       <TableBody
         items={rows}
-        emptyContent={<div className='flex items-center justify-center'>No rows to display.</div>}
+        emptyContent={
+          <div className={['flex items-center justify-center', tableBodyEmptyStateHeight].join(' ')}>
+            No rows to display.
+          </div>
+        }
         isLoading={loading}
         loadingContent={
           <div className='flex items-center justify-center w-full h-full z-20 backdrop-blur-sm'>
@@ -177,11 +178,7 @@ export const Table = <T,>(props: TableProps<T>) => {
           </div>
         }
       >
-        {(item) => (
-          <TableRow key={item.key as React.Key}>
-            {(colKey) => <TableCell>{renderCell(item, colKey)}</TableCell>}
-          </TableRow>
-        )}
+        {(item) => <TableRow key={item.key as React.Key}>{(key) => renderCell(key, item)}</TableRow>}
       </TableBody>
     </NextUITable>
   )

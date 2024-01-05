@@ -23,16 +23,25 @@ type SidebarContainerProps = {
 }
 
 const navbarId = 'navbar'
+const footerId = 'footer'
 
 export default function Container({ children }: SidebarContainerProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
 
+  // TODO: Refactor this
   const setupChildContainer = () => {
+    const elNavbarContainer = document.getElementById(`${navbarId}-container`)
+    const navbarContainerHeight = elNavbarContainer?.clientHeight || 0
+    document.getElementsByTagName('html')[0].style.setProperty('--navbar-container-h', `${navbarContainerHeight}px`)
+
     const elNavbar = document.getElementById(navbarId)
     const navbarHeight = elNavbar?.clientHeight || 0
-
     document.getElementsByTagName('html')[0].style.setProperty('--navbar-h', `${navbarHeight}px`)
+
+    const elFooter = document.getElementById(footerId)
+    const footerHeight = elFooter?.clientHeight || 0
+    document.getElementsByTagName('html')[0].style.setProperty('--footer-h', `${footerHeight}px`)
   }
 
   useInitAppSetting()
@@ -64,7 +73,7 @@ export default function Container({ children }: SidebarContainerProps) {
 
           <Content>{children}</Content>
 
-          <Footer />
+          <Footer id={footerId} />
         </ContentContainer>
 
         <DrawerTriggerButton />
