@@ -1,5 +1,4 @@
-import type { ModalType } from './page'
-import type { TableProps } from '@/components/NextUI'
+import type { CrudType, TableProps } from '@/components/NextUI'
 import type { MutationFunctionOptions, OperationVariables } from '@apollo/client'
 import type { todo as Todo } from '@prisma/client'
 
@@ -8,16 +7,15 @@ import React, { useCallback, useState } from 'react'
 import { Icon } from '@/components/Icon'
 import { Table } from '@/components/NextUI'
 
-import { TodoTableColAction } from './TodoTableColAction'
 import { TodoTableColData } from './TodoTableColData'
 
 export type TodoTableProps = {
   refetch: (v?: Partial<OperationVariables>) => Promise<unknown>
-  onOpenModalForm: () => void
+  onOpenForm: () => void
   onOpenModalConfirm: (force?: boolean) => void
   data: Todo[]
-  onSetItem: (item: Todo, modalType: ModalType) => void
-  setModalType: (modalType: ModalType) => void
+  onSetItem: (item: Todo, crudType: CrudType) => void
+  setCrudType: (crudType: CrudType) => void
   updateTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   deleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   forceDeleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
@@ -29,10 +27,8 @@ export type TodoTableProps = {
   | 'limit'
   | 'loading'
   | 'filterSelected'
-  | 'columnSelected'
   | 'onSearch'
   | 'onFilterSelected'
-  | 'onColumnSelected'
   | 'onChangeLimit'
   | 'onChangePage'
 >
@@ -46,14 +42,26 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
   const [selected, setSelected] = useState<string[]>([])
 
   const onQuickAction = useCallback(
-    async (id: string, { done, important }: QuickAction) => {
-      await props.updateTodo({
-        variables: {
-          id,
-          done,
-          important,
-        },
-      })
+    async (item: Todo, key: 'done' | 'important') => {
+      if (key === 'done') {
+        const done = !item.done
+        await props.updateTodo({
+          variables: {
+            id: item.id,
+            done,
+          },
+        })
+      }
+
+      if (key === 'important') {
+        const important = !item.important
+        await props.updateTodo({
+          variables: {
+            id: item.id,
+            important,
+          },
+        })
+      }
 
       await props.refetch()
     },
@@ -61,12 +69,14 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
   )
 
   const onAddNew = useCallback(() => {
-    props.onOpenModalForm()
-    props.setModalType('add')
+    props.onOpenForm()
+    props.setCrudType('add')
   }, [])
 
   return (
     <Table
+      // NOTE: Configs & Common Data
+      selectedMode='multiple'
       columns={[
         {
           key: 'name',
@@ -78,33 +88,24 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
           key: 'detail',
           label: 'Detail',
         },
-        {
-          key: 'action',
-          label: 'Action',
-          align: 'end',
-          width: 120,
-          show: true,
-          render: (item) => (
-            <TodoTableColAction
-              item={item}
-              onQuickAction={onQuickAction}
-              onOpenModalForm={props.onOpenModalForm}
-              onOpenModalConfirm={props.onOpenModalConfirm}
-              onSetItem={props.onSetItem}
-            />
-          ),
-        },
       ]}
-      // NOTE: Configs & Data
-      selectedMode='multiple'
       search={props.search}
       rows={props.data}
       total={props.total}
       page={props.page}
       limit={props.limit}
       loading={props.loading}
+      // NOTE: Table Events
+      onSearch={props.onSearch}
+      onChangeLimit={props.onChangeLimit}
+      onAddNew={onAddNew}
+      onChangePage={props.onChangePage}
+      // NOTE: Column Selected
       selected={selected}
+      onSelected={setSelected}
+      // NOTE: Filter
       filterSelected={props.filterSelected}
+      onFilterSelected={props.onFilterSelected}
       filterItems={[
         {
           key: 'done',
@@ -147,57 +148,25 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
           startContent: <Icon name='FaX' />,
         },
       ]}
-      columnSelected={props.columnSelected}
-      columnItems={[
+      // NOTE: Column Actions
+      showAction
+      onOpenForm={props.onOpenForm}
+      onOpenModalConfirm={props.onOpenModalConfirm}
+      onSetItem={props.onSetItem}
+      // NOTE: Quick Actions
+      onQuickAction={onQuickAction}
+      quickActionItems={[
         {
           key: 'done',
-          label: 'done',
-          color: 'success',
-          className: 'capitalize text-success',
-          startContent: <Icon name='FaCheck' />,
+          children: <Icon name='FaCheck' />,
+          toggleColor: (item) => (item.done ? 'success' : 'default'),
         },
         {
           key: 'important',
-          label: 'important',
-          color: 'warning',
-          className: 'capitalize text-warning',
-          startContent: <Icon name='FaStar' />,
-        },
-        {
-          key: 'deleted',
-          label: 'deleted',
-          color: 'danger',
-          className: 'capitalize text-danger',
-          startContent: <Icon name='FaTrash' />,
-          showDivider: true,
-        },
-        {
-          key: 'undone',
-          label: 'undone',
-          className: 'capitalize',
-          startContent: <Icon name='FaX' />,
-        },
-        {
-          key: 'unimportant',
-          label: 'unimportant',
-          className: 'capitalize',
-          startContent: <Icon name='FaX' />,
-        },
-        {
-          key: 'undeleted',
-          label: 'undeleted',
-          className: 'capitalize',
-          startContent: <Icon name='FaX' />,
+          children: <Icon name='FaStar' />,
+          toggleColor: (item) => (item.important ? 'warning' : 'default'),
         },
       ]}
-      // NOTE: Events
-      onSearch={props.onSearch}
-      onFilterSelected={props.onFilterSelected}
-      onColumnSelected={props.onColumnSelected}
-      onChangeLimit={props.onChangeLimit}
-      onSelected={setSelected}
-      onAddNew={onAddNew}
-      onChangePage={props.onChangePage}
     />
   )
 }

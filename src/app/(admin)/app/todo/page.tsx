@@ -1,6 +1,6 @@
 'use client'
 
-import type { TableLimitList } from '@/components/NextUI'
+import type { CrudType, TableLimitList } from '@/components/NextUI'
 import type { todo as Todo } from '@prisma/client'
 
 import { useEffect, useState } from 'react'
@@ -22,8 +22,6 @@ import { TodoForm } from './TodoForm'
 import { TodoTable } from './TodoTable'
 import { useGqlCrud } from './useGqlCrud'
 
-export type ModalType = 'add' | 'edit' | 'copy' | 'delete' | 'f-delete' | 'clone'
-
 export default function ToDo() {
   const { loading, dataList, refetchList, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
     queryList: queryTodos,
@@ -36,12 +34,11 @@ export default function ToDo() {
   const modalForm = useDisclosure()
   const modalConfirm = useDisclosure()
 
-  const [modalType, setModalType] = useState<ModalType>()
+  const [crudType, setCrudType] = useState<CrudType>()
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState<TableLimitList>(10)
   const [filterSelected, setFilterSelected] = useState<string[]>([])
-  const [columnSelected, setColumnSelected] = useState<string[]>([])
 
   const {
     handleSubmit,
@@ -82,14 +79,14 @@ export default function ToDo() {
     })
   }
 
-  const onSetItem = (item: Todo, _modalType: ModalType) => {
-    setModalType(_modalType)
+  const onSetItem = (item: Todo, _crudType: CrudType) => {
+    setCrudType(_crudType)
 
-    if (_modalType === 'delete' || _modalType === 'f-delete') {
+    if (_crudType === 'delete' || _crudType === 'force-delete') {
       return setValue('id', item.id)
     }
 
-    if (_modalType === 'edit') setValue('id', item.id)
+    if (_crudType === 'edit') setValue('id', item.id)
 
     setValue('name', item.name)
     setValue('detail', item.detail)
@@ -115,7 +112,7 @@ export default function ToDo() {
   const onSubmit = async (variables: Todo) => {
     let action: (opt?: { variables: Todo }) => Promise<unknown> = () => Promise.resolve()
 
-    switch (modalType) {
+    switch (crudType) {
       case 'copy':
       case 'clone':
       case 'add':
@@ -127,7 +124,7 @@ export default function ToDo() {
       case 'delete':
         action = deleteItem
         break
-      case 'f-delete':
+      case 'force-delete':
         action = forceDeleteItem
         break
     }
@@ -147,7 +144,7 @@ export default function ToDo() {
       <Modal isOpen={modalForm.isOpen} placement='center' onOpenChange={modalForm.onOpenChange} onClose={onCloseForm}>
         <ModalContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>{toCapitalCase(`${modalType}`)}</ModalHeader>
+            <ModalHeader>{toCapitalCase(`${crudType}`)}</ModalHeader>
 
             <ModalBody>
               <TodoForm errors={errors} control={control} />
@@ -169,9 +166,9 @@ export default function ToDo() {
         {...modalConfirm}
         onSubmit={handleSubmit(onSubmit)}
         onClose={onCloseConfirm}
-        title={`Confirm ${`${modalType === 'f-delete' ? 'delete' : modalType}`} Item`}
+        title={`Confirm ${`${crudType === 'force-delete' ? 'delete' : crudType}`} Item`}
         msg={`Are you sure you want to ${toCapitalCase(
-          `${modalType === 'f-delete' ? 'delete' : modalType}`,
+          `${crudType === 'force-delete' ? 'delete' : crudType}`,
         )} this item?`}
       />
 
@@ -184,17 +181,15 @@ export default function ToDo() {
         limit={limit}
         loading={loading}
         refetch={refetchList}
-        onOpenModalForm={modalForm.onOpen}
+        onOpenForm={modalForm.onOpen}
         onOpenModalConfirm={modalConfirm.onOpen}
         onSetItem={onSetItem}
-        setModalType={setModalType}
+        setCrudType={setCrudType}
         updateTodo={updateItem}
         deleteTodo={deleteItem}
         forceDeleteTodo={forceDeleteItem}
         filterSelected={filterSelected}
         onFilterSelected={setFilterSelected}
-        columnSelected={columnSelected}
-        onColumnSelected={setColumnSelected}
         onChangePage={setPage}
         onChangeLimit={setLimit}
       />
