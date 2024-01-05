@@ -141,12 +141,13 @@ builder.mutationField('createTodo', (t) =>
       duedate: t.arg.string(),
     },
     resolve: async (query, _parent, _args, ctx) => {
-      const { name, done, important, tags, duedate } = _args
+      const { name, detail, done, important, tags, duedate } = _args
 
       return prisma.todo.create({
         ...query,
         data: {
           name,
+          detail,
           done: !!done,
           important: !!important,
           tags: tags?.map((tag) => tag.toLowerCase()) ?? [],

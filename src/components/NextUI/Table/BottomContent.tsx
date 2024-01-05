@@ -13,6 +13,7 @@ type BottomContentProps<T> = Pick<
   | 'limit'
   | 'selected'
   | 'onChangePage'
+  | 'onSelected'
   | 'showTotalSelected'
   | 'showPagination'
   | 'showNavigation'
@@ -29,23 +30,29 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
     limit = 10,
     selected = [],
     onChangePage,
+    onSelected,
   } = props
 
   const [pages, setPages] = useState(1)
 
   const disabledNavigate = pages === 1 || !limit
 
+  const handleOnChangePage = useCallback((_page: number) => {
+    onChangePage?.(_page)
+    onSelected?.([])
+  }, [])
+
   const onNext = useCallback(() => {
     if (page < pages) {
       const _page = page + 1
-      onChangePage?.(_page)
+      handleOnChangePage(_page)
     }
   }, [page, pages])
 
   const onPrev = useCallback(() => {
     if (page > 1) {
       const _page = page - 1
-      onChangePage?.(_page)
+      handleOnChangePage(_page)
     }
   }, [page])
 
@@ -56,7 +63,7 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
       )}
 
       {showPagination && !!limit && (
-        <Pagination page={page} total={total} limit={limit} setPages={setPages} onChangePage={onChangePage} />
+        <Pagination page={page} total={total} limit={limit} setPages={setPages} onChangePage={handleOnChangePage} />
       )}
 
       {showNavigation && (

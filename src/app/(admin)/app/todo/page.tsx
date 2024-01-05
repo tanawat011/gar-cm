@@ -5,7 +5,6 @@ import type { todo as Todo } from '@prisma/client'
 
 import { useEffect, useState } from 'react'
 
-import { useMutation, useQuery } from '@apollo/client'
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 
@@ -21,15 +20,18 @@ import { toCapitalCase } from '@/utils'
 
 import { TodoForm } from './TodoForm'
 import { TodoTable } from './TodoTable'
+import { useGqlCrud } from './useGqlCrud'
 
 export type ModalType = 'add' | 'edit' | 'copy' | 'delete' | 'f-delete' | 'clone'
 
 export default function ToDo() {
-  const { data, refetch, loading } = useQuery<{ todos: { data: Todo[]; count: number } }>(queryTodos)
-  const [createTodo] = useMutation(mutationCreateTodo)
-  const [updateTodo] = useMutation(mutationUpdateTodo)
-  const [deleteTodo] = useMutation(mutationDeleteTodo)
-  const [forceDeleteTodo] = useMutation(mutationForceDeleteTodo)
+  const { loading, dataList, refetchList, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
+    queryList: queryTodos,
+    mutationCreate: mutationCreateTodo,
+    mutationUpdate: mutationUpdateTodo,
+    mutationDelete: mutationDeleteTodo,
+    mutationForceDelete: mutationForceDeleteTodo,
+  })
 
   const modalForm = useDisclosure()
   const modalConfirm = useDisclosure()
@@ -39,6 +41,7 @@ export default function ToDo() {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState<TableLimitList>(10)
   const [filterSelected, setFilterSelected] = useState<string[]>([])
+  const [columnSelected, setColumnSelected] = useState<string[]>([])
 
   const {
     handleSubmit,
@@ -66,7 +69,7 @@ export default function ToDo() {
   }, [page, limit])
 
   const onRefetch = async (_page?: number) => {
-    await refetch({
+    await refetchList({
       search,
       page: _page || page,
       limit,
@@ -114,20 +117,18 @@ export default function ToDo() {
 
     switch (modalType) {
       case 'copy':
+      case 'clone':
       case 'add':
-        action = createTodo
+        action = createItem
         break
       case 'edit':
-        action = updateTodo
+        action = updateItem
         break
       case 'delete':
-        action = deleteTodo
+        action = deleteItem
         break
       case 'f-delete':
-        action = forceDeleteTodo
-        break
-      case 'clone':
-        action = createTodo
+        action = forceDeleteItem
         break
     }
 
@@ -175,23 +176,25 @@ export default function ToDo() {
       />
 
       <TodoTable
-        data={data?.todos.data || []}
+        data={dataList?.todos.data || []}
         search={search}
         onSearch={setSearch}
-        total={data?.todos.count || 0}
+        total={dataList?.todos.count || 0}
         page={page}
         limit={limit}
         loading={loading}
-        refetch={refetch}
+        refetch={refetchList}
         onOpenModalForm={modalForm.onOpen}
         onOpenModalConfirm={modalConfirm.onOpen}
         onSetItem={onSetItem}
         setModalType={setModalType}
-        updateTodo={updateTodo}
-        deleteTodo={deleteTodo}
-        forceDeleteTodo={forceDeleteTodo}
+        updateTodo={updateItem}
+        deleteTodo={deleteItem}
+        forceDeleteTodo={forceDeleteItem}
         filterSelected={filterSelected}
         onFilterSelected={setFilterSelected}
+        columnSelected={columnSelected}
+        onColumnSelected={setColumnSelected}
         onChangePage={setPage}
         onChangeLimit={setLimit}
       />

@@ -32,13 +32,15 @@ builder.queryType({
     ok: t.boolean({
       resolve: () => true,
     }),
-    // Add query for a simple scalar type
-    hello: t.string({
-      resolve: () => 'hello, world!',
-    }),
   }),
 })
 
-builder.mutationType({})
+builder.mutationType({
+  fields: (t) => ({
+    ok: t.boolean({
+      resolve: () => true,
+    }),
+  }),
+})
 
 builder.addScalarType('Date', DateTimeResolver, {})
