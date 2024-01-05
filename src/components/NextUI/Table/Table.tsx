@@ -1,6 +1,6 @@
 import type { TableColumnProps } from './TableColumn'
 import type { DropdownInputProps } from '../Input'
-import type { Selection } from '@nextui-org/react'
+import type { ButtonProps, Selection } from '@nextui-org/react'
 import type { SelectionMode } from '@nextui-org/table'
 
 import React, { useCallback, useMemo } from 'react'
@@ -10,6 +10,7 @@ import { Table as NextUITable, TableHeader, TableBody, TableRow } from '@nextui-
 import { LoadingSpinner } from '../Loading'
 
 import { BottomContent } from './BottomContent'
+import { ColumnAction } from './ColumnAction'
 import { TableCell } from './TableCell'
 import { TableColumn } from './TableColumn'
 import { TopContent } from './TopContent'
@@ -17,7 +18,9 @@ import { useColumns } from './useColumns'
 
 export type TableLimitList = number | undefined
 
-export type TableProps<T> = {
+export type CrudType = 'add' | 'edit' | 'copy' | 'delete' | 'force-delete' | 'clone'
+
+export type TableProps<T, U = never> = {
   // NOTE: Table configs
   columns: TableColumnProps<T>[]
   rows: ({ key?: string; id?: string } & T)[]
@@ -31,20 +34,25 @@ export type TableProps<T> = {
   search?: string
   selected?: string[]
   filterSelected?: string[]
-  columnSelected?: string[]
+  quickActionItems?: ({
+    key: U
+    toggleColor?: (item: T) => ButtonProps['color']
+  } & ButtonProps)[]
 
   // NOTE: Table Events
   onSearch?: (value: string) => void
   onSelected?: (selected: string[]) => void
   onChangePage?: (page: number) => void
   onFilterSelected?: (selected: string[]) => void
-  onColumnSelected?: (selected: string[]) => void
   onAddNew?: () => void
   onChangeLimit?: (limit: TableLimitList) => void
+  onOpenForm?: () => void
+  onOpenModalConfirm?: () => void
+  onSetItem?: (item: T, crudType: CrudType) => void
+  onQuickAction?: (item: T, type: U) => void
 
   // NOTE: All items
   filterItems?: DropdownInputProps['items']
-  columnItems?: DropdownInputProps['items']
   pageLimitItems?: DropdownInputProps['items']
 
   // NOTE: Show/Hide TOP and BOTTOM content
@@ -54,12 +62,13 @@ export type TableProps<T> = {
   showAddButton?: boolean
   showTotal?: boolean
   showPageLimit?: boolean
+  showAction?: boolean
   showTotalSelected?: boolean
   showPagination?: boolean
   showNavigation?: boolean
 }
 
-export const Table = <T,>(props: TableProps<T>) => {
+export const Table = <T, U>(props: TableProps<T, U>) => {
   const tableBodyHeight =
     'max-h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*3)-52px-(40px*2))]'
   const tableBodyEmptyStateHeight =
@@ -77,7 +86,34 @@ export const Table = <T,>(props: TableProps<T>) => {
     filterSelected,
   } = props
 
-  const { columns, columnItems, columnSelected, setColumnSelected } = useColumns(props.columns)
+  const baseColumns = useMemo(
+    () => [
+      ...props.columns,
+      ...(props.showAction
+        ? ([
+            {
+              key: 'action',
+              label: 'Action',
+              align: 'end',
+              width: 120,
+              show: true,
+              render: (item) => (
+                <ColumnAction
+                  item={item}
+                  quickActionItems={props.quickActionItems}
+                  onQuickAction={props.onQuickAction}
+                  onOpenForm={props.onOpenForm}
+                  onOpenModalConfirm={props.onOpenModalConfirm}
+                  onSetItem={props.onSetItem}
+                />
+              ),
+            },
+          ] as TableColumnProps<T>[])
+        : []),
+    ],
+    [props.columns],
+  )
+  const { columns, columnItems, columnSelected, setColumnSelected } = useColumns(baseColumns)
 
   const renderColumn = useCallback((column: TableColumnProps<T>) => {
     return TableColumn(column)
