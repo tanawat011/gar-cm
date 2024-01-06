@@ -1,0 +1,19 @@
+{
+  "releaseCommitMessageFormat": "chore(release): :rocket: {{currentTag}}",
+  "types": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "docs", "section": "Documentation" },
+    { "type": "style", "section": "Other" },
+    { "type": "refactor", "section": "Other" },
+    { "type": "perf", "section": "Other" },
+    { "type": "test", "hidden": true },
+    { "type": "build", "hidden": true },
+    { "type": "ci", "hidden": true },
+    { "type": "chore", "section": "Chore" },
+    { "type": "revert", "hidden": true },
+    { "type": "release", "hidden": true }
+  ],
+  "commitUrlFormat": "https://github.com/tanawat011/gu-ask-real-2nd/commits/{{hash}}",
+  "compareUrlFormat": "https://github.com/tanawat011/gu-ask-real-2nd/compare/{{previousTag}}...{{currentTag}}"
+}
