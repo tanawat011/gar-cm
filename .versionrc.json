@@ -14,6 +14,6 @@
     { "type": "revert", "hidden": true },
     { "type": "release", "hidden": true }
   ],
-  "commitUrlFormat": "https://github.com/tanawat011/gu-ask-real-2nd/commits/{{hash}}",
-  "compareUrlFormat": "https://github.com/tanawat011/gu-ask-real-2nd/compare/{{previousTag}}...{{currentTag}}"
+  "commitUrlFormat": "https://github.com/tanawat011/gar-cm/commits/{{hash}}",
+  "compareUrlFormat": "https://github.com/tanawat011/gar-cm/compare/{{previousTag}}...{{currentTag}}"
 }
