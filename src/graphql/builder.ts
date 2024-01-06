@@ -2,7 +2,6 @@ import type { Context } from './context'
 import type PrismaTypes from '@pothos/plugin-prisma/generated'
 
 import SchemaBuilder from '@pothos/core'
-import AddGraphQLPlugin from '@pothos/plugin-add-graphql'
 import PrismaPlugin from '@pothos/plugin-prisma'
 import RelayPlugin from '@pothos/plugin-relay'
 import { DateTimeResolver } from 'graphql-scalars'
@@ -19,7 +18,7 @@ export const builder = new SchemaBuilder<{
     }
   }
 }>({
-  plugins: [PrismaPlugin, RelayPlugin, AddGraphQLPlugin],
+  plugins: [PrismaPlugin, RelayPlugin],
   relayOptions: {},
   prisma: {
     client: prisma,
