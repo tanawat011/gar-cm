@@ -2,7 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.5](https://github.com/tanawat011/gar-cm/compare/v0.5.4...v0.5.5) (2024-01-06)
+
+
+### Chore
+
+* :hammer: chore ([726181a](https://github.com/tanawat011/gar-cm/commit/726181a8c6de2c9723a68b835fb8c44da3efbcfd))
+
 ## [0.5.4](https://github.com/tanawat011/gar-cm/compare/v0.5.3...v0.5.4) (2024-01-06)
+
+
+### Chore
+
+* **release:** :rocket: 0.5.4 ([57bbf10](https://github.com/tanawat011/gar-cm/commit/57bbf108726faad03beb0aefdca822897e9d91f9))
 
 ## [0.5.3](https://github.com/tanawat011/gar-cm/compare/4c50590ffc04cdae876eb50fed9ced17da499e6f...v0.5.3) (2024-01-06)
 
