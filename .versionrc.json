@@ -8,11 +8,11 @@
     { "type": "style", "section": "Other" },
     { "type": "refactor", "section": "Other" },
     { "type": "perf", "section": "Other" },
-    { "type": "test", "hidden": true },
+    { "type": "test", "section": "Other" },
     { "type": "build", "hidden": true },
-    { "type": "ci", "hidden": true },
+    { "type": "ci", "section": "Other" },
     { "type": "chore", "section": "Chore" },
-    { "type": "revert", "hidden": true },
-    { "type": "release", "hidden": true }
+    { "type": "revert", "section": "Other" },
+    { "type": "release", "section": "Other" }
   ]
 }
