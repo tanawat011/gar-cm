@@ -1,4 +1,5 @@
 {
+  "releaseCount": 0,
   "releaseCommitMessageFormat": "chore(release): :rocket: {{currentTag}}",
   "types": [
     { "type": "feat", "section": "Features" },
@@ -13,7 +14,5 @@
     { "type": "chore", "section": "Chore" },
     { "type": "revert", "hidden": true },
     { "type": "release", "hidden": true }
-  ],
-  "commitUrlFormat": "https://github.com/tanawat011/gar-cm/commits/{{hash}}",
-  "compareUrlFormat": "https://github.com/tanawat011/gar-cm/compare/{{previousTag}}...{{currentTag}}"
+  ]
 }

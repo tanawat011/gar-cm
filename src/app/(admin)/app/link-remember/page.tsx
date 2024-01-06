@@ -22,6 +22,7 @@ export default function LinkRemember() {
       <NextLink label='Color Palette Generator' href='https://materialpalettes.com/' />
       <NextLink label='DaisyUI' href='https://daisyui.com/components/button/' />
       <NextLink label='Sample UI from NextUI' href='https://nextui-dashboard-template.vercel.app/' />
+      <NextLink label='Configuration for .versionrc.json' href='https://convco.github.io/configuration/' />
     </div>
   )
 }
