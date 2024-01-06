@@ -1,7 +1,7 @@
 {
   "name": "gar-cm",
   "description": "Gu Ask Real - Coding Man",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "i:all": "pnpm i --shamefully-hoist=true",
@@ -26,7 +26,11 @@
     "db:gen": "dotenv -e .env.local -- prisma generate",
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:pull": "dotenv -e .env.local -- prisma db pull",
-    "db:seed": "dotenv -e .env.local -- prisma db seed"
+    "db:seed": "dotenv -e .env.local -- prisma db seed",
+    "release": "commit-and-tag-version",
+    "release:major": "commit-and-tag-version --release-as major",
+    "release:minor": "commit-and-tag-version --release-as minor",
+    "release:patch": "commit-and-tag-version --release-as patch"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
