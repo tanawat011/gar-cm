@@ -27,6 +27,7 @@
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:pull": "dotenv -e .env.local -- prisma db pull",
     "db:seed": "dotenv -e .env.local -- prisma db seed",
+    "commit": "git add . && git cz",
     "release": "commit-and-tag-version",
     "release:major": "commit-and-tag-version --release-as major",
     "release:minor": "commit-and-tag-version --release-as minor",
