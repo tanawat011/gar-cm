@@ -81,6 +81,7 @@
     "babel-plugin-styled-components": "^2.1.4",
     "clsx": "^2.0.0",
     "cssnano": "^6.0.1",
+    "cz-git": "^1.8.0",
     "dotenv-cli": "^7.3.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
@@ -117,5 +118,11 @@
     "firefox 67",
     "opera 51",
     "safari 12"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git",
+      "czConfig": "./cz.config.js"
+    }
+  }
 }
