@@ -4,6 +4,7 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
+    "i:all": "pnpm i --shamefully-hoist=true",
     "dev": "pnpm husky && pnpm db:gen && next dev",
     "build": "next build",
     "build:prd": "prisma generate && pnpm build",
