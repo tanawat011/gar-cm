@@ -2,12 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.6](https://github.com/tanawat011/gar-cm/compare/v0.5.5...v0.5.6) (2024-01-08)
+
+
+### Other
+
+* **components:** :recycle: modalForm, Table and todo page ([52fee99](https://github.com/tanawat011/gar-cm/commit/52fee99d28637c631f2844f2532417367b016e4b))
+
+
+### Chore
+
+* :hammer: chore ([f1b68b9](https://github.com/tanawat011/gar-cm/commit/f1b68b9c1a1e6363356ef44ef943f679e48d4ff2))
+* bootstrap releases for path: . ([b3857ac](https://github.com/tanawat011/gar-cm/commit/b3857acdd8b958ed0f23bc37684c9a4a78e9cde2))
+
 ## [0.5.5](https://github.com/tanawat011/gar-cm/compare/v0.5.4...v0.5.5) (2024-01-06)
 
 
 ### Chore
 
 * :hammer: chore ([726181a](https://github.com/tanawat011/gar-cm/commit/726181a8c6de2c9723a68b835fb8c44da3efbcfd))
+* **release:** :rocket: 0.5.5 ([d230247](https://github.com/tanawat011/gar-cm/commit/d230247b5da4d339a65852afdce415016ea3898e))
 
 ## [0.5.4](https://github.com/tanawat011/gar-cm/compare/v0.5.3...v0.5.4) (2024-01-06)
 
