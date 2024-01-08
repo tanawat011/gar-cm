@@ -1,4 +1,6 @@
-import type { CommonOption, Lang } from '@/types'
+import type { CommonOption } from '@/types'
+
+export type Lang = (typeof LANG)[keyof typeof LANG]
 
 export const LANG = {
   EN: 'en',

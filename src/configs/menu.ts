@@ -49,6 +49,11 @@ export const menu: MenuProps[] = [
         id: 'common',
         items: [
           {
+            label: 'Grid',
+            icon: 'FaShop',
+            id: 'grid',
+          },
+          {
             label: 'Typography',
             icon: 'FaShop',
             id: 'typography',

@@ -1,5 +1,6 @@
 export * from './Backdrop'
 export * from './Divider'
 export * from './Drawer'
+export * from './Grid'
 export * from './Menu'
 export * from './Tabs'
