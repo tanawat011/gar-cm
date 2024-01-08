@@ -7,12 +7,12 @@ import { Icon } from '@/components/Icon'
 import { SwitchInput, TextInput, TextareaInput } from '@/components/NextUI'
 import { DatePickerInput } from '@/components/NextUI/Input/DatePickerInput'
 
-type TodoFormProps = {
+type FormConfigProps = {
   errors?: FieldErrors<Todo>
   control: Control<Todo>
 }
 
-export const TodoForm: React.FC<TodoFormProps> = ({ control }) => {
+export const FormConfig: React.FC<FormConfigProps> = ({ control }) => {
   return (
     <div className='flex flex-col gap-4'>
       <TextInput name='name' control={control} label='Todo name' />

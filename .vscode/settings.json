@@ -32,7 +32,9 @@
     "Datepicker",
     "duedate",
     "Outdent",
+    "pothos",
     "sidenav",
+    "versionrc",
     "webp"
   ],
   "scss.lint.unknownAtRules": "ignore",

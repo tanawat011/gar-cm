@@ -50,6 +50,7 @@ type TopContentProps<T> = Pick<
   | 'pageLimitItems'
 
   // NOTE: Selected Action
+  | 'onSelected'
   | 'selected'
 >
 
@@ -133,45 +134,49 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
           )}
 
           {props.showAddButton && (
-            <Button label='Add New' color='primary' icon='FaPlus' placement='right' onClick={props.onAdd} />
+            <Button color='primary' isIconOnly icon='FaPlus' placement='right' onClick={props.onAdd} />
           )}
         </div>
       </div>
 
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-3'>
-          {props.showTotal && <span className='text-default-400 text-small pl-2'>Total {props.total}</span>}
-
-          {!!props.selected?.length && (
-            <>
-              {props.showDeleteSelectedButton && (
-                <Button
-                  label='Delete'
-                  color='danger'
-                  icon='FaTrash'
-                  placement='right'
-                  onClick={props.onDeleteSelected}
-                />
-              )}
-
-              {props.showForceDeleteSelectedButton && (
-                <Button
-                  label='Force Delete'
-                  color='danger'
-                  icon='FaTrash'
-                  placement='right'
-                  onClick={props.onForceDeleteSelected}
-                />
-              )}
-            </>
+          {props.showTotal && (
+            <span className='text-default-400 text-small pl-2 select-none'>Total {props.total} rows</span>
           )}
+
+          {/* {!!props.selected?.length && (
+            <> */}
+          {props.showDeleteSelectedButton && (
+            <Button
+              isIconOnly
+              color={!props.selected?.length ? 'default' : 'danger'}
+              variant='flat'
+              icon='FaTrashCan'
+              placement='right'
+              onClick={props.onDeleteSelected}
+              isDisabled={!props.selected?.length}
+            />
+          )}
+
+          {props.showForceDeleteSelectedButton && (
+            <Button
+              label='Force Delete'
+              color={!props.selected?.length ? 'default' : 'danger'}
+              variant='flat'
+              onClick={props.onForceDeleteSelected}
+              isDisabled={!props.selected?.length}
+            />
+          )}
+          {/* </>
+          )} */}
         </div>
 
         <div className='h-[40px' />
 
         {props.showPageLimit && (
           <div>
-            <span className='text-default-400 text-small'>Rows per page: </span>
+            <span className='text-default-400 text-small select-none'>Rows per page: </span>
 
             <DropdownInput
               uncontrolled
@@ -181,6 +186,7 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
               onSelectionChange={(keys) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onSetPerPage(Number((keys as any).values().next().value) as TableLimitList)
+                props.onSelected?.([])
               }}
               items={pageLimitItems}
               label={`${perPage || 'ALL'}`}

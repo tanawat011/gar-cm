@@ -5,10 +5,10 @@ import type { todo as Todo } from '@prisma/client'
 
 import { useEffect, useState } from 'react'
 
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 
-import { ModalConfirm } from '@/components/NextUI'
+import { ModalConfirm, ModalForm } from '@/components/NextUI'
 import {
   mutationCreateTodo,
   mutationDeleteTodo,
@@ -16,11 +16,11 @@ import {
   mutationUpdateTodo,
   queryTodos,
 } from '@/graphql/client/todo'
+import { useGqlCrud } from '@/hooks/useGqlCrud'
 import { toCapitalCase } from '@/utils'
 
-import { TodoForm } from './TodoForm'
-import { TodoTable } from './TodoTable'
-import { useGqlCrud } from './useGqlCrud'
+import { FormConfig } from './FormConfig'
+import { TableConfig } from './TableConfig'
 
 export default function ToDo() {
   const { loading, dataList, refetchList, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
@@ -141,26 +141,13 @@ export default function ToDo() {
 
   return (
     <>
-      <Modal isOpen={modalForm.isOpen} placement='center' onOpenChange={modalForm.onOpenChange} onClose={onCloseForm}>
-        <ModalContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>{toCapitalCase(`${crudType}`)}</ModalHeader>
-
-            <ModalBody>
-              <TodoForm errors={errors} control={control} />
-            </ModalBody>
-
-            <ModalFooter>
-              <Button color='danger' variant='light' onPress={onCloseForm}>
-                Close
-              </Button>
-              <Button color='primary' type='submit'>
-                Submit
-              </Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+      <ModalForm
+        {...modalForm}
+        onSubmit={handleSubmit(onSubmit)}
+        onClose={onCloseForm}
+        title={toCapitalCase(`${crudType}`)}
+        renderForm={() => <FormConfig errors={errors} control={control} />}
+      />
 
       <ModalConfirm
         {...modalConfirm}
@@ -172,7 +159,7 @@ export default function ToDo() {
         )} this item?`}
       />
 
-      <TodoTable
+      <TableConfig
         data={dataList?.todos.data || []}
         search={search}
         onSearch={setSearch}

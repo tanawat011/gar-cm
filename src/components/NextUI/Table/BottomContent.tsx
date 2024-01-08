@@ -17,6 +17,7 @@ type BottomContentProps<T> = Pick<
   | 'showTotalSelected'
   | 'showPagination'
   | 'showNavigation'
+  | 'loading'
 >
 
 export const BottomContent = <T,>(props: BottomContentProps<T>) => {
@@ -31,6 +32,7 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
     selected = [],
     onChangePage,
     onSelected,
+    loading,
   } = props
 
   const [pages, setPages] = useState(1)
@@ -59,17 +61,38 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
   return (
     <div className='py-2 px-2 flex justify-between items-center flex-col md:flex-row'>
       {showTotalSelected && (
-        <span className='w-[30%] text-small text-default-400 h-[36px] whitespace-nowrap'>{`${selected.length} of ${rows.length} selected`}</span>
+        <span className='w-[30%] text-small text-default-400 h-[36px] whitespace-nowrap select-none'>{`${selected.length} of ${rows.length} selected`}</span>
       )}
 
       {showPagination && !!limit && (
-        <Pagination page={page} total={total} limit={limit} setPages={setPages} onChangePage={handleOnChangePage} />
+        <Pagination
+          page={page}
+          total={total}
+          limit={limit}
+          setPages={setPages}
+          onChangePage={handleOnChangePage}
+          isDisabled={loading}
+        />
       )}
 
       {showNavigation && (
         <div className='hidden sm:flex w-[30%] justify-end gap-2 mt-1'>
-          <Button isDisabled={disabledNavigate} size='sm' variant='flat' onPress={onPrev} icon='FaChevronLeft' />
-          <Button isDisabled={disabledNavigate} size='sm' variant='flat' onPress={onNext} icon='FaChevronRight' />
+          <Button
+            isDisabled={disabledNavigate}
+            size='sm'
+            variant='flat'
+            onPress={onPrev}
+            icon='FaChevronLeft'
+            isLoading={loading}
+          />
+          <Button
+            isDisabled={disabledNavigate}
+            size='sm'
+            variant='flat'
+            onPress={onNext}
+            icon='FaChevronRight'
+            isLoading={loading}
+          />
         </div>
       )}
     </div>

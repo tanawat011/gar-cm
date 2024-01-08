@@ -4,11 +4,11 @@ import React from 'react'
 
 import { Chip } from '@nextui-org/react'
 
-type TodoTableColDataProps = {
+type ColumnNameProps = {
   item: Todo
 }
 
-export const TodoTableColData: React.FC<TodoTableColDataProps> = ({ item }) => {
+export const ColumnName: React.FC<ColumnNameProps> = ({ item }) => {
   return (
     <div className='flex flex-col gap-1'>
       <p className={item.done ? 'line-through text-slate-500' : ''}>{item.name}</p>

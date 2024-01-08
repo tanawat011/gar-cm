@@ -207,6 +207,7 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
         showPageLimit={props.showPageLimit}
         pageLimitItems={props.pageLimitItems}
         // NOTE: Selected Action
+        onSelected={props.onSelected}
         selected={selected}
       />
     )
@@ -227,9 +228,10 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
         showTotalSelected={props.showTotalSelected}
         showPagination={props.showPagination}
         showNavigation={props.showNavigation}
+        loading={loading}
       />
     )
-  }, [selected, rows.length, total, page, limit])
+  }, [selected, rows.length, total, page, limit, loading])
 
   const onSelectionChange = useCallback(
     (keys: Selection) => {

@@ -7,9 +7,9 @@ import React, { useCallback, useState } from 'react'
 import { Icon } from '@/components/Icon'
 import { Table } from '@/components/NextUI'
 
-import { TodoTableColData } from './TodoTableColData'
+import { ColumnName } from './CustomColumn'
 
-export type TodoTableProps = {
+export type TableConfigProps = {
   refetch: (v?: Partial<OperationVariables>) => Promise<unknown>
   onOpenForm: () => void
   onOpenModalConfirm: (force?: boolean) => void
@@ -40,7 +40,7 @@ export type QuickAction = {
 
 type QuickActionKey = 'done' | 'important'
 
-export const TodoTable: React.FC<TodoTableProps> = (props) => {
+export const TableConfig: React.FC<TableConfigProps> = (props) => {
   const [selected, setSelected] = useState<string[]>([])
 
   const columns: TableColumnProps<Todo>[] = [
@@ -48,7 +48,7 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
       key: 'name',
       label: 'Name',
       show: true,
-      render: (item) => <TodoTableColData item={item} />,
+      render: (item) => <ColumnName item={item} />,
     },
     {
       key: 'detail',
@@ -76,7 +76,7 @@ export const TodoTable: React.FC<TodoTableProps> = (props) => {
       label: 'deleted',
       color: 'danger',
       className: 'capitalize text-danger',
-      startContent: <Icon name='FaTrash' />,
+      startContent: <Icon name='FaTrashCan' />,
       showDivider: true,
     },
     {

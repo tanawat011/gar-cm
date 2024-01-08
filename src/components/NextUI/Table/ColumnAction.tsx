@@ -47,7 +47,7 @@ export const ColumnAction = <T, U>({
       },
       {
         key: 'delete',
-        startContent: <Icon name='FaTrash' />,
+        startContent: <Icon name='FaTrashCan' />,
         color: 'danger',
         className: 'text-danger',
         children: 'Delete',
@@ -55,7 +55,7 @@ export const ColumnAction = <T, U>({
       },
       {
         key: 'force-delete',
-        startContent: <Icon name='FaTrash' />,
+        startContent: <Icon name='FaTrashCan' />,
         color: 'danger',
         className: 'text-danger',
         children: 'Force Delete',
