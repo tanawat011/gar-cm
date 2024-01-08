@@ -1,7 +1,7 @@
 {
   "name": "gar-cm",
   "description": "Gu Ask Real - Coding Man",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "private": true,
   "scripts": {
     "i:all": "pnpm i --shamefully-hoist=true",
