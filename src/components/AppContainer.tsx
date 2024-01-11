@@ -8,7 +8,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { Provider as ReduxProvider } from 'react-redux'
 
 import '@/assets/css/global.css'
-import { THEME } from '@/constants'
+import { TW_THEME } from '@/libs/twClassName'
 import { store } from '@/store'
 
 const client = new ApolloClient({
@@ -26,7 +26,7 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <ReduxProvider store={store}>
       <NextUIProvider>
-        <NextThemesProvider attribute='class' defaultTheme={THEME.DARK}>
+        <NextThemesProvider attribute='class' defaultTheme={TW_THEME.DARK}>
           <ApolloProvider client={client}>
             <UserProvider>{children}</UserProvider>
           </ApolloProvider>

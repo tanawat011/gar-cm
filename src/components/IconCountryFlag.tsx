@@ -1,4 +1,4 @@
-import type { Lang } from '@/types'
+import type { Lang } from '@/constants'
 
 import React from 'react'
 

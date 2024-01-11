@@ -1,4 +1,6 @@
-import type { DrawerPosition, Lang, NavbarStyle, NavbarType, SidebarStyle, SidebarType, Theme } from '@/types'
+import type { Lang } from '@/constants'
+import type { TwTheme } from '@/libs/twClassName'
+import type { DrawerPosition, NavbarStyle, NavbarType, SidebarStyle, SidebarType } from '@/types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -6,7 +8,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { DEFAULT_APP_SETTING } from '@/configs'
 
 export type AppSettingState = {
-  theme: Theme
+  theme: TwTheme
   lang: Lang
   sidebarType: SidebarType
   sidebarStyle: SidebarStyle
