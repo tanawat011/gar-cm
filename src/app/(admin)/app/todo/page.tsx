@@ -17,7 +17,7 @@ import {
   queryTodos,
 } from '@/graphql/client/todo'
 import { useGqlCrud } from '@/hooks/useGqlCrud'
-import { toCapital } from '@/utils'
+import { toCapital } from '@/libs/utilities'
 
 import { FormConfig } from './FormConfig'
 import { TableConfig } from './TableConfig'
