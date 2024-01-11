@@ -53,7 +53,19 @@
     "return\\ '([^']*)'", // return '...'
     ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"], // clsx(...)
     "[a-zA-Z]*ClassName='([^']*)'", // customClassName='...'
-    "className[:]* '([^']*)'" // className: '...'
+    "className[:]* '([^']*)'", // className: '...'
+    "start[:]* '([^']*)'", // start: '...'
+    "end[:]* '([^']*)'", // end: '...'
+    "center[:]* '([^']*)'", // center: '...'
+    "between[:]* '([^']*)'", // between: '...'
+    "around[:]* '([^']*)'", // around: '...'
+    "evenly[:]* '([^']*)'", // evenly: '...'
+    "stretch[:]* '([^']*)'", // stretch: '...'
+    "baseline[:]* '([^']*)'", // baseline: '...'
+    "auto[:]* '([^']*)'", // auto: '...'
+    "[0-9][:]* '([^']*)'", // auto: '...'
+    "full[:]* '([^']*)'", // full: '...'
+    "fit[:]* '([^']*)'" // fit: '...'
   ],
   "better-comments.tags": [
     {

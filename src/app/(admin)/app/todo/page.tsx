@@ -17,7 +17,7 @@ import {
   queryTodos,
 } from '@/graphql/client/todo'
 import { useGqlCrud } from '@/hooks/useGqlCrud'
-import { toCapitalCase } from '@/utils'
+import { toCapital } from '@/utils'
 
 import { FormConfig } from './FormConfig'
 import { TableConfig } from './TableConfig'
@@ -145,7 +145,7 @@ export default function ToDo() {
         {...modalForm}
         onSubmit={handleSubmit(onSubmit)}
         onClose={onCloseForm}
-        title={toCapitalCase(`${crudType}`)}
+        title={toCapital(`${crudType}`)}
         renderForm={() => <FormConfig errors={errors} control={control} />}
       />
 
@@ -154,9 +154,7 @@ export default function ToDo() {
         onSubmit={handleSubmit(onSubmit)}
         onClose={onCloseConfirm}
         title={`Confirm ${`${crudType === 'force-delete' ? 'delete' : crudType}`} Item`}
-        msg={`Are you sure you want to ${toCapitalCase(
-          `${crudType === 'force-delete' ? 'delete' : crudType}`,
-        )} this item?`}
+        msg={`Are you sure you want to ${toCapital(`${crudType === 'force-delete' ? 'delete' : crudType}`)} this item?`}
       />
 
       <TableConfig
