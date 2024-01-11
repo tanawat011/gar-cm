@@ -1,7 +1,7 @@
 import { isMobile } from 'react-device-detect'
 
 import { DRAWER_POSITION, LANG, NAVBAR_TYPE, SIDEBAR_TYPE, SIDEBAR_STYLE, NAVBAR_STYLE } from '@/constants'
-import { TW_THEME } from '@/libs/twClassName'
+import { TW_THEME } from '@/libs/pureTailwind'
 
 export const DEFAULT_APP_SETTING = {
   theme: TW_THEME.DARK,

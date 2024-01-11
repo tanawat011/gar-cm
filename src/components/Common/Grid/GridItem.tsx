@@ -6,7 +6,7 @@ import type {
   TwGridRowStartAmount,
   TwJustifySelf,
   TwUnionProp,
-} from '@/libs/twClassName'
+} from '@/libs/pureTailwind'
 
 import React, { useMemo } from 'react'
 
@@ -20,7 +20,7 @@ import {
   TW_GRID_ROW_START_SCREEN,
   TW_GRID_ROW_END_SCREEN,
   TW_JUSTIFY_SELF_SCREEN,
-} from '@/libs/twClassName'
+} from '@/libs/pureTailwind'
 
 export type GridItemProps = {
   children: React.ReactNode

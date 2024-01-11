@@ -7,7 +7,7 @@ import type {
   TwAlignSelf,
   TwJustifyItems,
   TwWidth,
-} from '@/libs/twClassName'
+} from '@/libs/pureTailwind'
 
 import React, { useMemo } from 'react'
 
@@ -22,7 +22,7 @@ import {
   TW_ALIGN_ITEMS_SCREEN,
   TW_ALIGN_SELF_SCREEN,
   TW_JUSTIFY_ITEMS_SCREEN,
-} from '@/libs/twClassName'
+} from '@/libs/pureTailwind'
 
 export type GridProps = {
   children: React.ReactNode

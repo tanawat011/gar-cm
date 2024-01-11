@@ -9,7 +9,7 @@ import { Icon } from '@/components/Icon'
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { LS_THEME } from '@/constants'
 import { useToggleAppSetting } from '@/hooks'
-import { twThemeSelection } from '@/libs/twClassName'
+import { twThemeSelection } from '@/libs/pureTailwind'
 import { appSettingSelector } from '@/store/selector'
 import { setTheme } from '@/store/slice'
 

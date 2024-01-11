@@ -8,7 +8,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { Provider as ReduxProvider } from 'react-redux'
 
 import '@/assets/css/global.css'
-import { TW_THEME } from '@/libs/twClassName'
+import { TW_THEME } from '@/libs/pureTailwind'
 import { store } from '@/store'
 
 const client = new ApolloClient({

@@ -1,5 +1,5 @@
 import type { Lang } from '@/constants'
-import type { TwTheme } from '@/libs/twClassName'
+import type { TwTheme } from '@/libs/pureTailwind'
 import type { DrawerPosition, NavbarStyle, NavbarType, SidebarStyle, SidebarType } from '@/types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
