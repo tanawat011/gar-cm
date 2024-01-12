@@ -2,6 +2,10 @@ name: Generate changelog
 on:
   release:
     types: [created, edited]
+  pull_request:
+    branches:
+      - main
+      - dev
 
 jobs:
   generate-changelog:
