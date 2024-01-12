@@ -1,23 +1,17 @@
-name: Generate changelog
+name: Generate Changelog
 on:
   release:
-    types: [created, edited]
+    types:
+      - created
   pull_request:
     branches:
       - main
       - dev
-
 jobs:
-  generate-changelog:
-    runs-on: ubuntu-latest
+  changelog:
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - uses: BobAnkh/auto-generate-changelog@v1.2.5
-      with:
-        REPO_NAME: 'tanawat011/gar-cm'
-        ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        PATH: 'CHANGELOG.md'
-        COMMIT_MESSAGE: 'docs(CHANGELOG): update release notes'
-        TYPE: 'feat:Feature,fix:Bug Fixes,docs:Documentation,refactor:Refactor,perf:Performance Improvements'
+      - name: "✏️ Generate release changelog"
+        uses: heinrichreimer/action-github-changelog-generator@v2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
