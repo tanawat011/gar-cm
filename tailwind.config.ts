@@ -8,12 +8,21 @@ const config: Config = {
   content: [
     './src/app/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
-    './src/pages/**/*.{ts,tsx}',
+    './src/page/**/*.{ts,tsx}',
     './src/utils/**/*.{ts,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    './src/libs/pureTailwind/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '480px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1440px',
+      },
       colors: {
         //
         'light-bg': '#ffffff',

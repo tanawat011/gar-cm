@@ -14,9 +14,10 @@ type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 
 type MenuProps = {
   items: ItemProps[]
+  prefixPath?: string
 }
 
-export const Menu: React.FC<MenuProps> = ({ items }) => {
+export const Menu: React.FC<MenuProps> = ({ items, prefixPath }) => {
   const activeLink = window.location.pathname
 
   const listRef = useRef<Record<string, HTMLUListElement | null>>({})
@@ -113,7 +114,7 @@ export const Menu: React.FC<MenuProps> = ({ items }) => {
               $activeItem={activeItem}
               className={classesActive}
               href='#'
-              {...(!hasItems && { href: itemLink })}
+              {...(!hasItems && { href: `${prefixPath ? `/${prefixPath}` : ''}${itemLink}` })}
             >
               <IconAndLabel
                 {...item}

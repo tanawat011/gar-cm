@@ -10,7 +10,11 @@ import { CoreLayoutContext } from '../Provider'
 import { Content } from './Content'
 import { FullSidebarContainer } from './FullSidebarContainer'
 
-export const Container = () => {
+type ContainerProps = {
+  prefixPath?: string
+}
+
+export const Container: React.FC<ContainerProps> = ({ prefixPath }) => {
   const { openSidebar, onToggleSidebar } = useContext(CoreLayoutContext)
 
   const { sidebarType } = useSelector(appSettingSelector)
@@ -24,13 +28,13 @@ export const Container = () => {
           onClose={() => onToggleSidebar(false)}
           containerClassName='bg-content1 p-4'
         >
-          <Content />
+          <Content prefixPath={prefixPath} />
         </Drawer>
       )}
 
       {sidebarType !== 'drawer' && (
         <FullSidebarContainer>
-          <Content />
+          <Content prefixPath={prefixPath} />
         </FullSidebarContainer>
       )}
     </div>

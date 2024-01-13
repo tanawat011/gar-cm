@@ -11,7 +11,11 @@ import { StyledMenuContainer } from './Content.styled'
 import { Footer } from './Footer'
 import { Logo } from './Logo'
 
-export const Content = () => {
+type ContentProps = {
+  prefixPath?: string
+}
+
+export const Content: React.FC<ContentProps> = ({ prefixPath }) => {
   const { sidebarStyle } = useSelector(appSettingSelector)
 
   return (
@@ -19,7 +23,7 @@ export const Content = () => {
       <Logo />
 
       <StyledMenuContainer className='overflow-x-hidden' $sidebarStyle={sidebarStyle}>
-        <Menu items={menu} />
+        <Menu items={menu} prefixPath={prefixPath} />
       </StyledMenuContainer>
 
       <Footer />

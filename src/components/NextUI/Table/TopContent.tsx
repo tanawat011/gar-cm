@@ -183,11 +183,6 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
               name='limit-actions'
               variant='faded'
               selectedKeys={new Set([`${perPage}`])}
-              onSelectionChange={(keys) => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                onSetPerPage(Number((keys as any).values().next().value) as TableLimitList)
-                props.onSelected?.([])
-              }}
               items={pageLimitItems}
               label={`${perPage || 'ALL'}`}
             />

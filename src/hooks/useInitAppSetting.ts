@@ -1,4 +1,5 @@
-import type { DrawerPosition, Lang, Theme } from '@/types'
+import type { TwTheme } from '@/libs/pureTailwind'
+import type { DrawerPosition, Lang } from '@/types'
 
 import { useEffect } from 'react'
 
@@ -12,7 +13,7 @@ export const useInitAppSetting = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const localTheme = localStorage.getItem(LS_THEME) as Theme
+    const localTheme = localStorage.getItem(LS_THEME) as TwTheme
     const localLang = localStorage.getItem(LS_LANG) as Lang
     const localDrawerPos = localStorage.getItem(LS_DRAWER_POS) as DrawerPosition
 

@@ -40,8 +40,10 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
   const disabledNavigate = pages === 1 || !limit
 
   const handleOnChangePage = useCallback((_page: number) => {
-    onChangePage?.(_page)
-    onSelected?.([])
+    if (_page) {
+      onChangePage?.(_page)
+      onSelected?.([])
+    }
   }, [])
 
   const onNext = useCallback(() => {

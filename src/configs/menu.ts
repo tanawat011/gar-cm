@@ -35,7 +35,7 @@ export const menu: MenuProps[] = [
   },
   {
     label: 'Component',
-    id: 'componenta',
+    id: 'component',
     isGroupLabel: true,
   },
   {
@@ -43,6 +43,23 @@ export const menu: MenuProps[] = [
     icon: 'FaShop',
     id: 'component',
     items: [
+      {
+        label: 'Display',
+        icon: 'FaShop',
+        id: 'display',
+        items: [
+          {
+            label: 'Flex',
+            icon: 'FaShop',
+            id: 'flex',
+          },
+          {
+            label: 'Grid',
+            icon: 'FaShop',
+            id: 'grid',
+          },
+        ],
+      },
       {
         label: 'Common',
         icon: 'FaShop',

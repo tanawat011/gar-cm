@@ -8,7 +8,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { Provider as ReduxProvider } from 'react-redux'
 
 import '@/assets/css/global.css'
-import { THEME } from '@/constants'
+import { TW_THEME } from '@/libs/pureTailwind'
 import { store } from '@/store'
 
 const client = new ApolloClient({
@@ -16,7 +16,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-export const AppContainer = ({ children }: { children: React.ReactNode }) => {
+const AppContainer = ({ children }: { children: React.ReactNode }) => {
   if (process.env.NODE_ENV === 'development') {
     // Adds messages only in a dev environment
     loadDevMessages()
@@ -26,7 +26,7 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <ReduxProvider store={store}>
       <NextUIProvider>
-        <NextThemesProvider attribute='class' defaultTheme={THEME.DARK}>
+        <NextThemesProvider attribute='class' defaultTheme={TW_THEME.DARK}>
           <ApolloProvider client={client}>
             <UserProvider>{children}</UserProvider>
           </ApolloProvider>
@@ -35,3 +35,5 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
     </ReduxProvider>
   )
 }
+
+export default AppContainer
