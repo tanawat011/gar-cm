@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.7](https://github.com/tanawat011/gar-cm/compare/v0.5.6...v0.5.7) (2024-01-13)
+
+
+### Features
+
+* **components:** :sparkles: pure tailwind ([cb60fd7](https://github.com/tanawat011/gar-cm/commit/cb60fd7881ac21422a19475c25cf2a9514ff7d9a))
+
 ## [0.5.6](https://github.com/tanawat011/gar-cm/compare/v0.5.5...v0.5.6) (2024-01-08)
 
 
@@ -14,6 +21,7 @@ All notable changes to this project will be documented in this file. See [commit
 
 * :hammer: chore ([f1b68b9](https://github.com/tanawat011/gar-cm/commit/f1b68b9c1a1e6363356ef44ef943f679e48d4ff2))
 * bootstrap releases for path: . ([b3857ac](https://github.com/tanawat011/gar-cm/commit/b3857acdd8b958ed0f23bc37684c9a4a78e9cde2))
+* **release:** :rocket: 0.5.6 ([fcacdf7](https://github.com/tanawat011/gar-cm/commit/fcacdf7d7beabb8d83ca6205e65c626c5e46746f))
 
 ## [0.5.5](https://github.com/tanawat011/gar-cm/compare/v0.5.4...v0.5.5) (2024-01-06)
 
