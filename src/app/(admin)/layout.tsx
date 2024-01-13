@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import AppContainer from '@/components/AppContainer'
 import CoreLayout from '@/components/CoreLayout'
 import { METADATA_BASE } from '@/constants'
 
@@ -14,9 +13,5 @@ export const metadata: Metadata = {
 }
 
 export default function RootAdminLayout({ children }: AppProps) {
-  return (
-    <AppContainer>
-      <CoreLayout>{children}</CoreLayout>
-    </AppContainer>
-  )
+  return <CoreLayout>{children}</CoreLayout>
 }

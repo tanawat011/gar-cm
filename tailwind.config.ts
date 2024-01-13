@@ -8,7 +8,7 @@ const config: Config = {
   content: [
     './src/app/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
-    './src/page/**/*.{ts,tsx}',
+    './src/pages/**/*.{ts,tsx}',
     './src/utils/**/*.{ts,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
     './src/libs/pureTailwind/**/*.{ts,tsx}',

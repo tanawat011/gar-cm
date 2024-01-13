@@ -7,7 +7,7 @@ type ErrorProps = {
   reset: () => void
 }
 
-export const FullScreenError: React.FC<ErrorProps> = ({ error, reset }) => {
+export const Error: React.FC<ErrorProps> = ({ error, reset }) => {
   const onClick = () => {
     reset()
 

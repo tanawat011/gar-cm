@@ -1,8 +1,19 @@
+import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev'
+
+import '@/assets/css/global.css'
+import { AllProviders } from '@/components/AllProviders'
+
 type AppProps = {
   children: React.ReactNode
 }
 
 export default function RootLayout({ children }: AppProps) {
+  if (process.env.NODE_ENV === 'development') {
+    // Adds messages only in a dev environment
+    loadDevMessages()
+    loadErrorMessages()
+  }
+
   return (
     <html suppressHydrationWarning>
       <body
@@ -11,7 +22,7 @@ export default function RootLayout({ children }: AppProps) {
       >
         <time dateTime={new Date().toISOString()} suppressHydrationWarning />
 
-        {children}
+        <AllProviders>{children}</AllProviders>
       </body>
     </html>
   )

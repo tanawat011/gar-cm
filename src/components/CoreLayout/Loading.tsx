@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { FullScreenLoading } from '../FullScreenLoading'
+import { FullScreenLoading } from '../Loading'
 
 import { CoreLayoutContext } from './Provider'
 
