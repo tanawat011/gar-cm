@@ -15,8 +15,7 @@ import { TableCell } from './TableCell'
 import { TableColumn } from './TableColumn'
 import { TopContent } from './TopContent'
 import { useColumns } from './useColumns'
-
-export type TableLimitList = number | undefined
+import { useTableConfig } from './useTableConfig'
 
 export type CrudType =
   | 'add'
@@ -66,7 +65,7 @@ export type TableProps<T, U = never> = {
   showForceDeleteSelectedButton?: boolean
 
   // NOTE: Limit Action
-  onChangeLimit?: (limit: TableLimitList) => void
+  onChangeLimit?: (limit: number) => void
   showPageLimit?: boolean
   pageLimitItems?: DropdownInputProps['items']
 
@@ -174,17 +173,19 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
     return TableCell({ column, item, key, columnAlign: column?.align })
   }, [])
 
+  const { tableConfig, setSearch, setFilter, setLimit, setPage } = useTableConfig()
+
   const topContent = useMemo(() => {
     return (
       <TopContent
         total={total}
         showTotal={props.showTotal}
         // NOTE: Search Action
-        onSearch={props.onSearch}
+        onSearch={setSearch}
         showSearch={props.showSearch}
         search={search}
         // NOTE: Filter Action
-        onFilterSelected={props.onFilterSelected}
+        onFilterSelected={setFilter}
         showFilterButton={props.showFilterButton}
         filterItems={props.filterItems}
         filterSelected={filterSelected}
@@ -203,7 +204,7 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
         onForceDeleteSelected={props.onForceDeleteSelected}
         showForceDeleteSelectedButton={props.showForceDeleteSelectedButton}
         // NOTE: Limit Action
-        onChangeLimit={props.onChangeLimit}
+        onChangeLimit={setLimit}
         showPageLimit={props.showPageLimit}
         pageLimitItems={props.pageLimitItems}
         // NOTE: Selected Action
@@ -223,7 +224,7 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
         total={total}
         limit={limit}
         selected={selected}
-        onChangePage={props.onChangePage}
+        onChangePage={setPage}
         onSelected={props.onSelected}
         showTotalSelected={props.showTotalSelected}
         showPagination={props.showPagination}

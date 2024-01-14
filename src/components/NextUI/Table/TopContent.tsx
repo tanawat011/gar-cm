@@ -1,4 +1,4 @@
-import type { TableLimitList, TableProps } from './Table'
+import type { TableProps } from './Table'
 import type { UseColumnsPropsReturn } from './useColumns'
 
 import React, { useState } from 'react'
@@ -69,9 +69,9 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
     ],
   } = props
 
-  const [perPage, setPerPage] = useState<TableLimitList>(10)
+  const [perPage, setPerPage] = useState(10)
 
-  const onSetPerPage = (v: TableLimitList) => {
+  const onSetPerPage = (v: number) => {
     props.onChangeLimit?.(v)
     setPerPage(v)
   }
