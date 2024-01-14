@@ -1,13 +1,13 @@
-import type { CrudType, DropdownInputProps, TableColumnProps, TableProps } from '@/components/NextUI'
+import type { QuickActionKey } from './useInitialData'
+import type { CrudType, TableProps } from '@/components/NextUI'
 import type { MutationFunctionOptions, OperationVariables } from '@apollo/client'
 import type { todo as Todo } from '@prisma/client'
 
 import React, { useCallback, useState } from 'react'
 
-import { Icon } from '@/components/Icon'
 import { Table } from '@/components/NextUI'
 
-import { ColumnName } from './CustomColumn'
+import { useInitialData } from './useInitialData'
 
 export type TableConfigProps = {
   refetch: (v?: Partial<OperationVariables>) => Promise<unknown>
@@ -38,79 +38,10 @@ export type QuickAction = {
   important?: boolean
 }
 
-type QuickActionKey = 'done' | 'important'
-
 export const TableConfig: React.FC<TableConfigProps> = (props) => {
   const [selected, setSelected] = useState<string[]>([])
 
-  const columns: TableColumnProps<Todo>[] = [
-    {
-      key: 'name',
-      label: 'Name',
-      show: true,
-      render: (item) => <ColumnName item={item} />,
-    },
-    {
-      key: 'detail',
-      label: 'Detail',
-    },
-  ]
-
-  const filterItems: DropdownInputProps['items'] = [
-    {
-      key: 'done',
-      label: 'done',
-      color: 'success',
-      className: 'capitalize text-success',
-      startContent: <Icon name='FaCheck' />,
-    },
-    {
-      key: 'important',
-      label: 'important',
-      color: 'warning',
-      className: 'capitalize text-warning',
-      startContent: <Icon name='FaStar' />,
-    },
-    {
-      key: 'deleted',
-      label: 'deleted',
-      color: 'danger',
-      className: 'capitalize text-danger',
-      startContent: <Icon name='FaTrashCan' />,
-      showDivider: true,
-    },
-    {
-      key: 'undone',
-      label: 'undone',
-      className: 'capitalize',
-      startContent: <Icon name='FaX' />,
-    },
-    {
-      key: 'unimportant',
-      label: 'unimportant',
-      className: 'capitalize',
-      startContent: <Icon name='FaX' />,
-    },
-    {
-      key: 'undeleted',
-      label: 'undeleted',
-      className: 'capitalize',
-      startContent: <Icon name='FaX' />,
-    },
-  ]
-
-  const quickActionItems: TableProps<Todo, QuickActionKey>['quickActionItems'] = [
-    {
-      key: 'done',
-      children: <Icon name='FaCheck' />,
-      toggleColor: (item) => (item.done ? 'success' : 'default'),
-    },
-    {
-      key: 'important',
-      children: <Icon name='FaStar' />,
-      toggleColor: (item) => (item.important ? 'warning' : 'default'),
-    },
-  ]
+  const { columns, filterItems, quickActionItems } = useInitialData()
 
   const onQuickAction = useCallback(
     async (item: Todo, key: QuickActionKey) => {
