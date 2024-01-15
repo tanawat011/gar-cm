@@ -28,30 +28,20 @@ export const mutationHealthCheck = gql`
 export const useGqlCrud = (props: UseGqlCrudProps) => {
   const [loading, setLoading] = useState(false)
   const queryList = useQuery(props?.queryList || queryHealthCheck)
-  const queryItem = useQuery(props?.queryItem || queryHealthCheck)
   const [createItem, mutateCreateItem] = useMutation(props?.mutationCreate || mutationHealthCheck)
   const [updateItem, mutateUpdateItem] = useMutation(props?.mutationUpdate || mutationHealthCheck)
   const [deleteItem, mutateDeleteItem] = useMutation(props?.mutationDelete || mutationHealthCheck)
   const [forceDeleteItem, mutateForceDeleteItem] = useMutation(props?.mutationForceDelete || mutationHealthCheck)
 
-  const refetchList = async (variables?: Partial<OperationVariables>) => {
+  const refetch = async (variables?: Partial<OperationVariables>) => {
     setLoading(true)
     await queryList.refetch(variables)
     setLoading(false)
   }
 
-  const refetchItem = async (variables?: Partial<OperationVariables>) => {
-    setLoading(true)
-    await queryItem.refetch(variables)
-    setLoading(false)
-  }
-
   return {
-    dataList: queryList.data,
-    refetchList,
-    dataItem: queryItem.data,
-    refetchItem,
-    queryItem,
+    data: queryList.data,
+    refetch,
     createItem,
     mutateCreateItem,
     updateItem,
@@ -63,7 +53,6 @@ export const useGqlCrud = (props: UseGqlCrudProps) => {
     loading:
       loading ||
       queryList.loading ||
-      queryItem.loading ||
       mutateCreateItem.loading ||
       mutateUpdateItem.loading ||
       mutateDeleteItem.loading ||

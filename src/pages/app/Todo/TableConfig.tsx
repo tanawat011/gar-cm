@@ -1,5 +1,5 @@
 import type { QuickActionKey } from './useInitialData'
-import type { CrudType, TableProps } from '@/components/NextUI'
+import type { TableProps, TableRefetchData, TableState } from '@/components/NextUI'
 import type { MutationFunctionOptions, OperationVariables } from '@apollo/client'
 import type { todo as Todo } from '@prisma/client'
 
@@ -14,24 +14,12 @@ export type TableConfigProps = {
   onOpenForm: () => void
   onOpenModalConfirm: (force?: boolean) => void
   data: Todo[]
-  onSetItem: (item: Todo, crudType: CrudType) => void
-  setCrudType: (crudType: CrudType) => void
+  onSetItem: (item: Todo, state: TableState) => void
+  onStateChange: (state: TableState) => void
   updateTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   deleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
   forceDeleteTodo: (opt?: MutationFunctionOptions) => Promise<unknown>
-} & Pick<
-  TableProps<unknown>,
-  | 'search'
-  | 'total'
-  | 'page'
-  | 'limit'
-  | 'loading'
-  | 'filterSelected'
-  | 'onSearch'
-  | 'onFilterSelected'
-  | 'onChangeLimit'
-  | 'onChangePage'
->
+} & Pick<TableProps<Todo>, 'total' | 'loading' | 'onRefetchData'>
 
 export type QuickAction = {
   done?: boolean
@@ -67,14 +55,14 @@ export const TableConfig: React.FC<TableConfigProps> = (props) => {
 
       await props.refetch()
     },
-    [props.page],
+    [props.data],
   )
 
-  const onAction = useCallback((crudType: CrudType, item?: Todo) => {
-    if (crudType === 'add') props.setCrudType(crudType)
-    else !!item && props.onSetItem(item, crudType)
+  const onAction = useCallback((state: TableState, item?: Todo) => {
+    if (state === 'add') props.onStateChange(state)
+    else !!item && props.onSetItem(item, state)
 
-    switch (crudType) {
+    switch (state) {
       case 'add':
       case 'edit':
       case 'copy':
@@ -88,65 +76,50 @@ export const TableConfig: React.FC<TableConfigProps> = (props) => {
     }
   }, [])
 
+  const handleRefetchData = useCallback((v: TableRefetchData<Todo>) => {
+    props?.onRefetchData?.(v)
+  }, [])
+
   return (
     <Table
-      // NOTE: Table configs & Common Data
+      // NOTE: Config
+      selectedMode='single'
+      // NOTE: Data
       columns={columns}
       rows={props.data}
-      page={props.page}
       total={props.total}
-      limit={props.limit}
       loading={props.loading}
-      showTotal
-      showAction
-      // NOTE: Search Action
-      onSearch={props.onSearch}
-      showSearch
-      search={props.search}
-      // NOTE: Filter Action
-      onFilterSelected={props.onFilterSelected}
-      showFilterButton
+      rowSelected={selected}
+      // NOTE: All Items
       filterItems={filterItems}
-      filterSelected={props.filterSelected}
-      // NOTE: Column Action
-      showColumnButton
-      // NOTE: Add Action
-      onAdd={() => onAction('add')}
-      showAddButton
-      // NOTE: Delete Selected Action
-      onDeleteSelected={() => void 0}
-      showDeleteSelectedButton
-      // NOTE: Force Delete Selected Action
-      onForceDeleteSelected={() => void 0}
-      showForceDeleteSelectedButton
-      // NOTE: Limit Action
-      onChangeLimit={props.onChangeLimit}
-      showPageLimit
-      // NOTE: Selected Action
-      onSelected={setSelected}
-      selectedMode='multiple'
-      showTotalSelected
-      selected={selected}
-      // NOTE: Edit Action
-      onEdit={(item) => onAction('edit', item)}
-      showEditButton
-      // NOTE: Copy Action
-      onCopy={(item) => onAction('copy', item)}
-      showCopyButton
-      // NOTE: Clone Action
-      onClone={(item) => onAction('clone', item)}
-      showCloneButton
-      // NOTE: Delete Action
-      onDelete={(item) => onAction('delete', item)}
-      showDeleteButton
-      // NOTE: ForceDelete Action
-      onForceDelete={(item) => onAction('force-delete', item)}
-      showForceDeleteButton
-      // NOTE: Quick Action
-      onQuickAction={onQuickAction}
       quickActionItems={quickActionItems}
-      // NOTE: Change Page Action
-      onChangePage={props.onChangePage}
+      // NOTE: Event/Action
+      onRefetchData={handleRefetchData}
+      onAdd={() => onAction('add')}
+      onEdit={(item) => onAction('edit', item)}
+      onCopy={(item) => onAction('copy', item)}
+      onClone={(item) => onAction('clone', item)}
+      onDelete={(item) => onAction('delete', item)}
+      onForceDelete={(item) => onAction('force-delete', item)}
+      onDeleteSelected={() => void 0}
+      onForceDeleteSelected={() => void 0}
+      onQuickAction={onQuickAction}
+      // NOTE: Show/Hide
+      showSearch
+      showFilterButton
+      showColumnButton
+      showAddButton
+      showTotal
+      showDeleteSelectedButton
+      showForceDeleteSelectedButton
+      showPageLimit
+      showAction
+      showEditButton
+      showCopyButton
+      showCloneButton
+      showDeleteButton
+      showForceDeleteButton
+      showTotalSelected
       showPagination
     />
   )

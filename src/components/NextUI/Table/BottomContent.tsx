@@ -1,24 +1,11 @@
-import type { TableProps } from './Table'
+import type { BottomContentProps } from './types'
 
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 import { Button } from '../Button'
-import { Pagination } from '../Pagination'
 
-type BottomContentProps<T> = Pick<
-  TableProps<T>,
-  | 'rows'
-  | 'page'
-  | 'total'
-  | 'limit'
-  | 'selected'
-  | 'onChangePage'
-  | 'onSelected'
-  | 'showTotalSelected'
-  | 'showPagination'
-  | 'showNavigation'
-  | 'loading'
->
+import { defaultLimit } from './constant'
+import { usePaginationInput } from './usePaginationInput'
 
 export const BottomContent = <T,>(props: BottomContentProps<T>) => {
   const {
@@ -26,56 +13,40 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
     showPagination = true,
     showNavigation,
     rows,
-    page = 1,
     total = 0,
-    limit = 10,
-    selected = [],
-    onChangePage,
-    onSelected,
+    limit = defaultLimit,
+    rowSelected = [],
+    onPageChange,
     loading,
   } = props
 
-  const [pages, setPages] = useState(1)
+  const { page, countPages, renderPagination, handlePageChange } = usePaginationInput({
+    page: props.page,
+    limit,
+    total,
+    loading,
+    onPageChange,
+  })
 
-  const disabledNavigate = pages === 1 || !limit
+  const disabledNavigate = countPages === 1 || !limit
 
-  const handleOnChangePage = useCallback((_page: number) => {
-    if (_page) {
-      onChangePage?.(_page)
-      onSelected?.([])
-    }
-  }, [])
+  const handleNextPage = useCallback(() => {
+    if (page < countPages) handlePageChange(page + 1)
+  }, [page, countPages])
 
-  const onNext = useCallback(() => {
-    if (page < pages) {
-      const _page = page + 1
-      handleOnChangePage(_page)
-    }
-  }, [page, pages])
-
-  const onPrev = useCallback(() => {
-    if (page > 1) {
-      const _page = page - 1
-      handleOnChangePage(_page)
-    }
+  const handlePrevPage = useCallback(() => {
+    if (page > 1) handlePageChange(page - 1)
   }, [page])
 
   return (
     <div className='py-2 px-2 flex justify-between items-center flex-col md:flex-row'>
       {showTotalSelected && (
-        <span className='w-[30%] text-small text-default-400 h-[36px] whitespace-nowrap select-none'>{`${selected.length} of ${rows.length} selected`}</span>
+        <span className='w-[30%] text-small text-default-400 h-[36px] whitespace-nowrap select-none'>{`${rowSelected.length} of ${rows.length} selected`}</span>
       )}
 
-      {showPagination && !!limit && (
-        <Pagination
-          page={page}
-          total={total}
-          limit={limit}
-          setPages={setPages}
-          onChangePage={handleOnChangePage}
-          isDisabled={loading}
-        />
-      )}
+      {!showTotalSelected && <div />}
+
+      {showPagination && !!limit && renderPagination}
 
       {showNavigation && (
         <div className='hidden sm:flex w-[30%] justify-end gap-2 mt-1'>
@@ -83,7 +54,7 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
             isDisabled={disabledNavigate}
             size='sm'
             variant='flat'
-            onPress={onPrev}
+            onPress={handlePrevPage}
             icon='FaChevronLeft'
             isLoading={loading}
           />
@@ -91,7 +62,7 @@ export const BottomContent = <T,>(props: BottomContentProps<T>) => {
             isDisabled={disabledNavigate}
             size='sm'
             variant='flat'
-            onPress={onNext}
+            onPress={handleNextPage}
             icon='FaChevronRight'
             isLoading={loading}
           />

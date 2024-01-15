@@ -1,7 +1,7 @@
-import type { TableColumnProps } from './TableColumn'
-import type { DropdownInputProps } from '../Input'
-import type { ButtonProps, Selection } from '@nextui-org/react'
-import type { SelectionMode } from '@nextui-org/table'
+'use client'
+
+import type { TableColumnProps, TableProps } from './types'
+import type { Selection } from '@nextui-org/table'
 
 import React, { useCallback, useMemo } from 'react'
 
@@ -14,119 +14,19 @@ import { ColumnAction } from './ColumnAction'
 import { TableCell } from './TableCell'
 import { TableColumn } from './TableColumn'
 import { TopContent } from './TopContent'
-import { useColumns } from './useColumns'
 import { useTableConfig } from './useTableConfig'
-
-export type CrudType =
-  | 'add'
-  | 'edit'
-  | 'copy'
-  | 'clone'
-  | 'delete'
-  | 'force-delete'
-  | 'delete-selected'
-  | 'force-delete-selected'
-
-export type TableProps<T, U = never> = {
-  // NOTE: Table configs & Common Data
-  columns: TableColumnProps<T>[]
-  rows: ({ key?: string; id?: string } & T)[]
-  page?: number
-  total?: number
-  limit?: number
-  loading?: boolean
-  showTotal?: boolean
-  showAction?: boolean
-
-  // NOTE: Search Action
-  onSearch?: (value: string) => void
-  showSearch?: boolean
-  search?: string
-
-  // NOTE: Filter Action
-  onFilterSelected?: (selected: string[]) => void
-  showFilterButton?: boolean
-  filterItems?: DropdownInputProps['items']
-  filterSelected?: string[]
-
-  // NOTE: Column Action
-  showColumnButton?: boolean
-
-  // NOTE: Add Action
-  onAdd?: () => void
-  showAddButton?: boolean
-
-  // NOTE: Delete Selected Action
-  onDeleteSelected?: () => void
-  showDeleteSelectedButton?: boolean
-
-  // NOTE: Force Delete Selected Action
-  onForceDeleteSelected?: () => void
-  showForceDeleteSelectedButton?: boolean
-
-  // NOTE: Limit Action
-  onChangeLimit?: (limit: number) => void
-  showPageLimit?: boolean
-  pageLimitItems?: DropdownInputProps['items']
-
-  // NOTE: Selected Action
-  onSelected?: (selected: string[]) => void
-  selectedMode?: SelectionMode
-  showTotalSelected?: boolean
-  selected?: string[]
-
-  // NOTE: Edit Action
-  onEdit?: (item: T) => void
-  showEditButton?: boolean
-
-  // NOTE: Copy Action
-  onCopy?: (item: T) => void
-  showCopyButton?: boolean
-
-  // NOTE: Clone Action
-  onClone?: (item: T) => void
-  showCloneButton?: boolean
-
-  // NOTE: Delete Action
-  onDelete?: (item: T) => void
-  showDeleteButton?: boolean
-
-  // NOTE: Force Delete Action
-  onForceDelete?: (item: T) => void
-  showForceDeleteButton?: boolean
-
-  // NOTE: Quick Action
-  onQuickAction?: (item: T, type: U) => void
-  quickActionItems?: ({
-    key: U
-    toggleColor?: (item: T) => ButtonProps['color']
-  } & ButtonProps)[]
-
-  // NOTE: Change Page Action
-  onChangePage?: (page: number) => void
-  showPagination?: boolean
-  showNavigation?: boolean
-}
 
 export const Table = <T, U>(props: TableProps<T, U>) => {
   const tableBodyHeight =
     'max-h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*3)-52px-(40px*2))]'
   const tableBodyEmptyStateHeight =
     'h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*5)-52px-(40px*3)-5px)]'
-  const {
-    search,
-    rows,
-    page,
-    total,
-    limit,
-    loading,
-    selectedMode = 'none',
-    selected = [],
-    onSelected,
-    filterSelected,
-  } = props
+  const { rows, total, loading, selectedMode = 'none' } = props
 
-  const baseColumns = useMemo(
+  const isSingleMode = selectedMode === 'single'
+  const isMultipleMode = selectedMode === 'multiple'
+
+  const defaultColumns = useMemo(
     () => [
       ...props.columns,
       ...(props.showAction
@@ -144,11 +44,11 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
                   onCopy={props.onCopy}
                   onClone={props.onClone}
                   onDelete={(_item) => {
-                    onSelected?.([])
+                    handleRowSelected?.([])
                     props.onDelete?.(_item)
                   }}
                   onForceDelete={(_item) => {
-                    onSelected?.([])
+                    handleRowSelected?.([])
                     props.onForceDelete?.(_item)
                   }}
                   quickActionItems={props.quickActionItems}
@@ -161,7 +61,6 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
     ],
     [props.columns],
   )
-  const { columns, columnItems, columnSelected, setColumnSelected } = useColumns(baseColumns)
 
   const renderColumn = useCallback((column: TableColumnProps<T>) => {
     return TableColumn(column)
@@ -173,97 +72,115 @@ export const Table = <T, U>(props: TableProps<T, U>) => {
     return TableCell({ column, item, key, columnAlign: column?.align })
   }, [])
 
-  const { tableConfig, setSearch, setFilter, setLimit, setPage } = useTableConfig()
+  const {
+    search,
+    filter,
+    // sort,
+    page,
+    limit,
+    columns,
+    columnItems,
+    columnSelected,
+    rowSelected,
+    // handleStateChange,
+    handleSearch,
+    handleFilter,
+    // handleSort,
+    handleLimitChange,
+    handlePageChange,
+    handleColumnSelected,
+    handleRowSelected,
+  } = useTableConfig({
+    columns: defaultColumns,
+    handleRefetchData: props?.onRefetchData,
+    handleConfigChange: props?.onConfigChange,
+  })
 
   const topContent = useMemo(() => {
     return (
       <TopContent
-        total={total}
-        showTotal={props.showTotal}
-        // NOTE: Search Action
-        onSearch={setSearch}
-        showSearch={props.showSearch}
+        // NOTE: Data
         search={search}
-        // NOTE: Filter Action
-        onFilterSelected={setFilter}
-        showFilterButton={props.showFilterButton}
-        filterItems={props.filterItems}
-        filterSelected={filterSelected}
-        // NOTE: Column Action
-        showColumnButton={props.showColumnButton}
-        columnItems={columnItems}
+        filterSelected={filter}
         columnSelected={columnSelected}
-        setColumnSelected={setColumnSelected}
-        // NOTE: Add Action
+        total={total}
+        rowSelected={rowSelected}
+        // NOTE: All Items
+        filterItems={props.filterItems}
+        columnItems={columnItems}
+        limitItems={props.limitItems}
+        // NOTE: Event/Action
+        onSearch={handleSearch}
+        onFilterSelected={handleFilter}
+        onColumnSelected={handleColumnSelected}
         onAdd={props.onAdd}
-        showAddButton={props.showAddButton}
-        // NOTE: Delete Selected Action
         onDeleteSelected={props.onDeleteSelected}
-        showDeleteSelectedButton={props.showDeleteSelectedButton}
-        // NOTE: Force Delete Selected Action
         onForceDeleteSelected={props.onForceDeleteSelected}
-        showForceDeleteSelectedButton={props.showForceDeleteSelectedButton}
-        // NOTE: Limit Action
-        onChangeLimit={setLimit}
+        onLimitSelected={handleLimitChange}
+        // NOTE: Show/Hide
+        showSearch={props.showSearch}
+        showFilterButton={props.showFilterButton}
+        showColumnButton={props.showColumnButton}
+        showAddButton={props.showAddButton}
+        showTotal={props.showTotal}
+        showDeleteSelectedButton={isMultipleMode && props.showDeleteSelectedButton}
+        showForceDeleteSelectedButton={isMultipleMode && props.showForceDeleteSelectedButton}
         showPageLimit={props.showPageLimit}
-        pageLimitItems={props.pageLimitItems}
-        // NOTE: Selected Action
-        onSelected={props.onSelected}
-        selected={selected}
       />
     )
-  }, [search, selected, rows.length, filterSelected, columnSelected, total])
+  }, [rowSelected, total])
 
   const bottomContent = useMemo(() => {
-    if (selectedMode === 'none') return null
-
     return (
       <BottomContent
         rows={rows}
         page={page}
         total={total}
         limit={limit}
-        selected={selected}
-        onChangePage={setPage}
-        onSelected={props.onSelected}
-        showTotalSelected={props.showTotalSelected}
+        rowSelected={rowSelected}
+        onPageChange={handlePageChange}
+        showTotalSelected={isMultipleMode && props.showTotalSelected}
         showPagination={props.showPagination}
         showNavigation={props.showNavigation}
         loading={loading}
       />
     )
-  }, [selected, rows.length, total, page, limit, loading])
+  }, [rowSelected, rows.length, loading])
 
   const onSelectionChange = useCallback(
     (keys: Selection) => {
       if (keys === 'all') {
-        return onSelected?.(rows.map((row) => row?.key || row?.id) as string[])
+        return handleRowSelected?.(rows.map((row) => row?.key || row?.id) as string[])
       }
 
-      onSelected?.(Array.from(keys) as string[])
+      handleRowSelected?.(Array.from(keys) as string[])
     },
     [rows],
   )
+
+  const handleSingleRowSelected = useCallback((key: React.Key) => {
+    onSelectionChange?.(new Set([key]))
+  }, [])
 
   return (
     <NextUITable
       fullWidth
       aria-label='Table with dynamic content'
       selectionMode={selectedMode}
-      selectedKeys={new Set(selected)}
+      selectedKeys={new Set(rowSelected)}
       onSelectionChange={onSelectionChange}
-      onRowAction={() => {}}
+      onRowAction={isSingleMode ? handleSingleRowSelected : () => {}}
       topContent={topContent}
       bottomContent={bottomContent}
       topContentPlacement='outside'
       bottomContentPlacement='outside'
       isHeaderSticky
       checkboxesProps={{
-        className: 'max-w-[44px]',
+        className: isMultipleMode ? 'max-w-[44px]' : '',
       }}
       classNames={{
         wrapper: tableBodyHeight,
-        th: ['first:w-[44px]'],
+        th: [isMultipleMode ? 'first:w-[44px]' : ''],
       }}
     >
       <TableHeader columns={columns}>{(col) => renderColumn(col)}</TableHeader>

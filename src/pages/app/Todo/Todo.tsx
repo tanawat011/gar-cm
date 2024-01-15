@@ -1,9 +1,9 @@
 'use client'
 
-import type { CrudType, TableLimitList } from '@/components/NextUI'
+import type { TableRefetchData, TableState } from '@/components/NextUI'
 import type { todo as Todo } from '@prisma/client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { useDisclosure } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
@@ -23,7 +23,7 @@ import { FormConfig } from './FormConfig'
 import { TableConfig } from './TableConfig'
 
 export const AppTodo = () => {
-  const { loading, dataList, refetchList, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
+  const { loading, data, refetch, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
     queryList: queryTodos,
     mutationCreate: mutationCreateTodo,
     mutationUpdate: mutationUpdateTodo,
@@ -34,11 +34,7 @@ export const AppTodo = () => {
   const modalForm = useDisclosure()
   const modalConfirm = useDisclosure()
 
-  const [crudType, setCrudType] = useState<CrudType>()
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState<TableLimitList>(10)
-  const [filterSelected, setFilterSelected] = useState<string[]>([])
+  const [crudType, setCrudType] = useState<TableState>()
 
   const {
     handleSubmit,
@@ -56,37 +52,14 @@ export const AppTodo = () => {
     },
   })
 
-  useEffect(() => {
-    setPage(1)
-    onRefetch(1)
-  }, [filterSelected, search])
+  const onSetItem = (item: Todo, state: TableState) => {
+    setCrudType(state)
 
-  useEffect(() => {
-    onRefetch()
-  }, [page, limit])
-
-  const onRefetch = async (_page?: number) => {
-    await refetchList({
-      search,
-      page: _page || page,
-      limit,
-      done: filterSelected.includes('done') || undefined,
-      important: filterSelected.includes('important') || undefined,
-      deleted: filterSelected.includes('deleted') || undefined,
-      undone: filterSelected.includes('undone') || undefined,
-      unimportant: filterSelected.includes('unimportant') || undefined,
-      undeleted: filterSelected.includes('undeleted') || undefined,
-    })
-  }
-
-  const onSetItem = (item: Todo, _crudType: CrudType) => {
-    setCrudType(_crudType)
-
-    if (_crudType === 'delete' || _crudType === 'force-delete') {
+    if (state === 'delete' || state === 'force-delete') {
       return setValue('id', item.id)
     }
 
-    if (_crudType === 'edit') setValue('id', item.id)
+    if (state === 'edit') setValue('id', item.id)
 
     setValue('name', item.name)
     setValue('detail', item.detail)
@@ -136,8 +109,41 @@ export const AppTodo = () => {
     onCloseForm()
     onCloseConfirm()
 
-    await onRefetch()
+    await refetch()
   }
+
+  const handleRefetchData = useCallback(async (v: TableRefetchData<Todo>) => {
+    await refetch({
+      search: v.search,
+      page: v.page,
+      limit: v.limit,
+      done: v.filter?.includes('done') || undefined,
+      important: v.filter?.includes('important') || undefined,
+      deleted: v.filter?.includes('deleted') || undefined,
+      undone: v.filter?.includes('undone') || undefined,
+      unimportant: v.filter?.includes('unimportant') || undefined,
+      undeleted: v.filter?.includes('undeleted') || undefined,
+    })
+  }, [])
+
+  const renderTable = useMemo(() => {
+    return (
+      <TableConfig
+        data={data?.todos.data || []}
+        total={data?.todos.count || 0}
+        loading={loading}
+        refetch={refetch}
+        onOpenForm={modalForm.onOpen}
+        onOpenModalConfirm={modalConfirm.onOpen}
+        onSetItem={onSetItem}
+        onStateChange={setCrudType}
+        updateTodo={updateItem}
+        deleteTodo={deleteItem}
+        forceDeleteTodo={forceDeleteItem}
+        onRefetchData={handleRefetchData}
+      />
+    )
+  }, [data?.todos, loading])
 
   return (
     <>
@@ -157,27 +163,7 @@ export const AppTodo = () => {
         msg={`Are you sure you want to ${toCapital(`${crudType === 'force-delete' ? 'delete' : crudType}`)} this item?`}
       />
 
-      <TableConfig
-        data={dataList?.todos.data || []}
-        search={search}
-        onSearch={setSearch}
-        total={dataList?.todos.count || 0}
-        page={page}
-        limit={limit}
-        loading={loading}
-        refetch={refetchList}
-        onOpenForm={modalForm.onOpen}
-        onOpenModalConfirm={modalConfirm.onOpen}
-        onSetItem={onSetItem}
-        setCrudType={setCrudType}
-        updateTodo={updateItem}
-        deleteTodo={deleteItem}
-        forceDeleteTodo={forceDeleteItem}
-        filterSelected={filterSelected}
-        onFilterSelected={setFilterSelected}
-        onChangePage={setPage}
-        onChangeLimit={setLimit}
-      />
+      {renderTable}
     </>
   )
 }

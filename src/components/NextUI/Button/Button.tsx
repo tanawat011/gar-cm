@@ -6,7 +6,7 @@ import { Button as ButtonNextUI } from '@nextui-org/react'
 
 import { Icon, type IconType } from '@/components/Icon'
 
-type ButtonProps = {
+export type ButtonProps = {
   label?: string
   icon?: IconType
   iconR?: IconType

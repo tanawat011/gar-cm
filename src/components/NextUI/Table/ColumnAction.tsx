@@ -1,4 +1,4 @@
-import type { TableProps } from './Table'
+import type { ColumnActionProps } from './types'
 import type { MenuItemProps } from '@nextui-org/react'
 
 import React, { useMemo } from 'react'
@@ -6,13 +6,6 @@ import React, { useMemo } from 'react'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
-
-type ColumnActionProps<T, U = never> = {
-  item: T
-} & Pick<
-  TableProps<T, U>,
-  'onEdit' | 'onCopy' | 'onClone' | 'onDelete' | 'onForceDelete' | 'quickActionItems' | 'onQuickAction'
->
 
 export const ColumnAction = <T, U>({
   item,

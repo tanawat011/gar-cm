@@ -1,137 +1,43 @@
-import type { TableProps } from './Table'
-import type { UseColumnsPropsReturn } from './useColumns'
-
-import React, { useState } from 'react'
-
-import { Input } from '@nextui-org/react'
-
-import { Icon } from '@/components/Icon'
+import type { TopContentProps } from './types'
 
 import { Button } from '../Button'
-import { DropdownInput } from '../Input'
 
-type TopContentProps<T> = Pick<
-  TableProps<T> & UseColumnsPropsReturn<T>,
-  | 'total'
-  | 'showTotal'
-
-  // NOTE: Search Action
-  | 'onSearch'
-  | 'showSearch'
-  | 'search'
-
-  // NOTE: Filter Action
-  | 'onFilterSelected'
-  | 'showFilterButton'
-  | 'filterItems'
-  | 'filterSelected'
-
-  // NOTE: Column Action
-  | 'showColumnButton'
-  | 'columnItems'
-  | 'columnSelected'
-  | 'setColumnSelected'
-
-  // NOTE: Add Action
-  | 'onAdd'
-  | 'showAddButton'
-
-  // NOTE: Delete Selected Action
-  | 'onDeleteSelected'
-  | 'showDeleteSelectedButton'
-
-  // NOTE: Force Delete Selected Action
-  | 'onForceDeleteSelected'
-  | 'showForceDeleteSelectedButton'
-
-  // NOTE: Limit Action
-  | 'onChangeLimit'
-  | 'showPageLimit'
-  | 'pageLimitItems'
-
-  // NOTE: Selected Action
-  | 'onSelected'
-  | 'selected'
->
+import { useColumnInput } from './useColumnInput'
+import { useFilterInput } from './useFilterInput'
+import { useLimitInput } from './useLimitInput'
+import { useSearchInput } from './useSearchInput'
 
 export const TopContent = <T,>(props: TopContentProps<T>) => {
-  const {
-    // NOTE: Set default value
-    pageLimitItems = [
-      { key: '5', label: '5', onClick: () => onSetPerPage(5) },
-      { key: '10', label: '10', onClick: () => onSetPerPage(10) },
-      { key: '15', label: '15', onClick: () => onSetPerPage(15) },
-      { key: '20', label: '20', onClick: () => onSetPerPage(20) },
-      { key: '30', label: '30', onClick: () => onSetPerPage(30) },
-      { key: '50', label: '50', onClick: () => onSetPerPage(50) },
-      { key: '100', label: '100', onClick: () => onSetPerPage(100) },
-      { key: 'all', label: 'ALL', onClick: () => onSetPerPage(0) },
-    ],
-  } = props
-
-  const [perPage, setPerPage] = useState(10)
-
-  const onSetPerPage = (v: number) => {
-    props.onChangeLimit?.(v)
-    setPerPage(v)
-  }
+  const { renderSearchInput } = useSearchInput({
+    onSearch: props.onSearch,
+    search: props.search,
+  })
+  const { renderFilterInput } = useFilterInput({
+    onFilterSelected: props.onFilterSelected,
+    filterSelected: props.filterSelected,
+    filterItems: props.filterItems,
+  })
+  const { renderColumnInput } = useColumnInput({
+    onColumnSelected: props.onColumnSelected,
+    columnSelected: props.columnSelected,
+    columnItems: props.columnItems,
+  })
+  const { renderLimitInput } = useLimitInput({
+    onLimitSelected: props.onLimitSelected,
+    limit: props.limit,
+  })
 
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex justify-between gap-3 items-end'>
-        {props.showSearch && (
-          <Input
-            isClearable
-            className='w-full sm:max-w-[44%]'
-            placeholder='Search by name...'
-            labelPlacement='outside'
-            startContent={<Icon name='FaMagnifyingGlass' />}
-            value={props.search}
-            onClear={() => props.onSearch?.('')}
-            onValueChange={props.onSearch}
-          />
-        )}
+        {props.showSearch && renderSearchInput}
 
         {!props.showSearch && <div />}
 
         <div className='flex gap-3'>
-          {props.showFilterButton && (
-            <DropdownInput
-              uncontrolled
-              name='filter-actions'
-              selectionMode='multiple'
-              variant='faded'
-              closeOnSelect={false}
-              selectedKeys={new Set(props.filterSelected)}
-              onSelectionChange={(keys) => {
-                props.onFilterSelected?.(Array.from(keys) as string[])
-              }}
-              items={props.filterItems || []}
-              buttonOptions={{
-                isIconOnly: true,
-                icon: 'FaFilter',
-              }}
-            />
-          )}
+          {props.showFilterButton && renderFilterInput}
 
-          {props.showColumnButton && (
-            <DropdownInput
-              uncontrolled
-              name='columns-actions'
-              selectionMode='multiple'
-              variant='faded'
-              closeOnSelect={false}
-              selectedKeys={new Set(props.columnSelected || [])}
-              onSelectionChange={(keys) => {
-                props.setColumnSelected?.(Array.from(keys) as string[])
-              }}
-              items={props.columnItems || []}
-              buttonOptions={{
-                isIconOnly: true,
-                icon: 'FaTableColumns',
-              }}
-            />
-          )}
+          {props.showColumnButton && renderColumnInput}
 
           {props.showAddButton && (
             <Button color='primary' isIconOnly icon='FaPlus' placement='right' onClick={props.onAdd} />
@@ -145,31 +51,27 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
             <span className='text-default-400 text-small pl-2 select-none'>Total {props.total} rows</span>
           )}
 
-          {/* {!!props.selected?.length && (
-            <> */}
           {props.showDeleteSelectedButton && (
             <Button
               isIconOnly
-              color={!props.selected?.length ? 'default' : 'danger'}
+              color={!props.rowSelected?.length ? 'default' : 'danger'}
               variant='flat'
               icon='FaTrashCan'
               placement='right'
               onClick={props.onDeleteSelected}
-              isDisabled={!props.selected?.length}
+              isDisabled={!props.rowSelected?.length}
             />
           )}
 
           {props.showForceDeleteSelectedButton && (
             <Button
               label='Force Delete'
-              color={!props.selected?.length ? 'default' : 'danger'}
+              color={!props.rowSelected?.length ? 'default' : 'danger'}
               variant='flat'
               onClick={props.onForceDeleteSelected}
-              isDisabled={!props.selected?.length}
+              isDisabled={!props.rowSelected?.length}
             />
           )}
-          {/* </>
-          )} */}
         </div>
 
         <div className='h-[40px' />
@@ -178,14 +80,7 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
           <div>
             <span className='text-default-400 text-small select-none'>Rows per page: </span>
 
-            <DropdownInput
-              uncontrolled
-              name='limit-actions'
-              variant='faded'
-              selectedKeys={new Set([`${perPage}`])}
-              items={pageLimitItems}
-              label={`${perPage || 'ALL'}`}
-            />
+            {renderLimitInput}
           </div>
         )}
       </div>

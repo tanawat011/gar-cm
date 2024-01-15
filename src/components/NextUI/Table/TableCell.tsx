@@ -1,16 +1,8 @@
-import type { TableColumnProps } from './TableColumn'
-import type { TableCellProps as NextUITableCellProps } from '@nextui-org/react'
+import type { TableCellProps } from './types'
 
 import React from 'react'
 
 import { TableCell as NextUITableCell, getKeyValue } from '@nextui-org/react'
-
-export type TableCellProps<T> = {
-  key: React.Key
-  column: TableColumnProps<T>
-  item: T
-  columnAlign?: TableColumnProps<T>['align']
-} & Omit<NextUITableCellProps, 'children'>
 
 export const TableCell = <T,>({ columnAlign, column, item, key, ...props }: TableCellProps<T>) => {
   const getAlignCell = () => {

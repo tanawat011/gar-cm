@@ -1,4 +1,4 @@
-import type { TableColumnProps } from './TableColumn'
+import type { TableColumnProps } from './types'
 import type { DropdownInputProps } from '../Input'
 
 import { useEffect, useMemo, useState } from 'react'
