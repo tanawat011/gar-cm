@@ -15,7 +15,7 @@ export const usePaginationInput = ({ limit, total, loading, ...props }: UsePagin
   const [countPages, setCountPages] = useState(1)
 
   useEffect(() => {
-    const countP = Math.ceil(total / limit)
+    const countP = Math.ceil(total / limit) || 1
 
     if (page > countP) handlePageChange(countP)
 
@@ -23,8 +23,8 @@ export const usePaginationInput = ({ limit, total, loading, ...props }: UsePagin
   }, [total, limit])
 
   const handlePageChange = useCallback((p: number) => {
-    setPage(p)
-    props?.onPageChange?.(p)
+    setPage(p || 1)
+    props?.onPageChange?.(p || 1)
   }, [])
 
   const renderPagination = useMemo(

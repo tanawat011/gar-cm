@@ -1,4 +1,5 @@
 import type { TopContentProps } from './types'
+import type { FieldValues } from 'react-hook-form'
 
 import { Button } from '../Button'
 
@@ -7,7 +8,7 @@ import { useFilterInput } from './useFilterInput'
 import { useLimitInput } from './useLimitInput'
 import { useSearchInput } from './useSearchInput'
 
-export const TopContent = <T,>(props: TopContentProps<T>) => {
+export const TopContent = <T extends FieldValues>(props: TopContentProps<T>) => {
   const { renderSearchInput } = useSearchInput({
     onSearch: props.onSearch,
     search: props.search,
@@ -58,7 +59,7 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
               variant='flat'
               icon='FaTrashCan'
               placement='right'
-              onClick={props.onDeleteSelected}
+              onClick={() => props.onDeleteSelected?.(props.rowSelected || [])}
               isDisabled={!props.rowSelected?.length}
             />
           )}
@@ -68,7 +69,7 @@ export const TopContent = <T,>(props: TopContentProps<T>) => {
               label='Force Delete'
               color={!props.rowSelected?.length ? 'default' : 'danger'}
               variant='flat'
-              onClick={props.onForceDeleteSelected}
+              onClick={() => props.onForceDeleteSelected?.(props.rowSelected || [])}
               isDisabled={!props.rowSelected?.length}
             />
           )}

@@ -5,10 +5,11 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextu
 import { Button } from '../Button'
 
 type ModalConfirmProps = {
-  title?: string
-  msg?: string
+  title?: string | React.ReactNode
+  msg?: string | React.ReactNode
   onSubmit?: () => void
-} & ReturnType<typeof useDisclosure>
+  onClose?: () => void
+} & Omit<ReturnType<typeof useDisclosure>, 'onClose'>
 
 export const ModalConfirm: React.FC<ModalConfirmProps> = ({ title, msg, ...props }) => {
   return (

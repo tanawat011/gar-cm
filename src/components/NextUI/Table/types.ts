@@ -6,6 +6,7 @@ import type {
   TableColumnProps as NextUITableColumnProps,
   SelectionMode,
 } from '@nextui-org/react'
+import type { Control, DefaultValues, FieldErrors, FieldValues } from 'react-hook-form'
 
 export type TableState =
   | 'default'
@@ -17,9 +18,9 @@ export type TableState =
   // | 'copy-inline'
   | 'clone'
   | 'delete'
-  | 'delete-all'
+  | 'delete-selected'
   | 'force-delete'
-  | 'force-delete-all'
+  | 'force-delete-selected'
 
 export type TableSortType = 'asc' | 'desc'
 export type TableSort<T> = { [key in keyof T]: TableSortType }
@@ -32,7 +33,7 @@ export type TableRefetchData<T> = {
   sort?: TableSort<T>
 }
 
-export type TableConfig<T> = TableRefetchData<T> & {
+export type TableConfig<T extends FieldValues> = TableRefetchData<T> & {
   state: TableState
   columns: TableColumnProps<T>[] // NOTE: This is the list of columns that are visible
   columnItems: DropdownInputProps['items'] // NOTE: List of columns that can be selectable for showing/hiding
@@ -40,11 +41,13 @@ export type TableConfig<T> = TableRefetchData<T> & {
   rowSelected: string[] // NOTE: List of rows that are selected
 }
 
-export type TableProps<T, U = never> = {
+export type TableProps<T extends FieldValues, U = never> = {
   // NOTE: Config
   selectedMode?: SelectionMode
 
   // NOTE: Data
+  defaultFormValues?: DefaultValues<T>
+  formBuilder?: (control: Control<T>, errors: FieldErrors<T>) => React.ReactNode
   columns: TableColumnProps<T>[]
   rows: ({ key?: string; id?: string } & T)[]
   search?: string
@@ -68,19 +71,19 @@ export type TableProps<T, U = never> = {
   onFilterSelected?: (selected: string[]) => void
   onColumnSelected?: (selected: string[]) => void
   onAdd?: () => void
-  onDeleteSelected?: () => void
-  onForceDeleteSelected?: () => void
+  onDeleteSelected?: (items: string[]) => void
+  onForceDeleteSelected?: (items: string[]) => void
   onLimitSelected?: (limit: number) => void
   onRowSelected?: (selected: string[]) => void
   onQuickAction?: (item: T, type: U) => void
-  onEdit?: (item: T) => void
-  onCopy?: (item: T) => void
-  onClone?: (item: T) => void
-  onDelete?: (item: T) => void
-  onForceDelete?: (item: T) => void
   onPageChange?: (page: number) => void
   onRefetchData?: (config: TableRefetchData<T>) => void
   onConfigChange?: (config: TableConfig<T>) => void
+  onSubmitDeleteSelectedModal?: (state: TableState, v: string[]) => void
+  onSubmitConfirmModal?: (state: TableState, v: T) => void
+  onCloseConfirmModal?: () => void
+  onSubmitFormModal?: (state: TableState, item: T) => void
+  onCloseFormModal?: () => void
 
   // NOTE: Show/Hide
   showSearch?: boolean
@@ -102,7 +105,7 @@ export type TableProps<T, U = never> = {
   showNavigation?: boolean
 }
 
-export type TopContentProps<T> = Pick<
+export type TopContentProps<T extends FieldValues> = Pick<
   TableProps<T> & UseColumnsPropsReturn<T>,
   // NOTE: Data
   | 'search'
@@ -137,7 +140,7 @@ export type TopContentProps<T> = Pick<
   | 'showPageLimit'
 >
 
-export type BottomContentProps<T> = Pick<
+export type BottomContentProps<T extends FieldValues> = Pick<
   TableProps<T>,
   // NOTE: Data
   | 'rows'
@@ -156,21 +159,23 @@ export type BottomContentProps<T> = Pick<
   | 'showNavigation'
 >
 
-export type ColumnActionProps<T, U = never> = {
+export type ColumnActionProps<T extends FieldValues, U = never> = {
   item: T
-} & Pick<
-  TableProps<T, U>,
-  'onEdit' | 'onCopy' | 'onClone' | 'onDelete' | 'onForceDelete' | 'quickActionItems' | 'onQuickAction'
->
+  onEdit?: (item: T) => void
+  onCopy?: (item: T) => void
+  onClone?: (item: T) => void
+  onDelete?: (item: T) => void
+  onForceDelete?: (item: T) => void
+} & Pick<TableProps<T, U>, 'showAction' | 'quickActionItems' | 'onQuickAction'>
 
-export type TableCellProps<T> = {
+export type TableCellProps<T extends FieldValues> = {
   key: React.Key
   column: TableColumnProps<T>
   item: T
   columnAlign?: TableColumnProps<T>['align']
 } & Omit<NextUITableCellProps, 'children'>
 
-export type TableColumnProps<T> = {
+export type TableColumnProps<T extends FieldValues> = {
   key: keyof T | 'action'
   label?: string
   show?: boolean

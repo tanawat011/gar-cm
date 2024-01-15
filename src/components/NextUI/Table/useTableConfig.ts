@@ -1,10 +1,12 @@
-import type { TableColumnProps, TableConfig, TableSort, TableState } from './types'
+import type { TableConfig, TableSort, TableState } from './types'
+import type { UseColumnsProps } from './useColumns'
+import type { FieldValues } from 'react-hook-form'
 
 import { useEffect, useMemo, useState } from 'react'
 
 import { useColumns } from './useColumns'
 
-export type UseTableConfigPropsReturn<T> = TableConfig<T> & {
+export type UseTableConfigPropsReturn<T extends FieldValues> = TableConfig<T> & {
   handleStateChange: (state: TableState) => void
   handleSearch: (search: string) => void
   handleFilter: (filter: string[]) => void
@@ -15,23 +17,22 @@ export type UseTableConfigPropsReturn<T> = TableConfig<T> & {
   handleRowSelected: (rowSelected: string[]) => void
 }
 
-export type UseTableConfigProps<T> = {
-  columns: TableColumnProps<T>[]
+export type UseTableConfigProps<T extends FieldValues, U> = {
   tableConfig?: TableConfig<T>
   handleRefetchData?: (config: Pick<TableConfig<T>, 'search' | 'filter' | 'page' | 'limit' | 'sort'>) => void
   handleConfigChange?: (config: TableConfig<T>) => void
-}
+} & UseColumnsProps<T, U>
 
 const defaultLimit = 10
 const defaultSort = { createdAt: 'desc' }
 
-export const useTableConfig = <T = { createdAt: string }>({
-  columns,
+export const useTableConfig = <T extends FieldValues, U = never>({
   tableConfig,
   handleRefetchData,
   handleConfigChange,
-}: UseTableConfigProps<T>): UseTableConfigPropsReturn<T> => {
-  const { columns: columnList, columnItems, columnSelected, setColumnSelected } = useColumns(columns)
+  ...props
+}: UseTableConfigProps<T, U>): UseTableConfigPropsReturn<T> => {
+  const { columns, columnItems, columnSelected, setColumnSelected } = useColumns({ ...props })
 
   const [isNotFirstRender, setIsNotFirstRender] = useState(false)
   const [state, setState] = useState<TableState>(tableConfig?.state || 'default')
@@ -50,12 +51,12 @@ export const useTableConfig = <T = { createdAt: string }>({
       sort,
       limit,
       page,
-      columns: columnList,
+      columns,
       columnItems,
       columnSelected,
       rowSelected,
     }),
-    [state, search, filter, sort, limit, page, columnList, columnItems, columnSelected, rowSelected],
+    [state, search, filter, sort, limit, page, columns, columnItems, columnSelected, rowSelected],
   )
 
   useEffect(() => {

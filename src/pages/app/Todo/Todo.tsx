@@ -1,14 +1,12 @@
 'use client'
 
+import type { QuickActionKey } from './useInitialData'
 import type { TableRefetchData, TableState } from '@/components/NextUI'
 import type { todo as Todo } from '@prisma/client'
 
-import { useCallback, useMemo, useState } from 'react'
+import React, { useCallback } from 'react'
 
-import { useDisclosure } from '@nextui-org/react'
-import { useForm } from 'react-hook-form'
-
-import { ModalConfirm, ModalForm } from '@/components/NextUI'
+import { Table } from '@/components/NextUI'
 import {
   mutationCreateTodo,
   mutationDeleteTodo,
@@ -17,10 +15,14 @@ import {
   queryTodos,
 } from '@/graphql/client/todo'
 import { useGqlCrud } from '@/hooks/useGqlCrud'
-import { toCapital } from '@/libs/utilities'
 
 import { FormConfig } from './FormConfig'
-import { TableConfig } from './TableConfig'
+import { useInitialData } from './useInitialData'
+
+export type QuickAction = {
+  done?: boolean
+  important?: boolean
+}
 
 export const AppTodo = () => {
   const { loading, data, refetch, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
@@ -31,68 +33,57 @@ export const AppTodo = () => {
     mutationForceDelete: mutationForceDeleteTodo,
   })
 
-  const modalForm = useDisclosure()
-  const modalConfirm = useDisclosure()
+  const { columns, filterItems, quickActionItems } = useInitialData()
 
-  const [crudType, setCrudType] = useState<TableState>()
+  const onQuickAction = useCallback(
+    async (item: Todo, key: QuickActionKey) => {
+      if (key === 'done') {
+        const done = !item.done
+        await updateItem({
+          variables: {
+            id: item.id,
+            done,
+          },
+        })
+      }
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    clearErrors,
-    control,
-    reset,
-    setValue,
-  } = useForm<Todo>({
-    defaultValues: {
-      name: '',
-      detail: '',
-      done: false,
-      important: false,
+      if (key === 'important') {
+        const important = !item.important
+        await updateItem({
+          variables: {
+            id: item.id,
+            important,
+          },
+        })
+      }
+
+      await refetch()
     },
-  })
+    [data],
+  )
 
-  const onSetItem = (item: Todo, state: TableState) => {
-    setCrudType(state)
+  const handleSubmitDeleteSelectedModal = useCallback(async (state: TableState, item: string[]) => {
+    // let action: (opt?: { variables: Todo }) => Promise<unknown> = () => Promise.resolve()
+    // switch (state) {
+    //   case 'delete-selected':
+    //     action = createItem
+    //     break
+    //   case 'force-delete-selected':
+    //     action = deleteItem
+    //     break
+    // }
+    // await action({
+    //   variables: item,
+    // })
+    // await refetch()
+  }, [])
 
-    if (state === 'delete' || state === 'force-delete') {
-      return setValue('id', item.id)
-    }
-
-    if (state === 'edit') setValue('id', item.id)
-
-    setValue('name', item.name)
-    setValue('detail', item.detail)
-    setValue('done', item.done)
-    setValue('important', item.important)
-  }
-
-  const onResetForm = () => {
-    clearErrors()
-    reset()
-  }
-
-  const onCloseForm = () => {
-    modalForm.onClose()
-    onResetForm()
-  }
-
-  const onCloseConfirm = () => {
-    modalConfirm.onClose()
-    onResetForm()
-  }
-
-  const onSubmit = async (variables: Todo) => {
+  const handleSubmitConfirmModal = useCallback(async (state: TableState, item: Todo) => {
     let action: (opt?: { variables: Todo }) => Promise<unknown> = () => Promise.resolve()
 
-    switch (crudType) {
-      case 'copy':
+    switch (state) {
       case 'clone':
-      case 'add':
         action = createItem
-        break
-      case 'edit':
-        action = updateItem
         break
       case 'delete':
         action = deleteItem
@@ -103,14 +94,31 @@ export const AppTodo = () => {
     }
 
     await action({
-      variables,
+      variables: item,
     })
 
-    onCloseForm()
-    onCloseConfirm()
+    await refetch()
+  }, [])
+
+  const handleSubmitFormModal = useCallback(async (state: TableState, item: Todo) => {
+    let action: (opt?: { variables: Todo }) => Promise<unknown> = () => Promise.resolve()
+
+    switch (state) {
+      case 'copy':
+      case 'add':
+        action = createItem
+        break
+      case 'edit':
+        action = updateItem
+        break
+    }
+
+    await action({
+      variables: item,
+    })
 
     await refetch()
-  }
+  }, [])
 
   const handleRefetchData = useCallback(async (v: TableRefetchData<Todo>) => {
     await refetch({
@@ -126,44 +134,50 @@ export const AppTodo = () => {
     })
   }, [])
 
-  const renderTable = useMemo(() => {
-    return (
-      <TableConfig
-        data={data?.todos.data || []}
-        total={data?.todos.count || 0}
-        loading={loading}
-        refetch={refetch}
-        onOpenForm={modalForm.onOpen}
-        onOpenModalConfirm={modalConfirm.onOpen}
-        onSetItem={onSetItem}
-        onStateChange={setCrudType}
-        updateTodo={updateItem}
-        deleteTodo={deleteItem}
-        forceDeleteTodo={forceDeleteItem}
-        onRefetchData={handleRefetchData}
-      />
-    )
-  }, [data?.todos, loading])
-
   return (
-    <>
-      <ModalForm
-        {...modalForm}
-        onSubmit={handleSubmit(onSubmit)}
-        onClose={onCloseForm}
-        title={toCapital(`${crudType}`)}
-        renderForm={() => <FormConfig errors={errors} control={control} />}
-      />
-
-      <ModalConfirm
-        {...modalConfirm}
-        onSubmit={handleSubmit(onSubmit)}
-        onClose={onCloseConfirm}
-        title={`Confirm ${`${crudType === 'force-delete' ? 'delete' : crudType}`} Item`}
-        msg={`Are you sure you want to ${toCapital(`${crudType === 'force-delete' ? 'delete' : crudType}`)} this item?`}
-      />
-
-      {renderTable}
-    </>
+    <Table
+      // NOTE: Config
+      selectedMode='multiple'
+      // NOTE: Data
+      defaultFormValues={{
+        name: '',
+        detail: '',
+        done: false,
+        important: false,
+      }}
+      formBuilder={(control, errors) => <FormConfig control={control} errors={errors} />}
+      columns={columns}
+      rows={data?.todos.data || []}
+      total={data?.todos.count || 0}
+      loading={loading}
+      // NOTE: All Items
+      filterItems={filterItems}
+      quickActionItems={quickActionItems}
+      // NOTE: Event/Action
+      onRefetchData={handleRefetchData}
+      onDeleteSelected={() => void 0}
+      onForceDeleteSelected={() => void 0}
+      onQuickAction={onQuickAction}
+      onSubmitDeleteSelectedModal={handleSubmitDeleteSelectedModal}
+      onSubmitConfirmModal={handleSubmitConfirmModal}
+      onSubmitFormModal={handleSubmitFormModal}
+      // NOTE: Show/Hide
+      showSearch
+      showFilterButton
+      showColumnButton
+      showAddButton
+      showTotal
+      showDeleteSelectedButton
+      showForceDeleteSelectedButton
+      showPageLimit
+      showAction
+      showEditButton
+      showCopyButton
+      showCloneButton
+      showDeleteButton
+      showForceDeleteButton
+      showTotalSelected
+      showPagination
+    />
   )
 }

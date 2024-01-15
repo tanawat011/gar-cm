@@ -1,5 +1,6 @@
 import type { ColumnActionProps } from './types'
 import type { MenuItemProps } from '@nextui-org/react'
+import type { FieldValues } from 'react-hook-form'
 
 import React, { useMemo } from 'react'
 
@@ -7,7 +8,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@
 
 import { Icon } from '@/components/Icon'
 
-export const ColumnAction = <T, U>({
+export const ColumnAction = <T extends FieldValues, U>({
   item,
   onEdit,
   onCopy,

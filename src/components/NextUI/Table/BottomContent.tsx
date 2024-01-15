@@ -1,4 +1,5 @@
 import type { BottomContentProps } from './types'
+import type { FieldValues } from 'react-hook-form'
 
 import { useCallback } from 'react'
 
@@ -7,7 +8,7 @@ import { Button } from '../Button'
 import { defaultLimit } from './constant'
 import { usePaginationInput } from './usePaginationInput'
 
-export const BottomContent = <T,>(props: BottomContentProps<T>) => {
+export const BottomContent = <T extends FieldValues>(props: BottomContentProps<T>) => {
   const {
     showTotalSelected = true,
     showPagination = true,

@@ -9,3 +9,8 @@ export const defaultLimitItems = [
   { key: '100', label: '100' },
   { key: 'all', label: 'ALL' },
 ]
+
+export const tableBodyHeight =
+  'max-h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*3)-52px-(40px*2))]'
+export const tableBodyEmptyStateHeight =
+  'h-[calc(100vh-var(--navbar-container-h)-var(--navbar-h)-var(--footer-h)-(theme(space.4)*5)-52px-(40px*3)-5px)]'
