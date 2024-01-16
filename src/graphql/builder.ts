@@ -43,3 +43,19 @@ builder.mutationType({
 })
 
 builder.addScalarType('Date', DateTimeResolver, {})
+
+export class Ids {
+  ids: string[]
+
+  constructor(ids: string[]) {
+    this.ids = ids
+  }
+}
+
+builder.objectType(Ids, {
+  name: 'ids',
+  description: 'All id for multiple action',
+  fields: (t) => ({
+    ids: t.exposeStringList('ids'),
+  }),
+})

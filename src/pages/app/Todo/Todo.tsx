@@ -12,6 +12,8 @@ import {
   mutationDeleteTodo,
   mutationForceDeleteTodo,
   mutationUpdateTodo,
+  mutationDeleteSelectedTodo,
+  mutationForceDeleteSelectedTodo,
   queryTodos,
 } from '@/graphql/client/todo'
 import { useGqlCrud } from '@/hooks/useGqlCrud'
@@ -25,12 +27,24 @@ export type QuickAction = {
 }
 
 export const AppTodo = () => {
-  const { loading, data, refetch, createItem, updateItem, deleteItem, forceDeleteItem } = useGqlCrud({
+  const {
+    loading,
+    data,
+    refetch,
+    createItem,
+    updateItem,
+    deleteItem,
+    forceDeleteItem,
+    deleteSelectedItem,
+    forceDeleteSelectedItem,
+  } = useGqlCrud({
     queryList: queryTodos,
     mutationCreate: mutationCreateTodo,
     mutationUpdate: mutationUpdateTodo,
     mutationDelete: mutationDeleteTodo,
     mutationForceDelete: mutationForceDeleteTodo,
+    mutationDeleteSelected: mutationDeleteSelectedTodo,
+    mutationForceDeleteSelected: mutationForceDeleteSelectedTodo,
   })
 
   const { columns, filterItems, quickActionItems } = useInitialData()
@@ -63,19 +77,22 @@ export const AppTodo = () => {
   )
 
   const handleSubmitDeleteSelectedModal = useCallback(async (state: TableState, item: string[]) => {
-    // let action: (opt?: { variables: Todo }) => Promise<unknown> = () => Promise.resolve()
-    // switch (state) {
-    //   case 'delete-selected':
-    //     action = createItem
-    //     break
-    //   case 'force-delete-selected':
-    //     action = deleteItem
-    //     break
-    // }
-    // await action({
-    //   variables: item,
-    // })
-    // await refetch()
+    let action: (opt?: { variables: { ids: string[] } }) => Promise<unknown> = () => Promise.resolve()
+
+    switch (state) {
+      case 'delete-selected':
+        action = deleteSelectedItem
+        break
+      case 'force-delete-selected':
+        action = forceDeleteSelectedItem
+        break
+    }
+
+    await action({
+      variables: { ids: item },
+    })
+
+    await refetch()
   }, [])
 
   const handleSubmitConfirmModal = useCallback(async (state: TableState, item: Todo) => {

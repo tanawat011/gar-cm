@@ -3,7 +3,7 @@ import type { todo as Todo } from '@prisma/client'
 
 import prisma from '@/libs/prisma'
 
-import { builder } from '../builder'
+import { Ids, builder } from '../builder'
 
 type TodoFieldObj = Record<keyof Todo, FieldRef>
 
@@ -38,7 +38,7 @@ export class TodoList {
 }
 
 // All Object Type
-const TodoObj = builder.objectRef<Todo>('todoo')
+const TodoObj = builder.objectRef<Todo>('todoObj')
 
 TodoObj.implement({
   fields: todoFieldObj,
@@ -237,3 +237,51 @@ builder.mutationField('forceDeleteTodo', (t) =>
     },
   }),
 )
+
+builder.mutationField('deleteSelectedTodo', (t) => {
+  return t.field({
+    type: Ids,
+    args: {
+      ids: t.arg.stringList({ required: true }),
+    },
+    resolve: async (_parent, _args, ctx) => {
+      const { ids } = _args
+
+      await prisma.todo.updateMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+        data: {
+          deletedAt: new Date(),
+          deletedBy: ctx.user?.email,
+        },
+      })
+
+      return { ids }
+    },
+  })
+})
+
+builder.mutationField('forceDeleteSelectedTodo', (t) => {
+  return t.field({
+    type: Ids,
+    args: {
+      ids: t.arg.stringList({ required: true }),
+    },
+    resolve: async (_parent, _args) => {
+      const { ids } = _args
+
+      await prisma.todo.deleteMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+      })
+
+      return { ids }
+    },
+  })
+})

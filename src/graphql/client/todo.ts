@@ -105,3 +105,19 @@ export const mutationForceDeleteTodo = gql`
     }
   }
 `
+
+export const mutationDeleteSelectedTodo = gql`
+  mutation ($ids: [String!]!) {
+    deleteSelectedTodo(ids: $ids) {
+      ids
+    }
+  }
+`
+
+export const mutationForceDeleteSelectedTodo = gql`
+  mutation ($ids: [String!]!) {
+    forceDeleteSelectedTodo(ids: $ids) {
+      ids
+    }
+  }
+`
