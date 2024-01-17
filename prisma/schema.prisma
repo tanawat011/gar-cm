@@ -51,6 +51,21 @@ model todo {
   deletedBy String?
 }
 
+model link_remember {
+  link String
+  name String
+
+  // Audit record fields
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  createdBy String?
+  updatedAt DateTime  @updatedAt
+  updatedBy String?
+  deletedAt DateTime?
+  deletedBy String?
+}
+
 model review_me {
   review String
   name   String
