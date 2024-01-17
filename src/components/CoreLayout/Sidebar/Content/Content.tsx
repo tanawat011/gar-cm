@@ -5,7 +5,8 @@ import tw, { styled } from 'twin.macro'
 
 import { Menu } from '@/components/Common'
 import { menu } from '@/configs'
-import { appSettingSelector } from '@/store/selector'
+import { appSettingSelector } from '@/store/appSetting'
+import { profileSelector } from '@/store/profile'
 
 import { StyledMenuContainer } from './Content.styled'
 import { Footer } from './Footer'
@@ -17,13 +18,14 @@ type ContentProps = {
 
 export const Content: React.FC<ContentProps> = ({ prefixPath }) => {
   const { sidebarStyle } = useSelector(appSettingSelector)
+  const { permission = [] } = useSelector(profileSelector)
 
   return (
     <StyledContent>
       <Logo />
 
       <StyledMenuContainer className='overflow-x-hidden' $sidebarStyle={sidebarStyle}>
-        <Menu items={menu} prefixPath={prefixPath} />
+        <Menu items={menu} prefixPath={prefixPath} currentPermission={permission} />
       </StyledMenuContainer>
 
       <Footer />

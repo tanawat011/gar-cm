@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { DEFAULT_APP_SETTING } from '@/configs/defaultAppSetting'
 import { LS_DRAWER_POS, LS_LANG, LS_THEME } from '@/constants'
-import { setDrawerPosition, setLang, setTheme } from '@/store/slice'
+import { setDrawerPosition, setLang, setTheme } from '@/store/appSetting'
 
 export const useInitAppSetting = () => {
   const dispatch = useDispatch()

@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import tw, { styled } from 'twin.macro'
 
-import { appSettingSelector } from '@/store/selector'
+import { appSettingSelector } from '@/store/appSetting'
 
 import { LeftContainer } from './Left'
 import { RightContainer } from './Right'

@@ -1,5 +1,6 @@
 import { builder } from './builder'
-import './types/reviewMe'
-import './types/todo'
+import './reviewMe/type'
+import './todo/type'
+import './user/type'
 
 export const schema = builder.toSchema()

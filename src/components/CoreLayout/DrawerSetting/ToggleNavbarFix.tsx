@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { LS_NAVBAR_TYPE, NAVBAR_TYPE_LABEL } from '@/constants'
-import { appSettingSelector } from '@/store/selector'
-import { setNavbarType } from '@/store/slice'
+import { appSettingSelector, setNavbarType } from '@/store/appSetting'
 
 import { ToggleAppSetting } from './ToggleAppSetting'
 

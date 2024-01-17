@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { LS_SIDEBAR_STYLE, SIDEBAR_STYLE_LABEL } from '@/constants'
-import { appSettingSelector } from '@/store/selector'
-import { setSidebarStyle } from '@/store/slice'
+import { appSettingSelector, setSidebarStyle } from '@/store/appSetting'
 
 import { ToggleAppSetting } from './ToggleAppSetting'
 

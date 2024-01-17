@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Drawer } from '@/components/Common'
-import { appSettingSelector } from '@/store/selector'
+import { appSettingSelector } from '@/store/appSetting'
 
 import { CoreLayoutContext } from '../Provider'
 

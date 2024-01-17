@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { DRAWER_POSITION_LABEL, LS_DRAWER_POS } from '@/constants'
-import { appSettingSelector } from '@/store/selector'
-import { setDrawerPosition } from '@/store/slice'
+import { appSettingSelector, setDrawerPosition } from '@/store/appSetting'
 
 import { ToggleAppSetting } from './ToggleAppSetting'
 

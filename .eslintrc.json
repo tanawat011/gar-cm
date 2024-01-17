@@ -14,7 +14,7 @@
     "camelcase": [
       "error",
       {
-        "allow": []
+        "allow": ["redirect_uri", "request_uri", "email_verified", "family_name", "given_name", "updated_at"]
       }
     ],
     "no-console": ["warn", { "allow": ["info", "warn", "error"] }],

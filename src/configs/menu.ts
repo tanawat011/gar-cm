@@ -1,11 +1,14 @@
 import type { IconType } from '@/components/Icon'
 
+export type Permission = 'SUPERADMIN' | 'ADMIN' | 'USER'
+
 export type MenuProps = {
   label: string
   icon?: IconType
   id: string
   link?: string
   isGroupLabel?: boolean
+  permission?: Permission[]
   items?: MenuProps[]
 }
 
@@ -17,6 +20,12 @@ export const menu: MenuProps[] = [
     link: '/',
   },
   {
+    label: 'Review Me',
+    icon: 'FaShop',
+    id: 'review-me',
+    permission: ['SUPERADMIN'],
+  },
+  {
     label: 'Application',
     icon: 'FaShop',
     id: 'app',
@@ -25,6 +34,7 @@ export const menu: MenuProps[] = [
         label: 'Link Remember',
         icon: 'FaShop',
         id: 'link-remember',
+        permission: ['SUPERADMIN'],
       },
       {
         label: 'TODO',

@@ -1,9 +1,9 @@
 'use client'
 
-import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
+import { useRouteProtect } from '@/hooks'
 
-function RootAdminTemplate({ children }: { children: React.ReactNode }) {
+export default function RootAdminTemplate({ children }: { children: React.ReactNode }) {
+  useRouteProtect()
+
   return children
 }
-
-export default withPageAuthRequired(RootAdminTemplate as never)

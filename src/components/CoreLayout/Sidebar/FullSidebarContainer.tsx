@@ -6,7 +6,7 @@ import { Card, CardBody } from '@nextui-org/react'
 import { useSelector } from 'react-redux'
 import tw, { css, styled } from 'twin.macro'
 
-import { appSettingSelector } from '@/store/selector'
+import { appSettingSelector } from '@/store/appSetting'
 
 type FullSidebarContainerProps = {
   children?: React.ReactNode

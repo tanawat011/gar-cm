@@ -23,6 +23,7 @@ export default function LinkRemember() {
       <NextLink label='DaisyUI' href='https://daisyui.com/components/button/' />
       <NextLink label='Sample UI from NextUI' href='https://nextui-dashboard-template.vercel.app/' />
       <NextLink label='Configuration for .versionrc.json' href='https://convco.github.io/configuration/' />
+      <NextLink label='API auth0' href='https://auth0.com/docs/api/management/v2/users/get-users' />
     </div>
   )
 }

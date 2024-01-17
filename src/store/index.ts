@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { appSettingReducer } from './slice'
+import { reducer as appSettingReducer } from './appSetting'
+import { reducer as profileReducer } from './profile'
 
 export const store = configureStore({
   reducer: {
     appSetting: appSettingReducer,
+    profile: profileReducer,
   },
 })
 

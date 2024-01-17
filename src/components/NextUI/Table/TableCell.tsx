@@ -1,10 +1,11 @@
 import type { TableCellProps } from './types'
+import type { FieldValues } from 'react-hook-form'
 
 import React from 'react'
 
 import { TableCell as NextUITableCell, getKeyValue } from '@nextui-org/react'
 
-export const TableCell = <T,>({ columnAlign, column, item, key, ...props }: TableCellProps<T>) => {
+export const TableCell = <T extends FieldValues>({ columnAlign, column, item, key, ...props }: TableCellProps<T>) => {
   const getAlignCell = () => {
     switch (columnAlign) {
       case 'center':

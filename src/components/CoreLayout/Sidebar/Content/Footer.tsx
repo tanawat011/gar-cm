@@ -3,7 +3,7 @@ import type { SidebarType } from '@/types'
 import { useSelector } from 'react-redux'
 import tw, { styled } from 'twin.macro'
 
-import { appSettingSelector } from '@/store/selector'
+import { appSettingSelector } from '@/store/appSetting'
 import pkg from '~/package.json'
 
 export const Footer = () => {

@@ -12,6 +12,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import { TW_THEME } from '@/libs/pureTailwind'
 import { store } from '@/store'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Providers = [ComponentType<any>, ComponentProps<any>?][]
 
 const CombineProviders = (providers: Providers): React.FC<{ children: React.ReactNode }> =>

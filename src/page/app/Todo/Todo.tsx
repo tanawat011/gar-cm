@@ -15,7 +15,7 @@ import {
   mutationDeleteSelectedTodo,
   mutationForceDeleteSelectedTodo,
   queryTodos,
-} from '@/graphql/client/todo'
+} from '@/graphql/todo'
 import { useGqlCrud } from '@/hooks/useGqlCrud'
 
 import { FormConfig } from './FormConfig'
@@ -49,7 +49,7 @@ export const AppTodo = () => {
 
   const { columns, filterItems, quickActionItems } = useInitialData()
 
-  const onQuickAction = useCallback(
+  const handleQuickAction = useCallback(
     async (item: Todo, key: QuickActionKey) => {
       if (key === 'done') {
         const done = !item.done
@@ -174,7 +174,7 @@ export const AppTodo = () => {
       onRefetchData={handleRefetchData}
       onDeleteSelected={() => void 0}
       onForceDeleteSelected={() => void 0}
-      onQuickAction={onQuickAction}
+      onQuickAction={handleQuickAction}
       onSubmitDeleteSelectedModal={handleSubmitDeleteSelectedModal}
       onSubmitConfirmModal={handleSubmitConfirmModal}
       onSubmitFormModal={handleSubmitFormModal}

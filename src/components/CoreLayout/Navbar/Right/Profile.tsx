@@ -1,15 +1,37 @@
 import type { AvatarProps } from '@nextui-org/react'
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
+import { useQuery } from '@apollo/client'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import { Avatar, User } from '@nextui-org/react'
+import { useDispatch } from 'react-redux'
 
 import { DropdownInput } from '@/components/NextUI'
+import { queryUserRoles } from '@/graphql/user'
+import { setProfile } from '@/store/profile'
 
 import { CoreLayoutContext } from '../../Provider'
 
 export const Profile = () => {
+  const { data } = useQuery(queryUserRoles)
+
+  const { user } = useUser()
+
   const { onLoading } = useContext(CoreLayoutContext)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (data && user) {
+      dispatch(
+        setProfile({
+          ...user,
+          permission: data?.userRoles?.roles || [],
+        }),
+      )
+    }
+  }, [data, user])
 
   const profileInfo: Partial<AvatarProps> = {
     isBordered: true,
@@ -17,7 +39,7 @@ export const Profile = () => {
     className: 'transition-transform',
     color: 'success',
     size: 'sm',
-    src: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+    src: user?.picture || '',
   }
 
   return (
@@ -46,8 +68,8 @@ export const Profile = () => {
     >
       <div>
         <User
-          name='Tanawat P'
-          description='tanawat.p@gmail.com'
+          name={user?.name || '-'}
+          description={user?.email || '-'}
           className='cursor-pointer mx-3 hidden md:flex'
           avatarProps={profileInfo}
         />

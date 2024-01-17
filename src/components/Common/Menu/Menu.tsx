@@ -1,9 +1,10 @@
-import type { MenuProps as ItemProps } from '@/configs'
+import type { MenuProps as ItemProps, Permission } from '@/configs'
 
 import type { KeyboardEvent } from 'react'
 import React, { useRef, useState } from 'react'
 
 import { Divider } from '@/components/Common'
+import { handlePermission } from '@/hooks'
 
 import { BadgeAndArrow } from './BadgeAndArrow'
 import { IconAndLabel } from './IconAndLabel'
@@ -15,9 +16,10 @@ type OpenedMenu = Record<string, { open: boolean; height: `${number}px` }>
 type MenuProps = {
   items: ItemProps[]
   prefixPath?: string
+  currentPermission: Permission[]
 }
 
-export const Menu: React.FC<MenuProps> = ({ items, prefixPath }) => {
+export const Menu: React.FC<MenuProps> = ({ items, prefixPath, currentPermission }) => {
   const activeLink = window.location.pathname
 
   const listRef = useRef<Record<string, HTMLUListElement | null>>({})
@@ -141,7 +143,9 @@ export const Menu: React.FC<MenuProps> = ({ items, prefixPath }) => {
                   isExpand={isExpand}
                   isExpandOnHover={isExpandOnHover}
                 >
-                  {item.items?.map((cldItem, cldIdx) => generateMenuItem(cldItem, cldIdx, (lvl + 1) as never, itemId))}
+                  {item.items
+                    ?.filter((m) => handlePermission(m, currentPermission))
+                    .map((cldItem, cldIdx) => generateMenuItem(cldItem, cldIdx, (lvl + 1) as never, itemId))}
                 </SubItemContainer>
               </div>
             )}
@@ -151,5 +155,9 @@ export const Menu: React.FC<MenuProps> = ({ items, prefixPath }) => {
     )
   }
 
-  return <StyledUlContainer>{items.map((item, idx) => generateMenuItem(item, idx, 1))}</StyledUlContainer>
+  return (
+    <StyledUlContainer>
+      {items.filter((m) => handlePermission(m, currentPermission)).map((item, idx) => generateMenuItem(item, idx, 1))}
+    </StyledUlContainer>
+  )
 }

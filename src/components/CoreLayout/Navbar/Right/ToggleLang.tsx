@@ -9,8 +9,7 @@ import { DropdownInput } from '@/components/NextUI'
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { LANG_LABEL, LS_LANG } from '@/constants'
 import { useToggleAppSetting } from '@/hooks'
-import { appSettingSelector } from '@/store/selector'
-import { setLang } from '@/store/slice'
+import { appSettingSelector, setLang } from '@/store/appSetting'
 
 export const ToggleLang = () => {
   const { lang } = useSelector(appSettingSelector)

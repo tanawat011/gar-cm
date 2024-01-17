@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux'
 import { IconCountryFlag } from '@/components/IconCountryFlag'
 import { DEFAULT_APP_SETTING } from '@/configs'
 import { LANG_LABEL, LS_LANG } from '@/constants'
-import { appSettingSelector } from '@/store/selector'
-import { setLang } from '@/store/slice'
+import { appSettingSelector, setLang } from '@/store/appSetting'
 
 import { ToggleAppSetting } from './ToggleAppSetting'
 

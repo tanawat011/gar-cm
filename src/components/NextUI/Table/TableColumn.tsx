@@ -1,10 +1,11 @@
 import type { TableColumnProps } from './types'
+import type { FieldValues } from 'react-hook-form'
 
 import React from 'react'
 
 import { TableColumn as NextUITableColumn } from '@nextui-org/react'
 
-export const TableColumn = <T,>(props: TableColumnProps<T>) => {
+export const TableColumn = <T extends FieldValues>(props: TableColumnProps<T>) => {
   const getAlign = () => {
     switch (props.align) {
       case 'center':
