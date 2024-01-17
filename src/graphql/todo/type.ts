@@ -110,7 +110,7 @@ builder.queryField('todos', (t) => {
         },
       }
 
-      const [count, data] = await prisma.$transaction([
+      const [count = 0, data = []] = await prisma.$transaction([
         prisma.todo.count(query),
         prisma.todo.findMany({
           take: _limit,

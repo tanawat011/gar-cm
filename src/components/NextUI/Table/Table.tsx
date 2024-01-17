@@ -23,7 +23,7 @@ import { tableBodyEmptyStateHeight, tableBodyHeight } from './constant'
 import { useTableConfig } from './useTableConfig'
 
 export const Table = <T extends FieldValues, U>(props: TableProps<T, U>) => {
-  const { defaultFormValues, formBuilder, rows, total, loading, selectedMode = 'none' } = props
+  const { defaultFormValues, formBuilder, rows, total, loading, selectedMode = 'none', striped } = props
 
   const {
     handleSubmit,
@@ -267,6 +267,7 @@ export const Table = <T extends FieldValues, U>(props: TableProps<T, U>) => {
         topContentPlacement='outside'
         bottomContentPlacement='outside'
         isHeaderSticky
+        isStriped={striped}
         checkboxesProps={{
           className: isMultipleMode ? 'max-w-[44px]' : '',
         }}

@@ -172,8 +172,6 @@ export const AppTodo = () => {
       quickActionItems={quickActionItems}
       // NOTE: Event/Action
       onRefetchData={handleRefetchData}
-      onDeleteSelected={() => void 0}
-      onForceDeleteSelected={() => void 0}
       onQuickAction={handleQuickAction}
       onSubmitDeleteSelectedModal={handleSubmitDeleteSelectedModal}
       onSubmitConfirmModal={handleSubmitConfirmModal}

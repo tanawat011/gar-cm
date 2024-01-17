@@ -1,19 +1,17 @@
 import { gql } from '@apollo/client'
 
 export const reviewMeList = gql`
-  query {
-    review {
-      id
-      review
-      name
-    }
-  }
-`
-
-export const reviewMe = gql`
-  mutation ($review: String!, $name: String!) {
-    reviewMe(review: $review, name: $name) {
-      id
+  query ($search: String, $page: Int, $limit: Int) {
+    reviewMeList(search: $search, page: $page, limit: $limit) {
+      count
+      data {
+        review
+        name
+        id
+        createdAt
+        updatedAt
+        deletedAt
+      }
     }
   }
 `

@@ -1,5 +1,5 @@
-import AppTodo from '@/page/app/Todo'
+import ReviewMe from '@/page/ReviewMe'
 
-export default function PageToDo() {
-  return <AppTodo />
+export default function PageReviewMe() {
+  return <ReviewMe />
 }

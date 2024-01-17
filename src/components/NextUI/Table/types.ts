@@ -44,6 +44,7 @@ export type TableConfig<T extends FieldValues> = TableRefetchData<T> & {
 export type TableProps<T extends FieldValues, U = never> = {
   // NOTE: Config
   selectedMode?: SelectionMode
+  striped?: boolean
 
   // NOTE: Data
   defaultFormValues?: DefaultValues<T>
@@ -71,8 +72,6 @@ export type TableProps<T extends FieldValues, U = never> = {
   onFilterSelected?: (selected: string[]) => void
   onColumnSelected?: (selected: string[]) => void
   onAdd?: () => void
-  onDeleteSelected?: (items: string[]) => void
-  onForceDeleteSelected?: (items: string[]) => void
   onLimitSelected?: (limit: number) => void
   onRowSelected?: (selected: string[]) => void
   onQuickAction?: (item: T, type: U) => void
@@ -105,7 +104,10 @@ export type TableProps<T extends FieldValues, U = never> = {
   showNavigation?: boolean
 }
 
-export type TopContentProps<T extends FieldValues> = Pick<
+export type TopContentProps<T extends FieldValues> = {
+  onDeleteSelected?: (rowSelected?: string[]) => void
+  onForceDeleteSelected?: (rowSelected?: string[]) => void
+} & Pick<
   TableProps<T> & UseColumnsPropsReturn<T>,
   // NOTE: Data
   | 'search'
@@ -125,8 +127,6 @@ export type TopContentProps<T extends FieldValues> = Pick<
   | 'onFilterSelected'
   | 'onColumnSelected'
   | 'onAdd'
-  | 'onDeleteSelected'
-  | 'onForceDeleteSelected'
   | 'onLimitSelected'
 
   // NOTE: Show/Hide
