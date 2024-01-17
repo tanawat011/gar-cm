@@ -63,7 +63,7 @@ builder.queryField('reviewMeList', (t) => {
       page: t.arg.int(),
       limit: t.arg.int(),
     },
-    resolve: async (_parent, _args, ctx) => {
+    resolve: async (_parent, _args) => {
       const { search, limit, page } = _args
       const _page = page || 1
       const _limit = limit ?? 10
