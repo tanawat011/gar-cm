@@ -34,7 +34,6 @@ export const menu: MenuProps[] = [
         label: 'Link Remember',
         icon: 'FaShop',
         id: 'link-remember',
-        permission: ['SUPERADMIN'],
       },
       {
         label: 'TODO',

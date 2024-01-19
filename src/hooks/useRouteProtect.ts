@@ -25,12 +25,14 @@ export const useRouteProtect = () => {
 
       if (parent) {
         newM.link = `${parent.link || `/${parent.id}`}/${m.id}`
+      } else {
+        newM.link = m.link || `/${m.id}`
       }
 
       return [newM, ...(m.items?.flatMap((mm) => getFlatMenu(mm, m)) || [])]
     }
 
-    const _menuFound = menu
+    const _menuFound = [...menu]
       .filter((m) => !m.isGroupLabel)
       .flatMap((m) => getFlatMenu(m))
       .find((m) => m?.link === pathname)

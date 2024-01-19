@@ -3,8 +3,6 @@ import type { review_me as ReviewMe } from '@prisma/client'
 
 import { useMemo } from 'react'
 
-export type QuickActionKey = 'done' | 'important'
-
 export const useInitialData = () => {
   const columns: TableColumnProps<ReviewMe>[] = useMemo(
     () => [
@@ -15,7 +13,7 @@ export const useInitialData = () => {
       },
       {
         key: 'review',
-        label: 'Detail',
+        label: 'Review',
         show: true,
       },
       {

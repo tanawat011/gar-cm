@@ -11,11 +11,6 @@ import { useGqlCrud } from '@/hooks/useGqlCrud'
 
 import { useInitialData } from './useInitialData'
 
-export type QuickAction = {
-  done?: boolean
-  important?: boolean
-}
-
 export const ReviewMe = () => {
   const { loading, data, refetch } = useGqlCrud({
     queryList: reviewMeList,

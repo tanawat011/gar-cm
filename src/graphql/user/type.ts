@@ -25,9 +25,11 @@ builder.queryField('userRoles', (t) => {
     resolve: async (_parent, _args, ctx) => {
       const userId = ctx?.user?.sub
 
-      const { data } = await axios.get(`${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}/roles`, {
+      const url = `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}/roles`
+
+      const { data } = await axios.get(url, {
         headers: {
-          Authorization: `Bearer ${process.env.AUTH0_API_TOKEN}`,
+          Authorization: `Bearer ${process.env.AUTH0_API_TOKEN}${process.env.AUTH0_API_TOKEN2}`,
         },
       })
 

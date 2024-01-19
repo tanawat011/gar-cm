@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const queryLinkRemembers = gql`
   query ($search: String, $page: Int, $limit: Int) {
-    todos(search: $search, page: $page, limit: $limit) {
+    linkRemembers(search: $search, page: $page, limit: $limit) {
       count
       data {
         id
@@ -17,7 +17,7 @@ export const queryLinkRemembers = gql`
 `
 
 export const mutationCreateLinkRemember = gql`
-  mutation ($name: String!, $link: String) {
+  mutation ($name: String!, $link: String!) {
     createLinkRemember(name: $name, link: $link) {
       id
       name
