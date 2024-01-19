@@ -1,4 +1,4 @@
-import type { ShowOffContent } from '@/types'
+import type { ShowOffContent } from '@/libs/componentDocument/types'
 
 import { useMemo } from 'react'
 
