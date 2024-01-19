@@ -1,4 +1,4 @@
-import type { TwAlignContent, TwAlignItems, TwAlignSelf, TwScreenStyle } from './types'
+import type { TwAlignContent, TwAlignItems, TwAlignSelf, TwScreenStyle } from '../types'
 
 /** Because this file too long,
  * * You can use shortcut 'ctrl + k, ctrl + j' to fold the code

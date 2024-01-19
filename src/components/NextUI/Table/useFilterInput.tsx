@@ -37,7 +37,7 @@ export const useFilterInput = (props: UseFilterInputProps) => {
         onSelectionChange={handleFilterSelected}
         items={props.filterItems || []}
         buttonOptions={{
-          isIconOnly: true,
+          iconOnly: true,
           icon: 'FaFilter',
         }}
       />

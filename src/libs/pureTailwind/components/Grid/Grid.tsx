@@ -33,13 +33,13 @@ export type GridProps = {
   colGap?: TwUnionProp<TwGridGapAmount>
   alignItems?: TwUnionProp<TwAlignItems>
   alignSelf?: TwUnionProp<TwAlignSelf>
-  justifyItem?: TwUnionProp<TwJustifyItems>
+  justifyItems?: TwUnionProp<TwJustifyItems>
   className?: string
   width?: TwUnionProp<Exclude<TwWidth, 'wide'>>
 }
 
 export const Grid: React.FC<GridProps> = (props) => {
-  const { className, children, width, col, row, gap, rowGap, colGap, alignItems, alignSelf, justifyItem } = props
+  const { className, children, width, col, row, gap, rowGap, colGap, alignItems, alignSelf, justifyItems } = props
 
   const generateClassName = useMemo(() => {
     return [
@@ -53,11 +53,11 @@ export const Grid: React.FC<GridProps> = (props) => {
       colGap && generateTwClassName(TW_GRID_COL_GAP_SCREEN, colGap),
       alignItems && generateTwClassName(TW_ALIGN_ITEMS_SCREEN, alignItems),
       alignSelf && generateTwClassName(TW_ALIGN_SELF_SCREEN, alignSelf),
-      justifyItem && generateTwClassName(TW_JUSTIFY_ITEMS_SCREEN, justifyItem),
+      justifyItems && generateTwClassName(TW_JUSTIFY_ITEMS_SCREEN, justifyItems),
     ]
       .join(' ')
       .replace(/  +/g, ' ')
-  }, [width, col, row, gap, rowGap, colGap, className, alignItems, alignSelf, justifyItem])
+  }, [width, col, row, gap, rowGap, colGap, className, alignItems, alignSelf, justifyItems])
 
   return <div className={generateClassName}>{children}</div>
 }

@@ -38,6 +38,7 @@ import {
   FaFilter,
   FaTableColumns,
   FaCalendarDays,
+  FaCode,
 } from 'react-icons/fa6'
 
 // NOTE: Add icon to this object
@@ -78,6 +79,7 @@ export const ICON_ALLOWED = {
   FaFilter,
   FaTableColumns,
   FaCalendarDays,
+  FaCode,
 }
 
 export type IconType = keyof typeof ICON_ALLOWED

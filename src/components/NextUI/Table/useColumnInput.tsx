@@ -37,7 +37,7 @@ export const useColumnInput = (props: UseColumnInputProps) => {
         onSelectionChange={handleColumnSelected}
         items={props.columnItems || []}
         buttonOptions={{
-          isIconOnly: true,
+          iconOnly: true,
           icon: 'FaTableColumns',
         }}
       />

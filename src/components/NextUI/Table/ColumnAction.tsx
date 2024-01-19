@@ -62,7 +62,7 @@ export const ColumnAction = <T extends FieldValues, U>({
     <div className='flex'>
       {quickActionItems?.map(({ toggleColor, variant, size, ...action }, idx) => (
         <Button
-          isIconOnly
+          iconOnly
           variant={variant || 'light'}
           size={size || 'sm'}
           color={toggleColor?.(item) || action?.color || 'default'}
@@ -75,7 +75,7 @@ export const ColumnAction = <T extends FieldValues, U>({
 
       <Dropdown>
         <DropdownTrigger>
-          <Button isIconOnly color='default' size='sm' variant='light'>
+          <Button iconOnly color='default' size='sm' variant='light'>
             <Icon name='FaEllipsisVertical' />
           </Button>
         </DropdownTrigger>

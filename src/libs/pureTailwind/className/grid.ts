@@ -8,7 +8,7 @@ import type {
   TwGridRowStartAmount,
   TwGridWidth,
   TwScreenStyle,
-} from './types'
+} from '../types'
 
 // * Please note that the grid is not supported in IE11
 /** Because this file too long,

@@ -1,4 +1,4 @@
-import type { TwJustifyContent, TwJustifyItems, TwJustifySelf, TwScreenStyle } from './types'
+import type { TwJustifyContent, TwJustifyItems, TwJustifySelf, TwScreenStyle } from '../types'
 
 /** Because this file too long,
  * * You can use shortcut 'ctrl + k, ctrl + j' to fold the code

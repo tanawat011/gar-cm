@@ -53,9 +53,9 @@ export const menu: MenuProps[] = [
     id: 'component',
     items: [
       {
-        label: 'Display',
+        label: 'Layout',
         icon: 'FaShop',
-        id: 'display',
+        id: 'layout',
         items: [
           {
             label: 'Flex',

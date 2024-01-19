@@ -67,6 +67,9 @@
     "evenly[:]* '([^']*)'", // evenly: '...'
     "stretch[:]* '([^']*)'", // stretch: '...'
     "baseline[:]* '([^']*)'", // baseline: '...'
+    "screen[:]* '([^']*)'", // screen: '...'
+    "half[:]* '([^']*)'", // half: '...'
+    "wide[:]* '([^']*)'", // wide: '...'
     "[0-9][:]* '([^']*)'" // [0-9]: '...'
   ],
   "better-comments.tags": [

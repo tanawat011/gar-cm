@@ -11,9 +11,18 @@ export type ButtonProps = {
   icon?: IconType
   iconR?: IconType
   placement?: 'left' | 'right' | 'two-side'
-} & ButtonPropsNextUI
+  iconOnly?: boolean
+} & Omit<ButtonPropsNextUI, 'isIconOnly'>
 
-export const Button: React.FC<ButtonProps> = ({ label, icon, placement = 'left', iconR, children, ...leftProps }) => {
+export const Button: React.FC<ButtonProps> = ({
+  label,
+  icon,
+  placement = 'left',
+  iconR,
+  iconOnly,
+  children,
+  ...leftProps
+}) => {
   const isLeft = icon && placement === 'left'
   const isRight = icon && placement === 'right'
   const isTwoSide = icon && placement === 'two-side'
@@ -27,6 +36,7 @@ export const Button: React.FC<ButtonProps> = ({ label, icon, placement = 'left',
         startContent: <Icon name={icon} />,
         endContent: <Icon name={iconR || icon} />,
       })}
+      isIconOnly={iconOnly}
     >
       {label}
       {children}

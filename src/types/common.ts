@@ -5,3 +5,9 @@ export type CommonOption<T = string> = {
   label: string
   icon?: IconType
 }
+
+export type ShowOffContent = {
+  title: string
+  id: string
+  children?: ShowOffContent[]
+}

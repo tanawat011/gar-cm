@@ -1,3 +1,5 @@
+'use client'
+
 import type { DrawerPosition } from '@/types'
 
 import React, { useEffect } from 'react'

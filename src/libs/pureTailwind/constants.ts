@@ -323,6 +323,9 @@ export enum TW_WIDTH {
   FIT = 'fit',
   WIDE = 'wide',
   AUTO = 'auto',
+  HALF = 'half',
+  SCREEN = 'screen',
+  NONE = 'none',
 }
 export const TW_WIDTH_ARR = Object.values(TW_WIDTH)
 
@@ -331,6 +334,9 @@ export enum TW_HEIGHT {
   FULL = 'full',
   FIT = 'fit',
   AUTO = 'auto',
+  HALF = 'half',
+  SCREEN = 'screen',
+  NONE = 'none',
 }
 export const TW_HEIGHT_ARR = Object.values(TW_HEIGHT)
 

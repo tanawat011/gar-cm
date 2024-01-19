@@ -1,4 +1,4 @@
-import AppLinkRemember from '@/page/app/LinkRemember'
+import AppLinkRemember from '@/page/App/LinkRemember'
 
 export default function PageLinkRemember() {
   return <AppLinkRemember />

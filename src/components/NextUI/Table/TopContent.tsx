@@ -41,7 +41,7 @@ export const TopContent = <T extends FieldValues>(props: TopContentProps<T>) => 
           {props.showColumnButton && renderColumnInput}
 
           {props.showAddButton && (
-            <Button color='primary' isIconOnly icon='FaPlus' placement='right' onClick={props.onAdd} />
+            <Button color='primary' iconOnly icon='FaPlus' placement='right' onClick={props.onAdd} />
           )}
         </div>
       </div>
@@ -54,7 +54,7 @@ export const TopContent = <T extends FieldValues>(props: TopContentProps<T>) => 
 
           {props.showDeleteSelectedButton && (
             <Button
-              isIconOnly
+              iconOnly
               color={!props.rowSelected?.length ? 'default' : 'danger'}
               variant='flat'
               icon='FaTrashCan'
