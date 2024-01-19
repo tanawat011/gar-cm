@@ -1,4 +1,4 @@
-import type { ShowOffContent } from '@/types'
+import type { ShowOffContent } from './types'
 
 import React, { useCallback } from 'react'
 

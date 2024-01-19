@@ -3,7 +3,7 @@ import React from 'react'
 import { Button } from '@/components/NextUI'
 import { Box } from '@/libs/pureTailwind'
 
-import { CodeBlock } from '../CodeBlock'
+import { CodeBlock } from './CodeBlock'
 
 type CodeDisplayProps = {
   id: string

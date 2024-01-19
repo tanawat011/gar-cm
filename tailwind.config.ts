@@ -11,7 +11,7 @@ const config: Config = {
     './src/page/**/*.{ts,tsx}',
     './src/utils/**/*.{ts,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-    './src/libs/pureTailwind/**/*.{ts,tsx}',
+    './src/libs/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {

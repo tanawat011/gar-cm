@@ -1,4 +1,5 @@
-import { CodeDisplay, MockupBox } from '@/components/Common'
+import { MockupBox } from '@/components/Common'
+import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid, GridItem, Box } from '@/libs/pureTailwind'
 
 export const JustifyItems = () => {

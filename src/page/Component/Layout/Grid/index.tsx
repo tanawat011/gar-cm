@@ -1,6 +1,6 @@
 'use client'
 
-import { ContentDisplay } from '@/components/Common'
+import { ComponentDocument } from '@/libs/componentDocument'
 
 import { AlignItems } from './AlignItems'
 import { AlignSelf } from './AlignSelf'
@@ -18,25 +18,17 @@ export const ComponentLayoutGrid = () => {
   const { contents } = useData()
 
   return (
-    <div className='flex gap-6'>
-      <div className='[&>:not(:last-child)]:mb-8'>
-        <Basic />
-        <RowGap />
-        <ColGap />
-        <Responsive />
-        <RowSpan />
-        <ColSpan />
-        <ResponsiveSpan />
-        <AlignItems />
-        <AlignSelf />
-        <JustifyItems />
-      </div>
-
-      <div className='min-w-[218px] select-none hidden lg:flex flex-col gap-2'>
-        <div className='fixed'>
-          <ContentDisplay contents={contents} />
-        </div>
-      </div>
-    </div>
+    <ComponentDocument contents={contents}>
+      <Basic />
+      <RowGap />
+      <ColGap />
+      <Responsive />
+      <RowSpan />
+      <ColSpan />
+      <ResponsiveSpan />
+      <AlignItems />
+      <AlignSelf />
+      <JustifyItems />
+    </ComponentDocument>
   )
 }

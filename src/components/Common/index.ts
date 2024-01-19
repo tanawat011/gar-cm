@@ -1,7 +1,4 @@
 export * from './Backdrop'
-export * from './CodeBlock'
-export * from './CodeDisplay'
-export * from './ContentDisplay'
 export * from './Divider'
 export * from './Drawer'
 export * from './Menu'
