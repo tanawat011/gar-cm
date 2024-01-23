@@ -1,5 +1,6 @@
+import type { ButtonProps } from '../../Button'
 import type { IconType } from '@/components/Icon'
-import type { ButtonProps, DropdownItemProps, DropdownMenuProps } from '@nextui-org/react'
+import type { DropdownItemProps, DropdownMenuProps } from '@nextui-org/react'
 import type { Control } from 'react-hook-form'
 
 import React, { useCallback } from 'react'

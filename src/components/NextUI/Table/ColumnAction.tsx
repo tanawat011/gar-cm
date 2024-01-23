@@ -4,9 +4,11 @@ import type { FieldValues } from 'react-hook-form'
 
 import React, { useMemo } from 'react'
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
 import { Icon } from '@/components/Icon'
+
+import { Button } from '../Button'
 
 export const ColumnAction = <T extends FieldValues, U>({
   item,
