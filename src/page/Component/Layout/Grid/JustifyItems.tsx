@@ -2,10 +2,10 @@ import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid, GridItem, Box } from '@/libs/pureTailwind'
 
-export const JustifyItems = () => {
+export const JustifyItems: React.FC<{ id: string }> = ({ id }) => {
   return (
     <CodeDisplay
-      id='justify-items'
+      id={id}
       title='Justify items'
       detail=''
       code={`<Grid col={{ default: 1, md: 2, xl: 3 }} className='flex gap-3'>

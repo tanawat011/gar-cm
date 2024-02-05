@@ -2,10 +2,10 @@ import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid, GridItem, Box } from '@/libs/pureTailwind'
 
-export const AlignItems = () => {
+export const AlignItems: React.FC<{ id: string }> = ({ id }) => {
   return (
     <CodeDisplay
-      id='align-items'
+      id={id}
       title='Align items'
       detail=''
       code={`<Grid col={{ default: 1, md: 2, xl: 3 }} className='flex gap-3'>

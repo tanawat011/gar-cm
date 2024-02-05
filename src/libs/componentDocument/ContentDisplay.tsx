@@ -2,39 +2,90 @@ import type { ShowOffContent } from './types'
 
 import React, { useCallback } from 'react'
 
+import { PREFIX_DOCUMENT_ID } from './constant'
+
 type ContentDisplayProps = {
   title?: string
   contents: ShowOffContent[]
+  onClick?: (id: string) => void
 }
 
-export const ContentDisplay: React.FC<ContentDisplayProps> = ({ title = 'Contents', contents }) => {
-  const renderText = useCallback((text: string) => <p className='text-sm text-gray-400 hover:text-white'>{text}</p>, [])
+type UlProps = {
+  children: React.ReactNode
+  className?: string
+}
+
+type LiProps = {
+  children: React.ReactNode
+  className?: string
+  key?: string
+}
+
+type ListProps = Partial<Pick<ContentDisplayProps, 'contents'>> & {
+  key?: string
+  id: string
+  title: string
+  onClick?: (id: string) => void
+}
+
+const Ul: React.FC<UlProps> = ({ children, className }) => (
+  <ul className={['[&>:not(:last-child)]:mb-2', className].join(' ')}>{children}</ul>
+)
+
+const Li: React.FC<LiProps> = ({ children, className }) => <li className={className}>{children}</li>
+
+const List: React.FC<ListProps> = ({ id, title, contents, onClick }) => {
+  const renderText = useCallback(
+    (text: string, elId: string) => (
+      <p
+        className='text-sm text-gray-400 hover:text-white cursor-pointer'
+        onClick={() => onClick?.(`${PREFIX_DOCUMENT_ID}-${elId}`)}
+      >
+        {text}
+      </p>
+    ),
+    [],
+  )
+
+  return (
+    <Li>
+      {renderText(title, id)}
+
+      {contents && (
+        <Ul className='mt-2 ml-3'>
+          {contents.map((content) => {
+            return <Li key={content.id}>{renderText(content.title, content.id)}</Li>
+          })}
+        </Ul>
+      )}
+    </Li>
+  )
+}
+
+export const ContentDisplay: React.FC<ContentDisplayProps> = ({ title = 'Contents', contents, onClick }) => {
+  const handleClick = useCallback((id: string) => {
+    onClick?.(id)
+  }, [])
 
   return (
     <>
       <p className='uppercase text-xs text-gray-500 font-bold mb-2'>{title}</p>
 
-      <ul className='[&>:not(:last-child)]:mb-2'>
+      <Ul>
         {contents.map((content) => {
           return (
-            <li key={content.id} className='cursor-pointer'>
-              {renderText(content.title)}
-
-              {content?.children && (
-                <ul className='[&>:not(:last-child)]:mb-2 mt-2 ml-3'>
-                  {content.children.map((child) => {
-                    return (
-                      <li key={child.id} className='cursor-pointer'>
-                        {renderText(child.title)}
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </li>
+            <List
+              key={content.id}
+              id={content.id}
+              title={content.title}
+              contents={content?.children}
+              onClick={handleClick}
+            />
           )
         })}
-      </ul>
+
+        <List id='api' title='API' onClick={handleClick} />
+      </Ul>
     </>
   )
 }
