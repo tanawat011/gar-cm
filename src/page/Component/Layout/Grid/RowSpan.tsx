@@ -2,10 +2,10 @@ import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid, GridItem } from '@/libs/pureTailwind'
 
-export const RowSpan = () => {
+export const RowSpan: React.FC<{ id: string }> = ({ id }) => {
   return (
     <CodeDisplay
-      id='row-span'
+      id={id}
       title='Row span'
       detail=''
       code={`<Grid col={3} gap={3}>

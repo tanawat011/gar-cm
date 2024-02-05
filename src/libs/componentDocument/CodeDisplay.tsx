@@ -4,6 +4,7 @@ import { Button } from '@/components/NextUI'
 import { Box } from '@/libs/pureTailwind'
 
 import { CodeBlock } from './CodeBlock'
+import { PREFIX_DOCUMENT_ID } from './constant'
 
 type CodeDisplayProps = {
   id: string
@@ -14,6 +15,7 @@ type CodeDisplayProps = {
 }
 
 export const CodeDisplay: React.FC<CodeDisplayProps> = ({ id, title, detail, code, children }) => {
+  const documentId = `${PREFIX_DOCUMENT_ID}-${id}`
   const blockWrapperId = `block-wrapper-${id}`
   const blockContainerId = `block-container-${id}`
 
@@ -41,7 +43,7 @@ export const CodeDisplay: React.FC<CodeDisplayProps> = ({ id, title, detail, cod
   }
 
   return (
-    <div className='w-full'>
+    <div className={[documentId, 'w-full'].join(' ')} id={documentId}>
       <div className='mb-6'>
         <h2 className='mb-2 text-xl'>{title}</h2>
         <p className='text-gray-400 text-sm'>{detail}</p>

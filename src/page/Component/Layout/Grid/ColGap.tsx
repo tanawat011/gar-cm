@@ -2,10 +2,10 @@ import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid } from '@/libs/pureTailwind'
 
-export const ColGap = () => {
+export const ColGap: React.FC<{ id: string }> = ({ id }) => {
   return (
     <CodeDisplay
-      id='col-gap'
+      id={id}
       title='Column Gap'
       detail=''
       code={`<Grid col={3} gap={3} colGap={12}>

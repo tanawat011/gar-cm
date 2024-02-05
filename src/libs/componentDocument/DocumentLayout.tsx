@@ -1,27 +1,81 @@
 import type { ShowOffContent } from './types'
 
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 
 import { ApiTable } from './ApiTable'
 import { ContentDisplay } from './ContentDisplay'
+import { PREFIX_DOCUMENT_ID } from './constant'
 
 type DocumentLayoutProps = {
-  children?: React.ReactNode
+  containerId: string
   contents: ShowOffContent[]
+  apiContents?: ShowOffContent[]
+  onClick?: (id: string) => void
 }
 
-export const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children, contents }) => {
+export const DocumentLayout: React.FC<DocumentLayoutProps> = ({ containerId, contents, onClick }) => {
+  const renderContent = useMemo(() => {
+    return contents.flatMap((content) => {
+      if (content?.children) {
+        const newContent = { ...content }
+
+        delete newContent.children
+
+        return [newContent, ...content.children]
+      }
+
+      return [content]
+    })
+  }, [contents])
+
+  const handleClick = useCallback(
+    (id: string) => {
+      onClick?.(id)
+
+      const containerEl = document.getElementById(containerId)
+
+      const el = document.getElementById(id)
+
+      if (containerEl && el) {
+        // console.log('containerEl.clientHeight', containerEl.clientHeight)
+        // console.log('el.clientHeight', el.clientHeight)
+
+        // console.log('aaaaaa', containerEl.getElementsByClassName(id).item(0)?.scrollTop)
+
+        // containerEl.scrollTop = el.clientHeight
+
+        console.log('aaaaa', el.getBoundingClientRect().top)
+
+        containerEl.scrollTo({
+          top: el.getBoundingClientRect().top - 100,
+          behavior: 'smooth',
+        })
+
+        // el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    },
+    [containerId],
+  )
+
   return (
     <div className='flex gap-6'>
       <div className='[&>:not(:last-child)]:mb-8'>
-        {children}
+        {renderContent.map((content) => {
+          if (content?.render) return content?.render()
+
+          return (
+            <p key={content.id} id={`${PREFIX_DOCUMENT_ID}-${content.id}`} className='font-bold text-4xl'>
+              {content.title}
+            </p>
+          )
+        })}
 
         <ApiTable />
       </div>
 
       <div className='min-w-[218px] select-none hidden lg:flex flex-col gap-2'>
         <div className='fixed'>
-          <ContentDisplay contents={contents} />
+          <ContentDisplay contents={contents} onClick={handleClick} />
         </div>
       </div>
     </div>
