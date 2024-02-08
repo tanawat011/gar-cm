@@ -29,7 +29,7 @@ builder.queryField('userRoles', (t) => {
 
       const { data } = await axios.get(url, {
         headers: {
-          Authorization: `Bearer ${process.env.AUTH0_API_TOKEN}${process.env.AUTH0_API_TOKEN2}`,
+          Authorization: `Bearer ${ctx.accessToken.access_token}`,
         },
       })
 
