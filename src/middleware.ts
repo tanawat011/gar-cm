@@ -1,14 +1,6 @@
-import type { NextRequest } from 'next/server'
-
 import { NextResponse } from 'next/server'
 
-export async function middleware(req: NextRequest) {
-  // const appSession = req.cookies.get('appSession')
-
-  // if (!appSession) {
-  //   return NextResponse.redirect('/')
-  // }
-
+export async function middleware() {
   return NextResponse.next()
 }
 

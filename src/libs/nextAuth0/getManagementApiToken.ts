@@ -8,12 +8,12 @@ import { NextResponse } from 'next/server'
 export const getManagementApiToken = async (_: NextRequest) => {
   try {
     const { data } = await axios.post<Auth0TokenResult>(
-      process.env.AUTH0_OAUTH_TOKEN_API_URL,
+      `${process.env.AUTH0_ISSUER_BASE_URL}/oauth/token`,
       {
         grant_type: 'client_credentials',
         client_id: process.env.AUTH0_CLIENT_ID,
         client_secret: process.env.AUTH0_CLIENT_SECRET,
-        audience: `${process.env.AUTH0_BASE_API_URL}/`,
+        audience: `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/`,
       },
       {
         headers: { 'content-type': 'application/json' },

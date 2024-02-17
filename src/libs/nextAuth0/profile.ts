@@ -9,7 +9,7 @@ import { setSession } from '../nextAppSession'
 
 export const profile = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { data } = await axios.post<Auth0TokenResult>('http://localhost:3000/api/auth/token')
+    const { data } = await axios.post<Auth0TokenResult>(`${process.env.AUTH0_ISSUER_BASE_URL}/api/auth/token`)
 
     await setSession('accessToken', data)
 
