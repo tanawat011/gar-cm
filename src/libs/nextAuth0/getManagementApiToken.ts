@@ -1,11 +1,11 @@
 import type { Auth0TokenResult } from './type'
-import type { NextApiRequest } from 'next'
+import type { NextRequest } from 'next/server'
 
 import axios from 'axios'
 import { NextResponse } from 'next/server'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getManagementApiToken = async (_: NextApiRequest) => {
+export const getManagementApiToken = async (_: NextRequest) => {
   try {
     const { data } = await axios.post<Auth0TokenResult>(
       process.env.AUTH0_OAUTH_TOKEN_API_URL,
