@@ -33,28 +33,16 @@ export const DocumentLayout: React.FC<DocumentLayoutProps> = ({ containerId, con
       onClick?.(id)
 
       const containerEl = document.getElementById(containerId)
-
       const el = document.getElementById(id)
 
       if (containerEl && el) {
-        // console.log('containerEl.clientHeight', containerEl.clientHeight)
-        // console.log('el.clientHeight', el.clientHeight)
-
-        // console.log('aaaaaa', containerEl.getElementsByClassName(id).item(0)?.scrollTop)
-
-        // containerEl.scrollTop = el.clientHeight
-
-        console.log('aaaaa', el.getBoundingClientRect().top)
-
         containerEl.scrollTo({
-          top: el.getBoundingClientRect().top - 100,
           behavior: 'smooth',
+          top: el.offsetTop - 100,
         })
-
-        // el.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     },
-    [containerId],
+    [containerId, document.getElementById(containerId)?.clientHeight],
   )
 
   return (
