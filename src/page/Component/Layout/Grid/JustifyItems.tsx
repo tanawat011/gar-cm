@@ -1,13 +1,13 @@
+import type { ComponentDocumentFC } from '@/libs/componentDocument/types'
+
 import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid, GridItem, Box } from '@/libs/pureTailwind'
 
-export const JustifyItems: React.FC<{ id: string }> = ({ id }) => {
+export const JustifyItems: ComponentDocumentFC = (props) => {
   return (
     <CodeDisplay
-      id={id}
-      title='Justify items'
-      detail=''
+      {...props}
       code={`<Grid col={{ default: 1, md: 2, xl: 3 }} className='flex gap-3'>
   <Box className='p-3 w-full'>
     <Grid col={2} colGap={3} justifyItems={'start'}>

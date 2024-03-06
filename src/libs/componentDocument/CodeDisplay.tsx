@@ -6,15 +6,16 @@ import { Box } from '@/libs/pureTailwind'
 import { CodeBlock } from './CodeBlock'
 import { PREFIX_DOCUMENT_ID } from './constant'
 
-type CodeDisplayProps = {
-  id: string
-  title: string
+export type CodeDisplayProps = {
+  id?: string
+  title?: string
   detail?: string
   code: string
   children?: React.ReactNode
+  firstLvl?: boolean
 }
 
-export const CodeDisplay: React.FC<CodeDisplayProps> = ({ id, title, detail, code, children }) => {
+export const CodeDisplay: React.FC<CodeDisplayProps> = ({ id = '', title, detail, code, children, firstLvl }) => {
   const documentId = `${PREFIX_DOCUMENT_ID}-${id}`
   const blockWrapperId = `block-wrapper-${id}`
   const blockContainerId = `block-container-${id}`
@@ -44,10 +45,12 @@ export const CodeDisplay: React.FC<CodeDisplayProps> = ({ id, title, detail, cod
 
   return (
     <div className={[documentId, 'w-full'].join(' ')} id={documentId}>
-      <div className='mb-6'>
-        <h2 className='mb-2 text-xl'>{title}</h2>
-        <p className='text-gray-400 text-sm'>{detail}</p>
-      </div>
+      {!firstLvl && (
+        <div className='mb-6'>
+          <h2 className='mb-2 text-xl'>{title}</h2>
+          <p className='text-gray-400 text-sm'>{detail}</p>
+        </div>
+      )}
 
       <Box className='overflow-auto'>
         <div className='p-6'>{children}</div>

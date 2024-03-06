@@ -1,14 +1,13 @@
+import type { ComponentDocumentFC } from '@/libs/componentDocument/types'
+
 import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid } from '@/libs/pureTailwind'
 
-export const Basic: React.FC<{ id: string }> = ({ id }) => {
+export const Basic: ComponentDocumentFC = (props) => {
   return (
     <CodeDisplay
-      id={id}
-      title='Basic Grid'
-      detail='The grid creates visual consistency between layouts while allowing flexibility across a wide variety of
-      designs. Material Design`s responsive UI is based on a 12-column grid layout.'
+      {...props}
       code={`<Grid col={3} gap={3}>
   <MockupBox label='1' />
   <MockupBox label='1' />

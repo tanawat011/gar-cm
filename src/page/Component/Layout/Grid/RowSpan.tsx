@@ -1,13 +1,13 @@
+import type { ComponentDocumentFC } from '@/libs/componentDocument/types'
+
 import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Grid, GridItem } from '@/libs/pureTailwind'
 
-export const RowSpan: React.FC<{ id: string }> = ({ id }) => {
+export const RowSpan: ComponentDocumentFC = (props) => {
   return (
     <CodeDisplay
-      id={id}
-      title='Row span'
-      detail=''
+      {...props}
       code={`<Grid col={3} gap={3}>
   <GridItem rowSpan={2}>
     <MockupBox label='row-span=2' />

@@ -20,69 +20,83 @@ export const useData = () => {
       [
         {
           title: 'Basic Grid',
+          detail:
+            'The grid creates visual consistency between layouts while allowing flexibility across a wide variety of designs. Material Design`s responsive UI is based on a 12-column grid layout.',
           id: ELEMENT_ID.BASIC_GRID,
-          render: () => <Basic id={ELEMENT_ID.BASIC_GRID} />,
+          element: <Basic />,
         },
         {
           title: 'Gap',
+          detail: 'The gap between grid items.',
           id: ELEMENT_ID.GAP,
           children: [
             {
               title: 'Row Gap',
+              detail: 'The gap between grid rows.',
               id: ELEMENT_ID.ROW_GAP,
-              render: () => <RowGap id={ELEMENT_ID.ROW_GAP} />,
+              element: <RowGap />,
             },
             {
               title: 'Column Gap',
+              detail: 'The gap between grid columns.',
               id: ELEMENT_ID.COL_GAP,
-              render: () => <ColGap id={ELEMENT_ID.COL_GAP} />,
+              element: <ColGap />,
             },
           ],
         },
         {
           title: 'Responsive',
+          detail: 'The grid layout is responsive to the screen size.',
           id: ELEMENT_ID.RESPONSIVE,
-          render: () => <Responsive id={ELEMENT_ID.RESPONSIVE} />,
+          element: <Responsive />,
         },
         {
           title: 'Span',
+          detail: 'The span of grid items.',
           id: ELEMENT_ID.SPAN,
           children: [
             {
               title: 'Row Span',
+              detail: 'The span of grid rows.',
               id: ELEMENT_ID.ROW_SPAN,
-              render: () => <RowSpan id={ELEMENT_ID.ROW_SPAN} />,
+              element: <RowSpan />,
             },
             {
               title: 'Column Span',
+              detail: 'The span of grid columns.',
               id: ELEMENT_ID.COL_SPAN,
-              render: () => <ColSpan id={ELEMENT_ID.COL_SPAN} />,
+              element: <ColSpan />,
             },
             {
               title: 'Responsive Span',
+              detail: 'The span of grid items is responsive to the screen size.',
               id: ELEMENT_ID.RESPONSIVE_SPAN,
-              render: () => <ResponsiveSpan id={ELEMENT_ID.RESPONSIVE_SPAN} />,
+              element: <ResponsiveSpan />,
             },
           ],
         },
         {
           title: 'Placement',
+          detail: 'The placement of grid items.',
           id: ELEMENT_ID.PLACEMENT,
           children: [
             {
               title: 'Align Items',
+              detail: 'The alignment of grid items.',
               id: ELEMENT_ID.ALIGN_ITEMS,
-              render: () => <AlignItems id={ELEMENT_ID.ALIGN_ITEMS} />,
+              element: <AlignItems />,
             },
             {
               title: 'Align Self',
+              detail: 'The alignment of a grid item within its grid area.',
               id: ELEMENT_ID.ALIGN_SELF,
-              render: () => <AlignSelf id={ELEMENT_ID.ALIGN_SELF} />,
+              element: <AlignSelf />,
             },
             {
               title: 'Justify Items',
+              detail: 'The alignment of grid items.',
               id: ELEMENT_ID.JUSTIFY_ITEMS,
-              render: () => <JustifyItems id={ELEMENT_ID.JUSTIFY_ITEMS} />,
+              element: <JustifyItems />,
             },
           ],
         },

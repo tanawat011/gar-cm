@@ -1,13 +1,13 @@
+import type { ComponentDocumentFC } from '@/libs/componentDocument/types'
+
 import { MockupBox } from '@/components/Common'
 import { CodeDisplay } from '@/libs/componentDocument'
 import { Box, Grid } from '@/libs/pureTailwind'
 
-export const AlignSelf: React.FC<{ id: string }> = ({ id }) => {
+export const AlignSelf: ComponentDocumentFC = (props) => {
   return (
     <CodeDisplay
-      id={id}
-      title='Align self'
-      detail=''
+      {...props}
       code={`<Grid col={{ default: 1, md: 2, xl: 3 }} className='gap-3'>
   <Box className='p-3 w-full h-32 flex'>
     <Grid width='full' col={2} gap={3} alignSelf={'start'}>
