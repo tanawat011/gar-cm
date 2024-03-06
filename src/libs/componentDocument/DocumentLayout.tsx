@@ -1,6 +1,10 @@
+'use client'
+
 import type { ShowOffContent } from './types'
 
 import React, { useCallback, useMemo } from 'react'
+
+import { useRouter } from 'next/navigation'
 
 import { ApiTable } from './ApiTable'
 import { ContentDisplay } from './ContentDisplay'
@@ -14,6 +18,8 @@ type DocumentLayoutProps = {
 }
 
 export const DocumentLayout: React.FC<DocumentLayoutProps> = ({ containerId, contents, onClick }) => {
+  const router = useRouter()
+
   const renderContent = useMemo(() => {
     return contents.flatMap((content) => {
       if (content?.children) {
@@ -31,6 +37,7 @@ export const DocumentLayout: React.FC<DocumentLayoutProps> = ({ containerId, con
   const handleClick = useCallback(
     (id: string) => {
       onClick?.(id)
+      router.push(`#${id}`)
 
       const containerEl = document.getElementById(containerId)
       const el = document.getElementById(id)
