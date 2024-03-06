@@ -37,7 +37,7 @@ export const DocumentLayout: React.FC<DocumentLayoutProps> = ({ containerId, con
   const handleClick = useCallback(
     (id: string) => {
       onClick?.(id)
-      router.push(`#${id}`)
+      router.push(`#${id}`, { scroll: false })
 
       const containerEl = document.getElementById(containerId)
       const el = document.getElementById(id)

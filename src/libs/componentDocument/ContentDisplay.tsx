@@ -2,6 +2,8 @@ import type { ShowOffContent } from './types'
 
 import React, { useCallback } from 'react'
 
+import clsx from 'clsx'
+
 import { PREFIX_DOCUMENT_ID } from './constant'
 
 type ContentDisplayProps = {
@@ -25,6 +27,7 @@ type ListProps = Partial<Pick<ContentDisplayProps, 'contents'>> & {
   key?: string
   id: string
   title: string
+  active?: boolean
   onClick?: (id: string) => void
 }
 
@@ -34,11 +37,11 @@ const Ul: React.FC<UlProps> = ({ children, className }) => (
 
 const Li: React.FC<LiProps> = ({ children, className }) => <li className={className}>{children}</li>
 
-const List: React.FC<ListProps> = ({ id, title, contents, onClick }) => {
+const List: React.FC<ListProps> = ({ id, title, contents, active, onClick }) => {
   const renderText = useCallback(
     (text: string, elId: string) => (
       <p
-        className='text-sm text-gray-400 hover:text-white cursor-pointer'
+        className={clsx('text-sm text-gray-400 hover:text-white cursor-pointer', active && 'text-white font-semibold')}
         onClick={() => onClick?.(`${PREFIX_DOCUMENT_ID}-${elId}`)}
       >
         {text}
@@ -79,6 +82,7 @@ export const ContentDisplay: React.FC<ContentDisplayProps> = ({ title = 'Content
               id={content.id}
               title={content.title}
               contents={content?.children}
+              active
               onClick={handleClick}
             />
           )
