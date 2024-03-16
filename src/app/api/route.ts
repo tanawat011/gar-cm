@@ -1,7 +1,12 @@
-export async function GET() {
-  return new Response('Hello world! GET', { status: 200 })
+const handleRequest = async () => {
+  return new Response('Hello, world!')
 }
 
-export async function POST() {
-  return new Response('Hello world! POST', { status: 200 })
+export {
+  handleRequest as GET,
+  handleRequest as POST,
+  handleRequest as PUT,
+  handleRequest as PATCH,
+  handleRequest as DELETE,
+  handleRequest as OPTIONS,
 }

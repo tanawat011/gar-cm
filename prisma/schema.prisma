@@ -5,11 +5,6 @@ datasource db {
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
-}
-
-generator pothos {
-  provider = "prisma-pothos-types"
 }
 
 model tag {
