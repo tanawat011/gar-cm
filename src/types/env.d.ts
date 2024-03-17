@@ -5,6 +5,7 @@ declare namespace NodeJS {
     MONGODB_URI: string
     NEXTAUTH_SECRET: string
     NEXTAUTH_URL: string
+    NEXTAUTH_REDIRECT_URI: string
     GITHUB_CLIENT_ID: string
     GITHUB_CLIENT_SECRET: string
     GOOGLE_CLIENT_ID: string

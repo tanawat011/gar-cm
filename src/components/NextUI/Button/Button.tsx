@@ -1,41 +1,47 @@
+import type { IconProps, IconType } from '@/components/Icon'
 import type { ButtonProps as ButtonPropsNextUI } from '@nextui-org/react'
 
 import React from 'react'
 
 import { Button as ButtonNextUI } from '@nextui-org/react'
+import clsx from 'clsx'
 
-import { Icon, type IconType } from '@/components/Icon'
+import { Icon } from '@/components/Icon'
 
 export type ButtonProps = {
   label?: string
   icon?: IconType
   iconR?: IconType
-  placement?: 'left' | 'right' | 'two-side'
+  iconSize?: IconProps['size']
+  iconPlacement?: 'left' | 'right' | 'two-side'
   iconOnly?: boolean
 } & Omit<ButtonPropsNextUI, 'isIconOnly'>
 
 export const Button: React.FC<ButtonProps> = ({
   label,
   icon,
-  placement = 'left',
+  iconPlacement = 'left',
   iconR,
+  iconSize,
   iconOnly,
   children,
+  className,
   ...leftProps
 }) => {
-  const isLeft = icon && placement === 'left'
-  const isRight = icon && placement === 'right'
-  const isTwoSide = icon && placement === 'two-side'
+  const isLeft = icon && iconPlacement === 'left'
+  const isRight = icon && iconPlacement === 'right'
+  const isTwoSide = icon && iconPlacement === 'two-side'
 
   return (
     <ButtonNextUI
       {...leftProps}
-      {...(isLeft && { startContent: <Icon name={icon} /> })}
-      {...(isRight && { endContent: <Icon name={icon} /> })}
+      {...(isLeft && { startContent: <Icon name={icon} size={iconSize} /> })}
+      {...(isRight && { endContent: <Icon name={icon} size={iconSize} /> })}
       {...(isTwoSide && {
-        startContent: <Icon name={icon} />,
-        endContent: <Icon name={iconR || icon} />,
+        startContent: <Icon name={icon} size={iconSize} />,
+        endContent: <Icon name={iconR || icon} size={iconSize} />,
       })}
+      className={clsx(className, iconOnly && 'rounded-full')}
       isIconOnly={iconOnly}
     >
       {label}

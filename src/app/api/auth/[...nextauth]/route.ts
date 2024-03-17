@@ -24,9 +24,9 @@ const handleRequest = nextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  // pages: {
-  //   signIn: '/sign-in',
-  // },
+  pages: {
+    signIn: '/sign-in',
+  },
 })
 
 export {
