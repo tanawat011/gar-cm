@@ -16,7 +16,7 @@
     "build:prd": "prisma generate && yarn build",
     "start": "next start",
     "lint": "next lint",
-    "commit": "git add . && git cz",
+    "cz": "git add . && git cz",
     "release": "commit-and-tag-version",
     "release:first": "commit-and-tag-version --first-release",
     "release:major": "commit-and-tag-version --release-as major",

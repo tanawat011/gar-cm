@@ -48,12 +48,11 @@ export type TwUnionProp<T> = T | TwScreenSizeOptionWithDefault<T>
 
 export type TwGridColAmount = NumericRange<1, 12> | 'auto'
 export type TwGridRowAmount = NumericRange<1, 6> | 'auto'
-export type TwGridGapAmount = NumericRange<0, 12> | 0
+export type TwGapAmount = NumericRange<0, 12> | 0
 export type TwGridColSpanAmount = NumericRange<1, 12> | 'auto'
 export type TwGridColStartAmount = NumericRange<1, 13>
 export type TwGridRowSpanAmount = NumericRange<1, 6>
 export type TwGridRowStartAmount = NumericRange<1, 7>
-export type TwGridWidth = Exclude<TwWidth, 'wide'>
 
 export type TwTheme = `${TW_THEME}`
 

@@ -2,11 +2,10 @@ import type {
   TwGridColAmount,
   TwGridColSpanAmount,
   TwGridColStartAmount,
-  TwGridGapAmount,
+  TwGapAmount,
   TwGridRowAmount,
   TwGridRowSpanAmount,
   TwGridRowStartAmount,
-  TwGridWidth,
   TwScreenStyle,
 } from '../types'
 
@@ -167,100 +166,7 @@ export const TW_GRID_ROW_SCREEN: TwScreenStyle<TwGridRowAmount> = {
   },
 } as const
 
-export const TW_GRID_GAP_SCREEN: TwScreenStyle<TwGridGapAmount> = {
-  default: {
-    0: 'gap-0',
-    1: 'gap-1',
-    2: 'gap-2',
-    3: 'gap-3',
-    4: 'gap-4',
-    5: 'gap-5',
-    6: 'gap-6',
-    7: 'gap-7',
-    8: 'gap-8',
-    9: 'gap-9',
-    10: 'gap-10',
-    11: 'gap-11',
-    12: 'gap-12',
-  },
-  xs: {
-    0: 'xs:gap-0',
-    1: 'xs:gap-1',
-    2: 'xs:gap-2',
-    3: 'xs:gap-3',
-    4: 'xs:gap-4',
-    5: 'xs:gap-5',
-    6: 'xs:gap-6',
-    7: 'xs:gap-7',
-    8: 'xs:gap-8',
-    9: 'xs:gap-9',
-    10: 'xs:gap-10',
-    11: 'xs:gap-11',
-    12: 'xs:gap-12',
-  },
-  sm: {
-    0: 'sm:gap-0',
-    1: 'sm:gap-1',
-    2: 'sm:gap-2',
-    3: 'sm:gap-3',
-    4: 'sm:gap-4',
-    5: 'sm:gap-5',
-    6: 'sm:gap-6',
-    7: 'sm:gap-7',
-    8: 'sm:gap-8',
-    9: 'sm:gap-9',
-    10: 'sm:gap-10',
-    11: 'sm:gap-11',
-    12: 'sm:gap-12',
-  },
-  md: {
-    0: 'md:gap-0',
-    1: 'md:gap-1',
-    2: 'md:gap-2',
-    3: 'md:gap-3',
-    4: 'md:gap-4',
-    5: 'md:gap-5',
-    6: 'md:gap-6',
-    7: 'md:gap-7',
-    8: 'md:gap-8',
-    9: 'md:gap-9',
-    10: 'md:gap-10',
-    11: 'md:gap-11',
-    12: 'md:gap-12',
-  },
-  lg: {
-    0: 'lg:gap-0',
-    1: 'lg:gap-1',
-    2: 'lg:gap-2',
-    3: 'lg:gap-3',
-    4: 'lg:gap-4',
-    5: 'lg:gap-5',
-    6: 'lg:gap-6',
-    7: 'lg:gap-7',
-    8: 'lg:gap-8',
-    9: 'lg:gap-9',
-    10: 'lg:gap-10',
-    11: 'lg:gap-11',
-    12: 'lg:gap-12',
-  },
-  xl: {
-    0: 'xl:gap-0',
-    1: 'xl:gap-1',
-    2: 'xl:gap-2',
-    3: 'xl:gap-3',
-    4: 'xl:gap-4',
-    5: 'xl:gap-5',
-    6: 'xl:gap-6',
-    7: 'xl:gap-7',
-    8: 'xl:gap-8',
-    9: 'xl:gap-9',
-    10: 'xl:gap-10',
-    11: 'xl:gap-11',
-    12: 'xl:gap-12',
-  },
-} as const
-
-export const TW_GRID_ROW_GAP_SCREEN: TwScreenStyle<TwGridGapAmount> = {
+export const TW_GRID_ROW_GAP_SCREEN: TwScreenStyle<TwGapAmount> = {
   default: {
     0: 'gap-y-0',
     1: 'gap-y-1',
@@ -353,7 +259,7 @@ export const TW_GRID_ROW_GAP_SCREEN: TwScreenStyle<TwGridGapAmount> = {
   },
 } as const
 
-export const TW_GRID_COL_GAP_SCREEN: TwScreenStyle<TwGridGapAmount> = {
+export const TW_GRID_COL_GAP_SCREEN: TwScreenStyle<TwGapAmount> = {
   default: {
     0: 'gap-x-0',
     1: 'gap-x-1',
@@ -889,54 +795,3 @@ export const TW_GRID_ROW_END_SCREEN: TwScreenStyle<TwGridRowStartAmount> = {
     7: 'xl:row-end-7',
   },
 } as const
-
-export const TW_GRID_WIDTH_SCREEN: TwScreenStyle<TwGridWidth> = {
-  default: {
-    auto: 'w-auto',
-    full: 'w-full',
-    fit: 'w-fit',
-    half: 'w-1/2',
-    none: '',
-    screen: 'w-screen',
-  },
-  xs: {
-    auto: 'xs:w-auto',
-    full: 'xs:w-full',
-    fit: 'xs:w-fit',
-    half: 'xs:w-1/2',
-    none: '',
-    screen: 'xs:w-screen',
-  },
-  sm: {
-    auto: 'sm:w-auto',
-    full: 'sm:w-full',
-    fit: 'sm:w-fit',
-    half: 'sm:w-1/2',
-    none: '',
-    screen: 'sm:w-screen',
-  },
-  md: {
-    auto: 'md:w-auto',
-    full: 'md:w-full',
-    fit: 'md:w-fit',
-    half: 'md:w-1/2',
-    none: '',
-    screen: 'md:w-screen',
-  },
-  lg: {
-    auto: 'lg:w-auto',
-    full: 'lg:w-full',
-    fit: 'lg:w-fit',
-    half: 'lg:w-1/2',
-    none: '',
-    screen: 'lg:w-screen',
-  },
-  xl: {
-    auto: 'xl:w-auto',
-    full: 'xl:w-full',
-    fit: 'xl:w-fit',
-    half: 'xl:w-1/2',
-    none: '',
-    screen: 'xl:w-screen',
-  },
-}

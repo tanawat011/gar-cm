@@ -25,7 +25,7 @@ const handleRequest = nextAuth({
     }),
   ],
   pages: {
-    signIn: '/sign-in',
+    signIn: process.env.NEXTAUTH_SIGN_IN_URI || '/sign-in',
   },
 })
 
