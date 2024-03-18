@@ -1,24 +1,30 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Checkbox, Image, Link } from '@nextui-org/react'
 import clsx from 'clsx'
 import NextImage from 'next/image'
 import { useRouter } from 'next/navigation'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 import { Button, PasswordInput, TextInput } from '@/components/NextUI'
+import { redirectUri } from '@/constants'
 import { Col, Row } from '@/libs/pureTailwind'
 
 export default function SignInPage() {
   const router = useRouter()
+  const { data } = useSession()
 
   const refUsername = useRef<HTMLInputElement>(null)
   const refPassword = useRef<HTMLInputElement>(null)
 
   const [isInvalid, setIsInvalid] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const handleRedirectToMainPage = () => {
+    router.push(redirectUri)
+  }
 
   const handleValueChange = () => {
     setIsInvalid(false)
@@ -40,13 +46,16 @@ export default function SignInPage() {
       username,
       password,
       redirect: false,
-      callbackUrl: process.env.NEXTAUTH_REDIRECT_URI || '/',
     })
 
     if (!result?.ok) return resetFormState(true)
 
-    router.push(process.env.NEXTAUTH_REDIRECT_URI || '/')
+    handleRedirectToMainPage()
   }
+
+  useEffect(() => {
+    if (data) handleRedirectToMainPage()
+  }, [data])
 
   return (
     <>

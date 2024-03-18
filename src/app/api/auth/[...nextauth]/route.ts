@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 
+import { signInUri } from '@/constants'
 import auth0Api from '@/libs/axios'
 
 const handleRequest = nextAuth({
@@ -61,7 +62,7 @@ const handleRequest = nextAuth({
   ],
   debug: false,
   pages: {
-    signIn: process.env.NEXTAUTH_SIGN_IN_URI || '/sign-in',
+    signIn: signInUri,
   },
   session: {
     strategy: 'jwt',
