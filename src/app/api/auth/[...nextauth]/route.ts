@@ -3,6 +3,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 
+import auth0Api from '@/libs/axios'
+
 const handleRequest = nextAuth({
   providers: [
     CredentialsProvider({
@@ -11,8 +13,40 @@ const handleRequest = nextAuth({
         username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        return { id: '1', name: 'J Smith', email: '' }
+      async authorize(credentials) {
+        if (credentials) {
+          try {
+            const tokenResult = await auth0Api.post('/oauth/token', {
+              username: credentials.username,
+              password: credentials.password,
+              client_id: process.env.AUTH0_CLIENT_ID,
+              client_secret: process.env.AUTH0_CLIENT_SECRET,
+              grant_type: 'http://auth0.com/oauth/grant-type/password-realm',
+              scope: 'openid profile email',
+              audience: `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/`,
+              realm: 'Username-Password-Authentication',
+              response_type: 'token id_token',
+            })
+
+            const infoResult = await auth0Api.get('/userinfo', {
+              headers: {
+                Authorization: `Bearer ${tokenResult.data.access_token}`,
+              },
+            })
+
+            return {
+              ...infoResult.data,
+              id: infoResult.data.sub,
+              exp: tokenResult.data.expires_in,
+            }
+          } catch (error) {
+            console.error('error', error)
+
+            throw error
+          }
+        }
+
+        return null
       },
     }),
     GithubProvider({
@@ -24,8 +58,30 @@ const handleRequest = nextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  debug: true,
   pages: {
     signIn: process.env.NEXTAUTH_SIGN_IN_URI || '/sign-in',
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+        token.name = user.name
+        token.email = user.email
+      }
+
+      return token
+    },
+    async session({ session, token }) {
+      session.user = token
+
+      return session
+    },
   },
 })
 

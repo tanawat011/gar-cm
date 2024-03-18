@@ -7,6 +7,9 @@ declare namespace NodeJS {
     NEXTAUTH_URL: string
     NEXTAUTH_REDIRECT_URI: string
     NEXTAUTH_SIGN_IN_URI: string
+    AUTH0_ISSUER_BASE_URL: string
+    AUTH0_CLIENT_ID: string
+    AUTH0_CLIENT_SECRET: string
     GITHUB_CLIENT_ID: string
     GITHUB_CLIENT_SECRET: string
     GOOGLE_CLIENT_ID: string
