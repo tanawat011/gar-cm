@@ -40,7 +40,8 @@ const handleRequest = nextAuth({
               exp: tokenResult.data.expires_in,
             }
           } catch (error) {
-            console.error('error', error)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            console.error('error', (error as any).response?.data || (error as any).message)
 
             throw error
           }
@@ -58,7 +59,7 @@ const handleRequest = nextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  debug: true,
+  debug: false,
   pages: {
     signIn: process.env.NEXTAUTH_SIGN_IN_URI || '/sign-in',
   },

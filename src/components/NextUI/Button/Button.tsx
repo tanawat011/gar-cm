@@ -15,7 +15,8 @@ export type ButtonProps = {
   iconSize?: IconProps['size']
   iconPlacement?: 'left' | 'right' | 'two-side'
   iconOnly?: boolean
-} & Omit<ButtonPropsNextUI, 'isIconOnly'>
+  loading?: boolean
+} & Omit<ButtonPropsNextUI, 'isIconOnly' | 'isLoading'>
 
 export const Button: React.FC<ButtonProps> = ({
   label,
@@ -26,6 +27,7 @@ export const Button: React.FC<ButtonProps> = ({
   iconOnly,
   children,
   className,
+  loading,
   ...leftProps
 }) => {
   const isLeft = icon && iconPlacement === 'left'
@@ -41,6 +43,7 @@ export const Button: React.FC<ButtonProps> = ({
         startContent: <Icon name={icon} size={iconSize} />,
         endContent: <Icon name={iconR || icon} size={iconSize} />,
       })}
+      isLoading={loading}
       className={clsx(className, iconOnly && 'rounded-full')}
       isIconOnly={iconOnly}
     >

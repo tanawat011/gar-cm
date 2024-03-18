@@ -1,16 +1,14 @@
 'use client'
 
+import type { TextInputProps } from '..'
+
 import React, { useMemo } from 'react'
 
 import { Icon } from '@/components/Icon'
 
 import { TextInput } from '..'
 
-type PasswordInputProps = {
-  _ref?: React.Ref<HTMLInputElement>
-  label: string
-  placeholder: string
-}
+type PasswordInputProps = Omit<TextInputProps, 'type' | 'startContent' | 'endContent'>
 
 export const PasswordInput: React.FC<PasswordInputProps> = (props) => {
   const [isVisible, setIsVisible] = React.useState(false)

@@ -1,31 +1,51 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import { Checkbox, Image, Link } from '@nextui-org/react'
 import clsx from 'clsx'
 import NextImage from 'next/image'
+import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 
 import { Button, PasswordInput, TextInput } from '@/components/NextUI'
 import { Col, Row } from '@/libs/pureTailwind'
 
 export default function SignInPage() {
+  const router = useRouter()
+
   const refUsername = useRef<HTMLInputElement>(null)
   const refPassword = useRef<HTMLInputElement>(null)
 
-  const handleSignIn = () => {
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleValueChange = () => {
+    setIsInvalid(false)
+  }
+
+  const handleSignIn = async () => {
+    setIsLoading(true)
+
     const username = refUsername.current?.value
     const password = refPassword.current?.value
-
-    if (username && password) {
-      signIn('credentials', {
-        username,
-        password,
-        redirect: true,
-        callbackUrl: process.env.NEXTAUTH_REDIRECT_URI || '/',
-      })
+    const resetFormState = (invalid = false) => {
+      setIsLoading(false)
+      setIsInvalid(invalid)
     }
+
+    if (!username || !password) return resetFormState(true)
+
+    const result = await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+      callbackUrl: process.env.NEXTAUTH_REDIRECT_URI || '/',
+    })
+
+    if (!result?.ok) return resetFormState(true)
+
+    router.push(process.env.NEXTAUTH_REDIRECT_URI || '/')
   }
 
   return (
@@ -65,20 +85,39 @@ export default function SignInPage() {
 
             <span className='text-2xl lg:text-4xl font-semibold lg:mb-2'>Welcome</span>
 
-            <TextInput _ref={refUsername} label='Email or Username' placeholder='Please enter Email or Username' />
-            <PasswordInput _ref={refPassword} label='Password' placeholder='Please enter Password' />
+            <Col>
+              <TextInput
+                _ref={refUsername}
+                label='Email or Username'
+                placeholder='Please enter Email or Username'
+                className='mb-5'
+                invalid={isInvalid}
+                color={isInvalid ? 'danger' : 'default'}
+                onChange={handleValueChange}
+              />
+              <PasswordInput
+                _ref={refPassword}
+                label='Password'
+                placeholder='Please enter Password'
+                className='h-[64px]'
+                invalid={isInvalid}
+                errorMessage={isInvalid && 'Wrong username or password.'}
+                color={isInvalid ? 'danger' : 'default'}
+                onChange={handleValueChange}
+              />
 
-            <Row alignItems='center' justifyContent='between'>
-              <Checkbox defaultChecked size='sm'>
-                Remember me
-              </Checkbox>
+              <Row alignItems='center' justifyContent='between'>
+                <Checkbox defaultChecked size='sm'>
+                  Remember me
+                </Checkbox>
 
-              <Link href='#' size='sm' className='text-end'>
-                Forgot Password?
-              </Link>
-            </Row>
+                <Link href='#' size='sm' className='text-end'>
+                  Forgot Password?
+                </Link>
+              </Row>
+            </Col>
 
-            <Button className='mt-4' color='primary' onClick={handleSignIn}>
+            <Button className='mt-4' color='primary' onClick={handleSignIn} loading={isLoading}>
               Sign In
             </Button>
 
@@ -90,15 +129,27 @@ export default function SignInPage() {
 
             <div className='block lg:hidden'>
               <Row alignItems='center' justifyContent='center' gap={3}>
-                <Button iconOnly icon='FaGithub' iconSize='2xl' />
-                <Button iconOnly icon='FcGoogle' iconSize='2xl' />
+                <Button iconOnly icon='FaGithub' iconSize='2xl' loading={isLoading} />
+                <Button iconOnly icon='FcGoogle' iconSize='2xl' loading={isLoading} />
               </Row>
             </div>
 
             <div className='hidden lg:block'>
               <Col alignItems='center' justifyContent='center' gap={3}>
-                <Button icon='FaGithub' iconSize='2xl' label='Continue with Github' className='w-full' />
-                <Button icon='FcGoogle' iconSize='2xl' label='Continue with Github' className='w-full' />
+                <Button
+                  icon='FaGithub'
+                  iconSize='2xl'
+                  label='Continue with Github'
+                  className='w-full'
+                  loading={isLoading}
+                />
+                <Button
+                  icon='FcGoogle'
+                  iconSize='2xl'
+                  label='Continue with Github'
+                  className='w-full'
+                  loading={isLoading}
+                />
               </Col>
             </div>
 
