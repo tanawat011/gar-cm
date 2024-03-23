@@ -1,9 +1,21 @@
+---
+runme:
+  id: 01HSP7BVV18YGWDRBFMPP2BYPH
+  version: v3
+---
+
 # Important Link
 
 ## Color
 
 - [RGB to Hex](https://www.rapidtables.com/convert/color/rgb-to-hex.html)
 - [Name of color from Hex](https://www.color-name.com/)
+
+## Lottie
+
+- [Lottie](https://app.lottiefiles.com/)
+- [Lottie Free Animations](https://lottiefiles.com/free-animations)
+- [Lottie JSON Editor](https://lottiefiles.github.io/lottie-docs/playground/json_editor/)
 
 ## Icons
 

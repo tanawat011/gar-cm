@@ -21,7 +21,8 @@
     "release:first": "commit-and-tag-version --first-release",
     "release:major": "commit-and-tag-version --release-as major",
     "release:minor": "commit-and-tag-version --release-as minor",
-    "release:patch": "commit-and-tag-version --release-as patch"
+    "release:patch": "commit-and-tag-version --release-as patch",
+    "tw:view": "tailwind-config-viewer -o -c tailwind.example-config.js"
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
@@ -66,6 +67,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "prisma": "^5.11.0",
+    "tailwind-config-viewer": "^1.7.3",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"

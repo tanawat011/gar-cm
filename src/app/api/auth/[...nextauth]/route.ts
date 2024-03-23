@@ -3,7 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 
-import { signInUri } from '@/constants'
 import auth0Api from '@/libs/axios'
 
 const handleRequest = nextAuth({
@@ -61,8 +60,9 @@ const handleRequest = nextAuth({
     }),
   ],
   debug: false,
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: signInUri,
+    signIn: process.env.NEXT_PUBLIC_AUTH_SIGN_IN_URI,
   },
   session: {
     strategy: 'jwt',
@@ -87,11 +87,4 @@ const handleRequest = nextAuth({
   },
 })
 
-export {
-  handleRequest as GET,
-  handleRequest as POST,
-  handleRequest as PUT,
-  handleRequest as PATCH,
-  handleRequest as DELETE,
-  handleRequest as OPTIONS,
-}
+export { handleRequest as GET, handleRequest as POST, handleRequest as OPTIONS }

@@ -1,5 +1,6 @@
 'use client'
 
+import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 import { Checkbox, Image, Link } from '@nextui-org/react'
@@ -9,7 +10,6 @@ import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 
 import { Button, PasswordInput, TextInput } from '@/components/NextUI'
-import { redirectUri } from '@/constants'
 import { Col, Row } from '@/libs/pureTailwind'
 
 export default function SignInPage() {
@@ -23,14 +23,15 @@ export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleRedirectToMainPage = () => {
-    router.push(redirectUri)
+    router.push(process.env.NEXT_PUBLIC_AUTH_REDIRECT_URI)
   }
 
   const handleValueChange = () => {
     setIsInvalid(false)
   }
 
-  const handleSignIn = async () => {
+  const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault()
     setIsLoading(true)
 
     const username = refUsername.current?.value
@@ -60,7 +61,7 @@ export default function SignInPage() {
   return (
     <>
       <Image
-        src='/temp-bg.jpg'
+        src='/images/temp-bg.jpg'
         as={NextImage}
         width={0}
         height={0}
@@ -80,6 +81,7 @@ export default function SignInPage() {
         className={clsx('min-h-[667px] p-12', 'lg:p-0')}
       >
         <form
+          onSubmit={handleSubmit}
           className={clsx(
             'px-8 py-10 bg-slate-400 rounded-2xl min-h-[628px] max-w-[456px] mx-auto z-10',
             'xs:min-w-[334px]',
@@ -88,7 +90,7 @@ export default function SignInPage() {
         >
           <Col gap={5} width={'full'} className='relative'>
             <Row alignItems={'center'} justifyContent={{ default: 'center', lg: 'start' }} className='mb-8'>
-              <Image src='/next.svg' width={48} height={48} alt='Logo' radius='full' shadow='sm' />
+              <Image src='/images/next.svg' width={48} height={48} alt='Logo' radius='full' shadow='sm' />
               <span className='text-4xl font-bold ml-2'>NextUI</span>
             </Row>
 
@@ -126,7 +128,7 @@ export default function SignInPage() {
               </Row>
             </Col>
 
-            <Button className='mt-4' color='primary' onClick={handleSignIn} loading={isLoading}>
+            <Button type='submit' className='mt-4' color='primary' loading={isLoading}>
               Sign In
             </Button>
 
